@@ -1,51 +1,39 @@
-class Progress {
-  Progress({
-    required this.title,
-    required this.duration,
-    this.progress,
-    required this.bgPath,
-    required this.potentialUsed,
-    required this.outputLevels,
-    required this.levelExp,
-    required this.levelGolds,
-    required this.currentLevel,
-    this.isActive = false,
-  });
-
+class ProgressModel {
   final String title;
   final int duration;
-  final double? progress;
-  final String bgPath;
-  final int potentialUsed;
-  final List<int> outputLevels;
-  final List<int> levelExp;
-  final List<int> levelGolds;
-  final int currentLevel;
-  final bool isActive;
+  final int level;
+  final double gains;
+  final String assetUrl;
+  final double? progressValue = 0;
 
-  Progress copyWith({
-    String? title,
-    int? duration,
-    double? progress,
-    String? bgPath,
-    int? potentialUsed,
-    List<int>? outputLevels,
-    List<int>? levelExp,
-    List<int>? levelGolds,
-    int? currentLevel,
-    bool? isActive,
-  }) {
-    return Progress(
-      title: title ?? this.title,
-      duration: duration ?? this.duration,
-      progress: progress ?? this.progress,
-      bgPath: bgPath ?? this.bgPath,
-      potentialUsed: potentialUsed ?? this.potentialUsed,
-      outputLevels: outputLevels ?? this.outputLevels,
-      levelExp: levelExp ?? this.levelExp,
-      levelGolds: levelGolds ?? this.levelGolds,
-      currentLevel: currentLevel ?? this.currentLevel,
-      isActive: isActive ?? this.isActive,
-    );
-  }
+  ProgressModel(
+      {required this.title,
+      required this.duration,
+      required this.level,
+      required this.gains,
+      required this.assetUrl});
 }
+
+class Solution extends ProgressModel {
+  final Map<Solution, int> requiredSolution;
+  final Map<Development, int>? requiredDevelopment;
+  final Map<Resource, double>? consumedResources;
+  final Map<GlobalIssue, int> outputs;
+
+  Solution(
+      {required super.title,
+      required super.duration,
+      required super.level,
+      required super.gains,
+      required super.assetUrl,
+      required this.requiredSolution,
+      required this.requiredDevelopment,
+      required this.consumedResources,
+      required this.outputs});
+}
+
+class Development {}
+
+class Resource {}
+
+class GlobalIssue {}

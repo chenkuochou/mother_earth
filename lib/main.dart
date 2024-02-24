@@ -49,16 +49,17 @@ class HomePage extends ConsumerWidget {
       ),
       body: Center(
         child: GestureDetector(
-            onTap: () {
-              ref.read(progressProvider.notifier).activateTraining(
-                  'A', ref.read(progressProvider)['A']![0].title);
-              HapticFeedback.mediumImpact();
-            },
+            // onTap: () {
+            //   ref
+            //       .read(pollutionProvider.notifier)
+            //       .toggleActivation(ref.read(pollutionProvider)[0].title);
+            //   HapticFeedback.mediumImpact();
+            // },
             child: Column(
-              children: [
-                ProgressBar(0, ref.read(progressProvider)['A']![0]),
-              ],
-            )),
+          children: [
+            ProgressBar(0, ref.read(pollutionProvider)[0]),
+          ],
+        )),
       ),
     );
   }

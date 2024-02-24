@@ -1,6 +1,6 @@
 import 'package:mother_earth/model/progress_model.dart';
 
-final Progress stamina = Progress(
+final Solution stamina = Solution(
   title: 'Stamina',
   duration: 1,
   bgPath: 'bgPath',
@@ -11,7 +11,7 @@ final Progress stamina = Progress(
   currentLevel: 0,
 );
 
-Progress pitching = Progress(
+Solution pitching = Solution(
   title: 'Pitching',
   duration: 2,
   bgPath: 'bgPath',
@@ -23,7 +23,7 @@ Progress pitching = Progress(
   // isActive: true,
 );
 
-Progress batting = Progress(
+Solution batting = Solution(
   title: 'Batting',
   duration: 1,
   bgPath: 'bgPath',
