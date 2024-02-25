@@ -1,35 +1,30 @@
 import 'package:mother_earth/model/progress_model.dart';
 
-final Solution stamina = Solution(
-  title: 'Stamina',
-  duration: 1,
-  bgPath: 'bgPath',
-  potentialUsed: 1,
-  outputLevels: [2, 4, 5],
-  levelExp: [30, 20, 10],
-  levelGolds: [0, 5, 10],
-  currentLevel: 0,
+/// Solutions
+// Pollution
+final Solution airRenewableEnergy = Solution(
+  title: 'Renewable Energy',
+  duration: const Duration(seconds: 1),
+  gains: 1,
+  assetUrl: 'assetUrl',
+  outputs: {
+    pollution: 1,
+  },
 );
 
-Solution pitching = Solution(
-  title: 'Pitching',
-  duration: 2,
-  bgPath: 'bgPath',
-  potentialUsed: 1,
-  outputLevels: [2, 4, 5],
-  levelExp: [30, 20, 10],
-  levelGolds: [0, 5, 10],
-  currentLevel: 0,
-  // isActive: true,
+final Solution airEV = Solution(
+  title: 'Electric Cars',
+  duration: const Duration(seconds: 30),
+  gains: 0.1,
+  assetUrl: 'assetUrl',
+  requiredSolution: {airRenewableEnergy: 1},
+  outputs: {pollution: 1},
 );
 
-Solution batting = Solution(
-  title: 'Batting',
-  duration: 1,
-  bgPath: 'bgPath',
-  potentialUsed: 1,
-  outputLevels: [2, 4, 5],
-  levelExp: [30, 20, 10],
-  levelGolds: [0, 5, 10],
-  currentLevel: 0,
+/// Global Issue
+final GlobalIssue pollution = GlobalIssue(
+  title: 'Pollution',
+  duration: const Duration(seconds: 30),
+  gains: 0,
+  assetUrl: '',
 );

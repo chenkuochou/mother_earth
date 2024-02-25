@@ -8,24 +8,15 @@ final pollutionProvider =
 
 class PollutionNotifier extends Notifier<List<Solution>> {
   @override
-  build() => [stamina, pitching, batting];
+  build() => [airRenewableEnergy, airEV];
 
   void levelUp(int index) {
-    int currentLevel = state[index].currentLevel;
-    if (state[index].outputLevels.length < currentLevel) {
-      state[index] = state[index].copyWith(currentLevel: currentLevel++);
+    Solution solution = state[index];
+
+    if (solution.level! + 1 < solution.maxLevel!) {
+      state[index] = solution.copyWith(level: solution.level! + 1);
     } else {
       debugPrint('Maximum level reached');
     }
-  }
-
-  void toggleActivation(String title) {
-    state = [
-      for (final progress in state)
-        if (progress.title == title)
-          progress.copyWith(isActive: !progress.isActive)
-        else
-          progress,
-    ];
   }
 }

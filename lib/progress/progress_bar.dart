@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/progress_model.dart';
-import 'package:mother_earth/providers/progress_provider.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar(
     this.index,
-    this.progress, {
+    this.listenable,
+    this.notifier, {
     Key? key,
   }) : super(key: key);
   final int index;
-  final Solution progress;
+  final ProviderListenable listenable;
+  final ProviderListenable notifier;
 
   @override
   ConsumerState createState() => _ProgressBarState();
@@ -26,14 +26,19 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(minutes: 1),
+      duration: ref.read(widget.listenable)[widget.index].currentDuration,
       lowerBound: 0,
     );
     Future(() {
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          ref.read(pollutionProvider.notifier).toggleActivation(
-              ref.read(pollutionProvider)[widget.index].title);
+          print('producing outputs');
+
+          ref.read(widget.notifier).levelUp(widget.index);
+
+          _animationController.duration =
+              ref.read(widget.listenable)[widget.index].currentDuration;
+          _animationController.repeat();
         }
       });
     });
@@ -47,18 +52,10 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
 
   @override
   Widget build(BuildContext context) {
-    final double durationInHour = widget.progress.duration.toDouble();
-
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, __) {
         double value = _animationController.value;
-        final double hours = durationInHour - durationInHour * value;
-        final double minutes = 60 - ((durationInHour * value * 60) % 60);
-        final double seconds = 60 - ((durationInHour * value * 3600) % 60);
-
-        double minuteLeft = (minutes == 60) ? 0 : minutes;
-        double secondLeft = (seconds == 60) ? 0 : seconds;
 
         if (isActive) {
           _animationController.forward();
@@ -86,12 +83,12 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                        // .floor().toString()
-                        '${hours.truncateToDouble().toStringAsFixed(0).padLeft(2, '0')}:${minuteLeft.truncateToDouble().toStringAsFixed(0).padLeft(2, '0')}:${secondLeft.truncateToDouble().toStringAsFixed(0).padLeft(2, '0')}',
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54)),
+                      'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54),
+                    ),
                   ],
                 ),
               ),

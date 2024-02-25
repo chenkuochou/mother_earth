@@ -3,11 +3,9 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/progress_model.dart';
 import 'package:mother_earth/progress/progress_bar.dart';
-import 'package:mother_earth/providers/progress_provider.dart';
+import 'package:mother_earth/providers/solution_provider.dart';
 
 // import 'firebase_options.dart';
 
@@ -49,15 +47,9 @@ class HomePage extends ConsumerWidget {
       ),
       body: Center(
         child: GestureDetector(
-            // onTap: () {
-            //   ref
-            //       .read(pollutionProvider.notifier)
-            //       .toggleActivation(ref.read(pollutionProvider)[0].title);
-            //   HapticFeedback.mediumImpact();
-            // },
             child: Column(
           children: [
-            ProgressBar(0, ref.read(pollutionProvider)[0]),
+            ProgressBar(0, pollutionProvider, pollutionProvider.notifier),
           ],
         )),
       ),
