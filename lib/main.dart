@@ -4,8 +4,7 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/progress/progress_bar.dart';
-import 'package:mother_earth/providers/solution_provider.dart';
+import 'package:mother_earth/layout_page.dart';
 
 // import 'firebase_options.dart';
 
@@ -27,32 +26,11 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       child: MaterialApp(
-        title: 'MyDemo',
+        title: 'Mother Earth',
         theme: ThemeData(),
         debugShowCheckedModeBanner: false,
-        home: const HomePage(),
+        home: const LayoutPage(),
       ),
     ),
   );
-}
-
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: Center(
-        child: GestureDetector(
-            child: Column(
-          children: [
-            ProgressBar(0, pollutionProvider, pollutionProvider.notifier),
-          ],
-        )),
-      ),
-    );
-  }
 }
