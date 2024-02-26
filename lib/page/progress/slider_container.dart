@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/progress_model.dart';
-import 'package:mother_earth/progress/progress_slider.dart';
-import 'package:mother_earth/providers/solution_provider.dart';
+import 'package:mother_earth/page/progress/progress_slider.dart';
 
-class ChallengePage extends ConsumerWidget {
-  const ChallengePage({super.key});
+class SliderContainer extends StatelessWidget {
+  const SliderContainer(
+      {super.key, required this.groupList, required this.constraints});
 
-  Widget sliderContainer(
-      List<List<Solution>> list, BoxConstraints constraints) {
+  final List<List<SolutionModel>> groupList;
+  final BoxConstraints constraints;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.grey,
       height: constraints.maxHeight * 0.25,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: list.length,
+        itemCount: groupList.length,
         itemBuilder: (_, index) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -30,34 +32,17 @@ class ChallengePage extends ConsumerWidget {
                     margin: const EdgeInsets.only(top: 5),
                     height: 20,
                     // width: 20,
-                    child: Text(['Climate Change', 'Pollution'][index],
+                    child: Text(['Air', 'Water'][index],
                         style: const TextStyle(
                           color: Colors.grey,
                         )),
                   ),
                   SizedBox(
                       height: constraints.maxHeight * 0.25 - 50,
-                      child: ProgressSlider(list: list[index])),
+                      child: ProgressSlider(list: groupList[index])),
                 ],
               )),
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) => ListView(
-        children: [
-          const Center(child: Text('Climate Change')),
-          const Center(child: Text('Pollution')),
-          
-          sliderContainer([
-            ref.read(pollutionProvider).sublist(0, 1),
-            ref.read(pollutionProvider)
-          ], constraints)
-        ],
       ),
     );
   }

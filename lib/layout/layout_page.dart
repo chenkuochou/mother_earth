@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mother_earth/challenge/challenge_page.dart';
+import 'package:mother_earth/page/challenge_page.dart';
+import 'package:mother_earth/layout/app_bar_bottom.dart';
 
 class LayoutPage extends StatefulWidget {
   const LayoutPage({super.key});
@@ -23,10 +24,29 @@ class _LayoutPageState extends State<LayoutPage> {
         backgroundColor: Colors.white.withOpacity(0.9),
         // elevation: 0,
         scrolledUnderElevation: 0,
-        leading: Lottie.network(
-            'https://lottie.host/9b686d12-5423-4cba-a0c9-5a7cbc637664/NKFHCHs6kY.json'),
-        title: const Text('Mother Earth'),
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(top: 25, left: 5, bottom: 10),
+          child: Row(
+            children: [
+              Lottie.network(
+                  'https://lottie.host/9b686d12-5423-4cba-a0c9-5a7cbc637664/NKFHCHs6kY.json',
+                  fit: BoxFit.contain),
+              const Text('Mother Earth'),
+            ],
+          ),
+        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 10),
+        //   child: Lottie.network(
+        //       'https://lottie.host/9b686d12-5423-4cba-a0c9-5a7cbc637664/NKFHCHs6kY.json',
+        //       fit: BoxFit.contain),
+        // ),
+        // title: const Text('Mother Earth'),
         actions: const [],
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(10),
+          child: AppBarBottom(),
+        ),
       ),
       body: IndexedStack(
         index: pageIndex,
@@ -52,6 +72,7 @@ class _LayoutPageState extends State<LayoutPage> {
           });
         },
         selectedIndex: pageIndex,
+
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.sports_esports, size: 28),
@@ -59,18 +80,18 @@ class _LayoutPageState extends State<LayoutPage> {
             label: 'Challenges',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.face),
+            selectedIcon: Icon(Icons.construction),
             icon: Icon(
-              Icons.face_outlined,
+              Icons.construction_outlined,
             ),
             label: 'Development',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.settings),
+            selectedIcon: Icon(Icons.military_tech),
             icon: Icon(
-              Icons.settings_outlined,
+              Icons.military_tech_outlined,
             ),
-            label: 'Setting',
+            label: 'Leaderboard',
           ),
         ],
       ),

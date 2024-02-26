@@ -2,7 +2,7 @@ import 'package:mother_earth/model/progress_model.dart';
 
 /// Solutions
 // Pollution
-final Solution airRenewableEnergy = Solution(
+final SolutionModel airRenewableEnergy = SolutionModel(
   title: 'Renewable Energy',
   duration: const Duration(seconds: 1),
   gains: 1,
@@ -12,19 +12,20 @@ final Solution airRenewableEnergy = Solution(
   },
 );
 
-final Solution airEV = Solution(
+final SolutionModel airEV = SolutionModel(
   title: 'Electric Cars',
-  duration: const Duration(seconds: 30),
-  gains: 0.1,
+  duration: const Duration(seconds: 10),
+  gains: 1.5,
   assetUrl: 'assetUrl',
   requiredSolution: {airRenewableEnergy: 1},
   outputs: {pollution: 1},
 );
 
 /// Global Issue
-final GlobalIssue pollution = GlobalIssue(
+final GlobalIssueModel pollution = GlobalIssueModel(
   title: 'Pollution',
-  duration: const Duration(seconds: 30),
+  tolerance: 500,
+  duration: Duration.zero,
   gains: 0,
   assetUrl: '',
 );

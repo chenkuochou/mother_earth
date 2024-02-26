@@ -38,13 +38,13 @@ class ProgressModel {
   }
 }
 
-class Solution extends ProgressModel {
-  final Map<Solution, int>? requiredSolution;
-  final Map<Development, int>? requiredDevelopment;
-  final Map<Resource, double>? consumedResources;
-  final Map<GlobalIssue, double> outputs;
+class SolutionModel extends ProgressModel {
+  final Map<SolutionModel, int>? requiredSolution;
+  final Map<DevelopmentModel, int>? requiredDevelopment;
+  final Map<ResourceModel, double>? consumedResources;
+  final Map<GlobalIssueModel, double> outputs;
 
-  Solution({
+  SolutionModel({
     required super.title,
     required super.duration,
     super.level,
@@ -62,7 +62,7 @@ class Solution extends ProgressModel {
   Duration get currentOutput => duration * (1 + gains * level!);
 
   @override
-  Solution copyWith({
+  SolutionModel copyWith({
     String? title,
     Duration? duration,
     int? level,
@@ -70,12 +70,12 @@ class Solution extends ProgressModel {
     String? assetUrl,
     double? progress,
     int? maxLevel,
-    Map<Solution, int>? requiredSolution,
-    Map<Development, int>? requiredDevelopment,
-    Map<Resource, double>? consumedResources,
-    Map<GlobalIssue, double>? outputs,
+    Map<SolutionModel, int>? requiredSolution,
+    Map<DevelopmentModel, int>? requiredDevelopment,
+    Map<ResourceModel, double>? consumedResources,
+    Map<GlobalIssueModel, double>? outputs,
   }) {
-    return Solution(
+    return SolutionModel(
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
@@ -91,17 +91,19 @@ class Solution extends ProgressModel {
   }
 }
 
-class Development {}
+class DevelopmentModel {}
 
-class Resource {}
+class ResourceModel {}
 
-class GlobalIssue extends ProgressModel {
-  GlobalIssue({
+class GlobalIssueModel extends ProgressModel {
+  final int tolerance;
+
+  GlobalIssueModel({
+    required this.tolerance,
     required super.title,
     required super.duration,
     required super.gains,
     required super.assetUrl,
     super.progress,
   });
-  Duration get tolerance => duration;
 }

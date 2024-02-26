@@ -4,12 +4,13 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/layout_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mother_earth/layout/layout_page.dart';
 
 // import 'firebase_options.dart';
 
 Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 //   await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 //   );
@@ -27,7 +28,13 @@ Future<void> main() async {
     ProviderScope(
       child: MaterialApp(
         title: 'Mother Earth',
-        theme: ThemeData(),
+        theme: ThemeData(
+          textTheme: TextTheme(
+            bodyMedium: GoogleFonts.ubuntuMono(
+                // fontSize: 9,
+                ),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
         home: const LayoutPage(),
       ),
