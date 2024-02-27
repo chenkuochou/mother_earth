@@ -11,17 +11,24 @@ class SliderContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double bgHeight = constraints.maxHeight * 0.25;
+    const double groupPadding = 8;
+    const double groupTitleHeight = 20;
+    const double groupTitleTopPadding = 5;
+    final double progressSliderHeight =
+        bgHeight - groupPadding * 2 - groupTitleHeight - groupTitleTopPadding;
+
     return Container(
       color: Colors.grey,
-      height: constraints.maxHeight * 0.25,
+      height: bgHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: groupList.length,
         itemBuilder: (_, index) => Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(groupPadding),
           child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(7),
                 color: Colors.black,
               ),
               // width: 350,
@@ -29,8 +36,8 @@ class SliderContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    height: 20,
+                    margin: const EdgeInsets.only(top: groupTitleTopPadding),
+                    height: groupTitleHeight,
                     // width: 20,
                     child: Text(['Air', 'Water'][index],
                         style: const TextStyle(
@@ -38,7 +45,7 @@ class SliderContainer extends StatelessWidget {
                         )),
                   ),
                   SizedBox(
-                      height: constraints.maxHeight * 0.25 - 50,
+                      height: progressSliderHeight,
                       child: ProgressSlider(list: groupList[index])),
                 ],
               )),

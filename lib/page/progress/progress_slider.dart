@@ -9,7 +9,7 @@ class ProgressSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 17),
       itemCount: list.length,
       itemBuilder: (context, index) {
         return Padding(
@@ -26,15 +26,19 @@ Widget progressCard(String title, int index) {
   return LayoutBuilder(builder: (_, constraints) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
         color: Colors.grey,
+        borderRadius: BorderRadius.circular(10),
+        // border: Border.all(
+        //     color: Colors.greenAccent,
+        //     width: 3,
+        //     strokeAlign: BorderSide.strokeAlignOutside),
       ),
       width: 150,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title),
-          SizedBox(height: constraints.maxHeight * 0.5),
+          const Expanded(child: Text('url')),
           ProgressBar(index, pollutionProvider, pollutionProvider.notifier)
         ],
       ),

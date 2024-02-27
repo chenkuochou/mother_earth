@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
+import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/page/challenge_page.dart';
 import 'package:mother_earth/layout/app_bar_bottom.dart';
 
@@ -17,24 +17,14 @@ class _LayoutPageState extends State<LayoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.white.withOpacity(0.9),
         // elevation: 0,
         scrolledUnderElevation: 0,
-        flexibleSpace: Padding(
-          padding: const EdgeInsets.only(top: 25, left: 5, bottom: 10),
-          child: Row(
-            children: [
-              Lottie.network(
-                  'https://lottie.host/9b686d12-5423-4cba-a0c9-5a7cbc637664/NKFHCHs6kY.json',
-                  fit: BoxFit.contain),
-              const Text('Mother Earth'),
-            ],
-          ),
-        ),
+        flexibleSpace: const AppBarFlexible(),
         // leading: Padding(
         //   padding: const EdgeInsets.only(left: 10),
         //   child: Lottie.network(
@@ -42,9 +32,10 @@ class _LayoutPageState extends State<LayoutPage> {
         //       fit: BoxFit.contain),
         // ),
         // title: const Text('Mother Earth'),
-        actions: const [],
+        // actions: const [],
+        toolbarHeight: 120,
         bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(10),
+          preferredSize: Size.fromHeight(20),
           child: AppBarBottom(),
         ),
       ),
@@ -56,7 +47,7 @@ class _LayoutPageState extends State<LayoutPage> {
             child: Text('Development'),
           ),
           Center(
-            child: Text('Setting'),
+            child: Text('Achievements'),
           ),
         ],
       ),
@@ -91,7 +82,7 @@ class _LayoutPageState extends State<LayoutPage> {
             icon: Icon(
               Icons.military_tech_outlined,
             ),
-            label: 'Leaderboard',
+            label: 'Achievement',
           ),
         ],
       ),

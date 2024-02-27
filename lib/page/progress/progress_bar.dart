@@ -69,30 +69,34 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
               isActive = !isActive;
             });
           },
-          child: Stack(
-            children: [
-              LinearProgressIndicator(
-                minHeight: 22,
-                value: value,
-                color: Colors.green,
-                backgroundColor: Colors.white70,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
-                      style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                  ],
+          child: ClipRRect(
+            borderRadius:
+                const BorderRadius.vertical(bottom: Radius.circular(10)),
+            child: Stack(
+              children: [
+                LinearProgressIndicator(
+                  minHeight: 22,
+                  value: value,
+                  color: Colors.green,
+                  backgroundColor: Colors.white70,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
+                        style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

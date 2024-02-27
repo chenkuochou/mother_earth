@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/model/progress_model.dart';
-import 'package:mother_earth/page/progress/progress_slider.dart';
 import 'package:mother_earth/page/progress/slider_container.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
@@ -14,10 +12,9 @@ class ChallengePage extends ConsumerWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) => ListView(
         children: [
-          const Center(child: Text('Climate Change')),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(child: myText('Pollution', size: 18, isBold: true)),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Center(child: myText('Pollution', size: 18, bold: true)),
           ),
           SliderContainer(
             groupList: [
