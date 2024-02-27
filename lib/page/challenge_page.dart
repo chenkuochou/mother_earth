@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/page/progress/slider_container.dart';
+import 'package:mother_earth/page/progress/progress_slider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class ChallengePage extends ConsumerWidget {
@@ -11,19 +11,21 @@ class ChallengePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) => Container(
-        color: Colors.grey[300],
+        color: const Color(0xFFE6DBCA).withOpacity(0.5),
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(top: 15, bottom: 5),
               child: Center(child: myText('Pollution', size: 18, bold: true)),
             ),
-            SliderContainer(
+            ProgressSlider(
               groupList: [
                 ref.read(pollutionProvider).sublist(0, 1),
-                ref.read(pollutionProvider)
+                ref.read(pollutionProvider).sublist(1, 2),
               ],
               constraints: constraints,
+              listenable: pollutionProvider,
+              notifier: pollutionProvider.notifier,
             ),
           ],
         ),

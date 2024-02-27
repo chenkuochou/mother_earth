@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar(
-    this.index,
     this.listenable,
-    this.notifier, {
+    this.notifier, 
+    this.index, {
     Key? key,
   }) : super(key: key);
-  final int index;
   final ProviderListenable listenable;
   final ProviderListenable notifier;
+  final int index;
 
   @override
   ConsumerState createState() => _ProgressBarState();

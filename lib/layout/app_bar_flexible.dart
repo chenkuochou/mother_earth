@@ -14,25 +14,26 @@ class AppBarFlexible extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              flex: 1,
-              child: ShaderMask(
-                blendMode: BlendMode.dstIn,
-                shaderCallback: (Rect bounds) {
-                  return RadialGradient(
-                    center: Alignment.topLeft,
-                    radius: 1.0,
-                    colors: <Color>[Colors.yellow, Colors.deepOrange.shade900],
-                    tileMode: TileMode.mirror,
-                  ).createShader(bounds);
-                },
-                child: Lottie.network(
-                    'https://lottie.host/1de15c7c-278e-4751-bd68-54ebedb5d3a3/crNVTBdG5b.json',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center),
-              ),
+            ShaderMask(
+              blendMode: BlendMode.dstIn,
+              shaderCallback: (Rect bounds) {
+                return RadialGradient(
+                  center: Alignment.topLeft,
+                  radius: 1.0,
+                  colors: <Color>[Colors.yellow, Colors.deepOrange.shade900],
+                  tileMode: TileMode.mirror,
+                ).createShader(bounds);
+              },
+              child: Lottie.network(
+                  'https://lottie.host/1de15c7c-278e-4751-bd68-54ebedb5d3a3/crNVTBdG5b.json',
+                  fit: BoxFit.contain,
+                  alignment: Alignment.center),
             ),
-            Flexible(flex: 2, child: health()),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: healthAndLevel(),
+            )),
             // const Flexible(flex: 1, child: Text('data')),
           ],
         ),
@@ -40,7 +41,7 @@ class AppBarFlexible extends ConsumerWidget {
     );
   }
 
-  Widget health() => Column(
+  Widget healthAndLevel() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
@@ -52,8 +53,16 @@ class AppBarFlexible extends ConsumerWidget {
                   myText('Health', bold: true),
                   Wrap(
                     children: [
-                      const Icon(Icons.trending_up, color: Colors.green),
-                      myText(' +24', bold: true, color: Colors.green),
+                      const Icon(
+                        Icons.trending_up,
+                        color: Colors.green,
+                        size: 20,
+                      ),
+                      myText(
+                        ' +24',
+                        bold: true,
+                        color: Colors.green,
+                      ),
                     ],
                   ),
                 ],
@@ -64,7 +73,7 @@ class AppBarFlexible extends ConsumerWidget {
               )
             ],
           ),
-          const SizedBox(height: 5),
+          // const SizedBox(height: 5),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

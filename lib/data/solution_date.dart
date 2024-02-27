@@ -16,7 +16,8 @@ final SolutionModel airEV = SolutionModel(
   title: 'Electric Cars',
   duration: const Duration(seconds: 10),
   gains: 1.5,
-  assetUrl: 'assetUrl',
+  assetUrl:
+      'https://dotown.maeda-design-room.net/wp-content/uploads/2022/01/vehicle_truck_02.png',
   requiredSolution: {airRenewableEnergy: 1},
   outputs: {pollution: 1},
 );

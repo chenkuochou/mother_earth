@@ -72,13 +72,13 @@ class AppBarBottom extends ConsumerWidget {
                     size: iconSize,
                   ),
                   0),
-              singleIssue(
-                  Icon(
-                    Icons.landscape,
-                    color: Colors.grey,
-                    size: iconSize,
-                  ),
-                  7),
+              // singleIssue(
+              //     Icon(
+              //       Icons.landscape,
+              //       color: Colors.grey,
+              //       size: iconSize,
+              //     ),
+              //     7),
             ],
           ),
         ],
