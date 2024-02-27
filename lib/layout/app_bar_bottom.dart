@@ -7,21 +7,10 @@ class AppBarBottom extends ConsumerWidget {
 
   final double iconSize = 15;
 
-  Widget singleIssue(Icon icon, int value) => Row(
-        children: [
-          icon,
-          const SizedBox(width: 5),
-          Text(
-            value.toString(),
-            style: const TextStyle(fontSize: 13, color: Colors.black),
-          ),
-        ],
-      );
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      color: Colors.grey.withOpacity(0.2),
+      // color: Colors.grey.withOpacity(0.2),
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,43 +37,63 @@ class AppBarBottom extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // const SizedBox(width: 5),
               singleIssue(
                   Icon(
-                    Icons.school,
+                    Icons.paid,
                     color: Colors.amber,
                     size: iconSize,
                   ),
                   11),
-              // const SizedBox(width: 20),
               singleIssue(
                   Icon(
-                    Icons.power,
+                    Icons.rocket,
                     color: Colors.red,
                     size: iconSize,
                   ),
                   11),
-              // const SizedBox(width: 20),
               singleIssue(
                   Icon(
-                    Icons.water,
-                    color: Colors.blue,
-                    size: iconSize,
-                  ),
-                  7),
-              // const SizedBox(width: 20),
-              singleIssue(
-                  Icon(
-                    Icons.landscape,
+                    Icons.favorite_sharp,
                     color: Colors.green,
                     size: iconSize,
                   ),
                   21),
-              // const SizedBox(width: 5),
+              singleIssue(
+                  Icon(
+                    Icons.apartment,
+                    color: Colors.blue,
+                    size: iconSize,
+                  ),
+                  7),
+              singleIssue(
+                  Icon(
+                    Icons.redeem,
+                    color: Colors.purple,
+                    size: iconSize,
+                  ),
+                  0),
+              singleIssue(
+                  Icon(
+                    Icons.landscape,
+                    color: Colors.grey,
+                    size: iconSize,
+                  ),
+                  7),
             ],
           ),
         ],
       ),
     );
   }
+
+  Widget singleIssue(Icon icon, int value) => Row(
+        children: [
+          icon,
+          const SizedBox(width: 5),
+          Text(
+            value.toString(),
+            style: const TextStyle(fontSize: 13, color: Colors.black),
+          ),
+        ],
+      );
 }

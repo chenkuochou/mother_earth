@@ -18,8 +18,8 @@ class SliderContainer extends StatelessWidget {
     final double progressSliderHeight =
         bgHeight - groupPadding * 2 - groupTitleHeight - groupTitleTopPadding;
 
-    return Container(
-      color: Colors.grey,
+    return SizedBox(
+      // color: Colors.grey[300],
       height: bgHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

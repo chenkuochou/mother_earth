@@ -10,20 +10,23 @@ class ChallengePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) => ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Center(child: myText('Pollution', size: 18, bold: true)),
-          ),
-          SliderContainer(
-            groupList: [
-              ref.read(pollutionProvider).sublist(0, 1),
-              ref.read(pollutionProvider)
-            ],
-            constraints: constraints,
-          ),
-        ],
+      builder: (BuildContext context, BoxConstraints constraints) => Container(
+        color: Colors.grey[300],
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Center(child: myText('Pollution', size: 18, bold: true)),
+            ),
+            SliderContainer(
+              groupList: [
+                ref.read(pollutionProvider).sublist(0, 1),
+                ref.read(pollutionProvider)
+              ],
+              constraints: constraints,
+            ),
+          ],
+        ),
       ),
     );
   }

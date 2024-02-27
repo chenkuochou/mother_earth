@@ -51,40 +51,41 @@ class _LayoutPageState extends State<LayoutPage> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        // height: 60,
-        backgroundColor: Colors.white,
-        indicatorColor: Colors.grey,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        onDestinationSelected: (int index) {
-          HapticFeedback.selectionClick();
-          setState(() {
-            pageIndex = index;
-          });
-        },
-        selectedIndex: pageIndex,
-
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.sports_esports, size: 28),
-            icon: Icon(Icons.sports_esports_outlined, size: 28),
-            label: 'Challenges',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.construction),
-            icon: Icon(
-              Icons.construction_outlined,
+      bottomNavigationBar: SafeArea(
+        child: NavigationBar(
+          height: 60,
+          backgroundColor: Colors.white,
+          indicatorColor: Colors.grey,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          onDestinationSelected: (int index) {
+            HapticFeedback.selectionClick();
+            setState(() {
+              pageIndex = index;
+            });
+          },
+          selectedIndex: pageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.sports_esports, size: 28),
+              icon: Icon(Icons.sports_esports_outlined, size: 28),
+              label: 'Challenges',
             ),
-            label: 'Development',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.military_tech),
-            icon: Icon(
-              Icons.military_tech_outlined,
+            NavigationDestination(
+              selectedIcon: Icon(Icons.construction),
+              icon: Icon(
+                Icons.construction_outlined,
+              ),
+              label: 'Development',
             ),
-            label: 'Achievement',
-          ),
-        ],
+            NavigationDestination(
+              selectedIcon: Icon(Icons.military_tech),
+              icon: Icon(
+                Icons.military_tech_outlined,
+              ),
+              label: 'Achievement',
+            ),
+          ],
+        ),
       ),
     );
   }

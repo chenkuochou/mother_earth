@@ -29,10 +29,14 @@ Future<void> main() async {
       child: MaterialApp(
         title: 'Mother Earth',
         theme: ThemeData(
+          navigationBarTheme: NavigationBarThemeData(
+            labelTextStyle: MaterialStatePropertyAll(GoogleFonts.ubuntuMono()),
+          ),
           textTheme: TextTheme(
             bodyMedium: GoogleFonts.ubuntuMono(
                 // fontSize: 9,
                 ),
+            labelSmall: GoogleFonts.ubuntuMono(),
           ),
         ),
         debugShowCheckedModeBanner: false,
