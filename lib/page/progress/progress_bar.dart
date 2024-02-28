@@ -3,14 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar(
-    this.listenable,
-    this.notifier, 
-    this.index, {
-    Key? key,
-  }) : super(key: key);
+      {super.key,
+      required this.listenable,
+      required this.notifier,
+      required this.index,
+      required this.isActive,});
+  
   final ProviderListenable listenable;
   final ProviderListenable notifier;
   final int index;
+  final bool isActive;
+
 
   @override
   ConsumerState createState() => _ProgressBarState();
@@ -19,13 +22,13 @@ class ProgressBar extends ConsumerStatefulWidget {
 class _ProgressBarState extends ConsumerState<ProgressBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  bool isActive = false;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
+      // duration * gift updates
       duration: ref.read(widget.listenable)[widget.index].currentDuration,
       lowerBound: 0,
     );
@@ -57,46 +60,39 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       builder: (_, __) {
         double value = _animationController.value;
 
-        if (isActive) {
+        if (widget.isActive) {
           _animationController.forward();
         } else {
           _animationController.stop();
         }
 
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              isActive = !isActive;
-            });
-          },
-          child: ClipRRect(
-            borderRadius:
-                const BorderRadius.vertical(bottom: Radius.circular(10)),
-            child: Stack(
-              children: [
-                LinearProgressIndicator(
-                  minHeight: 22,
-                  value: value,
-                  color: Colors.green,
-                  backgroundColor: Colors.white70,
+        return ClipRRect(
+          borderRadius:
+              const BorderRadius.vertical(bottom: Radius.circular(10)),
+          child: Stack(
+            children: [
+              LinearProgressIndicator(
+                minHeight: 22,
+                value: value,
+                color: Colors.green,
+                backgroundColor: Colors.white70,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

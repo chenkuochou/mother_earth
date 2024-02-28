@@ -15,7 +15,7 @@ class ChallengePage extends ConsumerWidget {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 5),
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
               child: Center(child: myText('Pollution', size: 18, bold: true)),
             ),
             ProgressSlider(

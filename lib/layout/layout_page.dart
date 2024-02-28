@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mother_earth/layout/app_bar_flexible.dart';
+import 'package:mother_earth/layout/app_bar_navigation.dart';
 import 'package:mother_earth/page/challenge_page.dart';
 import 'package:mother_earth/layout/app_bar_bottom.dart';
 
@@ -52,42 +53,14 @@ class _LayoutPageState extends State<LayoutPage> {
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: 0,
-        height: 60,
-        backgroundColor: const Color(0xFFE6DBCA),
-        indicatorColor: Colors.grey,
-        indicatorShape: const CircleBorder(),
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        onDestinationSelected: (int index) {
-          HapticFeedback.selectionClick();
+      bottomNavigationBar: AppBarNavigation(
+        pageIndex: pageIndex,
+        onTap: (index) {
           setState(() {
             pageIndex = index;
+            HapticFeedback.selectionClick();
           });
         },
-        selectedIndex: pageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.sports_esports, size: 28),
-            icon: Icon(Icons.sports_esports_outlined, size: 28),
-            label: 'Challenges',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.construction),
-            icon: Icon(
-              Icons.construction_outlined,
-            ),
-            label: 'Development',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.military_tech),
-            icon: Icon(
-              Icons.military_tech_outlined,
-            ),
-            label: 'Achievement',
-          ),
-        ],
       ),
     );
   }

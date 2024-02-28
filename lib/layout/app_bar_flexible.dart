@@ -10,7 +10,7 @@ class AppBarFlexible extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
+        padding: const EdgeInsets.only(bottom: 50, left: 10, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

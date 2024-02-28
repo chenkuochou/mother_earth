@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/progress_model.dart';
+import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_group.dart';
-import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressSlider extends StatelessWidget {
   const ProgressSlider({
@@ -20,12 +19,12 @@ class ProgressSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double bgHeight = constraints.maxHeight * 0.25;
-    const double groupPadding = 8;
-    const double groupTitleHeight = 20;
+    const double bgHeight = 175; //constraints.maxHeight * 0.25;
+    const double groupPadding = 5;
+    const double groupTitleHeight = 15;
     const double groupTitleTopPadding = 5;
-    final double progressSliderHeight =
-        bgHeight - groupPadding * 2 - groupTitleHeight - groupTitleTopPadding;
+    const double progressGroupHeight =
+        bgHeight - groupTitleHeight - groupTitleTopPadding;
 
     return SizedBox(
       // color: const Color(0xFFE6DBCA).withOpacity(0.5),
@@ -34,7 +33,7 @@ class ProgressSlider extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: groupList.length,
         itemBuilder: (_, index) => Padding(
-          padding: const EdgeInsets.all(groupPadding),
+          padding: const EdgeInsets.symmetric(horizontal: groupPadding),
           child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7),
@@ -54,7 +53,7 @@ class ProgressSlider extends StatelessWidget {
                         )),
                   ),
                   SizedBox(
-                      height: progressSliderHeight,
+                      height: progressGroupHeight,
                       child: ProgressGroup(
                         list: groupList[index],
                         previousItems: countPreviousItems(index),

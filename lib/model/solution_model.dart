@@ -1,39 +1,38 @@
+import 'package:mother_earth/model/resource_model.dart';
+
 class ProgressModel {
   final String title;
   final Duration duration;
   final int? level;
-  final double gains;
+  final double gain;
   final String assetUrl;
   final double? progress;
-  final int? maxLevel;
+  // isActive
 
   ProgressModel({
     required this.title,
     required this.duration,
     this.level = 0,
-    required this.gains,
+    required this.gain,
     required this.assetUrl,
     this.progress = 0,
-    this.maxLevel = 999,
   });
 
   ProgressModel copyWith({
     String? title,
     Duration? duration,
     int? level,
-    double? gains,
+    double? gain,
     String? assetUrl,
     double? progress,
-    int? maxLevel,
   }) {
     return ProgressModel(
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
-      gains: gains ?? this.gains,
+      gain: gain ?? this.gain,
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
-      maxLevel: maxLevel ?? this.maxLevel,
     );
   }
 }
@@ -42,47 +41,44 @@ class SolutionModel extends ProgressModel {
   final Map<SolutionModel, int>? requiredSolution;
   final Map<DevelopmentModel, int>? requiredDevelopment;
   final Map<ResourceModel, double>? consumedResources;
-  final Map<GlobalIssueModel, double> outputs;
+  final Map<IssueModel, double> outputs;
 
   SolutionModel({
     required super.title,
     required super.duration,
     super.level,
-    required super.gains,
+    required super.gain,
     required super.assetUrl,
     this.requiredSolution,
     this.requiredDevelopment,
     this.consumedResources,
     required this.outputs,
     super.progress,
-    super.maxLevel,
   });
 
-  Duration get currentDuration => duration * (1 + gains * level!);
-  Duration get currentOutput => duration * (1 + gains * level!);
+  Duration get currentDuration => duration * (1 + gain * level!);
+  double get currentOutput => outputs.values.first * (1 + gain * level!);
 
   @override
   SolutionModel copyWith({
     String? title,
     Duration? duration,
     int? level,
-    double? gains,
+    double? gain,
     String? assetUrl,
     double? progress,
-    int? maxLevel,
     Map<SolutionModel, int>? requiredSolution,
     Map<DevelopmentModel, int>? requiredDevelopment,
     Map<ResourceModel, double>? consumedResources,
-    Map<GlobalIssueModel, double>? outputs,
+    Map<IssueModel, double>? outputs,
   }) {
     return SolutionModel(
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
-      gains: gains ?? this.gains,
+      gain: gain ?? this.gain,
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
-      maxLevel: maxLevel ?? this.maxLevel,
       requiredSolution: requiredSolution ?? this.requiredSolution,
       requiredDevelopment: requiredDevelopment ?? this.requiredDevelopment,
       consumedResources: consumedResources ?? this.consumedResources,
@@ -92,18 +88,3 @@ class SolutionModel extends ProgressModel {
 }
 
 class DevelopmentModel {}
-
-class ResourceModel {}
-
-class GlobalIssueModel extends ProgressModel {
-  final int tolerance;
-
-  GlobalIssueModel({
-    required this.tolerance,
-    required super.title,
-    required super.duration,
-    required super.gains,
-    required super.assetUrl,
-    super.progress,
-  });
-}
