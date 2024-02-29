@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/providers/solution_provider.dart';
 
 class AppBarBottom extends ConsumerWidget {
   const AppBarBottom({super.key});
@@ -43,7 +44,7 @@ class AppBarBottom extends ConsumerWidget {
                     color: Colors.amber,
                     size: iconSize,
                   ),
-                  11),
+                  ref.watch(pollutionProvider)[0].level!),
               singleIssue(
                   Icon(
                     Icons.rocket,

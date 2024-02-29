@@ -20,8 +20,8 @@ class ChallengePage extends ConsumerWidget {
             ),
             ProgressSlider(
               groupList: [
-                ref.read(pollutionProvider).sublist(0, 1),
-                ref.read(pollutionProvider).sublist(1, 2),
+                ref.read(pollutionProvider).sublist(0, 3),
+                ref.read(pollutionProvider).sublist(3),
               ],
               constraints: constraints,
               listenable: pollutionProvider,

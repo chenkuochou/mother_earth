@@ -8,10 +8,14 @@ final pollutionProvider =
 
 class PollutionNotifier extends Notifier<List<SolutionModel>> {
   @override
-  build() => [airRenewable, airEV];
+  build() => [airRenewable, airEV, airRegulation, waterReducing];
 
   void levelUp(int index) {
+    List<SolutionModel> newState = [...state];
+
     SolutionModel solution = state[index];
-    state[index] = solution.copyWith(level: solution.level! + 1);
+    newState[index] = solution.copyWith(level: solution.level! + 1);
+
+    state = newState;
   }
 }

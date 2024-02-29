@@ -23,26 +23,34 @@ class ProgressCard extends ConsumerStatefulWidget {
 class _ProgressCardState extends ConsumerState<ProgressCard> {
   bool isActive = false;
   late SolutionModel solution = ref.read(widget.listenable)[widget.index];
+  // Color? maskColor = Colors.grey[900];
+
+  // void updateColor() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     maskColor = null;
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        clickable()
-            ? setState(() {
-                isActive = !isActive;
-                HapticFeedback.selectionClick();
-              })
-            : null;
+        setState(() {
+          isActive = !isActive;
+          HapticFeedback.selectionClick();
+        });
       },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey[400],
           borderRadius: BorderRadius.circular(10),
-          // border: Border.all(
-          //     color: Colors.greenAccent,
-          //     width: 3,
-          //     strokeAlign: BorderSide.strokeAlignOutside),
+          border: isActive
+              ? Border.all(
+                  color: Colors.greenAccent,
+                  width: 3,
+                  strokeAlign: BorderSide.strokeAlignOutside)
+              : null,
         ),
         width: 100,
         child: LayoutBuilder(builder: (_, constraints) {
@@ -61,18 +69,33 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               ),
               Expanded(
                   child: Image.asset(
-                'assets/img/${solution.assetUrl}',
-                color: clickable() ? null : Colors.grey[900],
+                'assets/img/${solution.assetUrl}.png',
+                color: clickable()
+                // ref
+                //             .watch(widget.listenable)[widget.index]
+                //             .requiredSolution ==
+                //         null
+                //     ? null
+                //     : ref
+                //                 .watch(solution.requiredSolution!.keys.first)[0]
+                //                 .level! >=
+                //             solution.requiredSolution!.values.first
+                        ? null
+                        : Colors.grey[900],
               )),
-              const Center(
-                child: Text('2'),
+              Center(
+                child: Text(ref
+                    .watch(widget.listenable)[widget.index]
+                    .level
+                    .toString()),
               ),
               const SizedBox(height: 5),
               ProgressBar(
-                  listenable: widget.listenable,
-                  notifier: widget.notifier,
-                  index: widget.index,
-                  isActive: isActive),
+                listenable: widget.listenable,
+                notifier: widget.notifier,
+                index: widget.index,
+                isActive: isActive,
+              ),
             ],
           );
         }),
@@ -81,24 +104,32 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
   }
 
   bool clickable() {
-    Map<SolutionModel, int>? requiredSolution = solution.requiredSolution;
-    Map<DevelopmentModel, int>? requiredDevelopment =
-        solution.requiredDevelopment;
+    print('clikable');
+    Map<ProviderListenable, int>? requiredSolution = solution.requiredSolution;
+    // Map<DevelopmentModel, int>? requiredDevelopment =
+    //     solution.requiredDevelopment;
 
-    if (requiredSolution == null  
-    //  requiredDevelopment == null 
+    if (requiredSolution == null
+        // && requiredDevelopment == null
         ) {
       return true;
-    } else if (requiredSolution.keys.first.level! >=
+    }
+    // if (requiredSolution != null) {
+    if (ref.watch(requiredSolution.keys.first)[0].level! >=
         requiredSolution.values.first) {
+      // if (requiredDevelopment != null) {
+      //   if (requiredDevelopment.keys.first.level! >=
+      //       requiredDevelopment.values.first) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // }
       return true;
     }
-    // else if (requiredDevelopment.keys.first.level! >=
-    //     requiredDevelopment.values.first) {
-    //   return true;
+    return false;
+
     // }
-    else {
-      return false;
-    }
+    // return true;
   }
 }

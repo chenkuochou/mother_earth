@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
-  const ProgressBar(
-      {super.key,
-      required this.listenable,
-      required this.notifier,
-      required this.index,
-      required this.isActive,});
-  
+  const ProgressBar({
+    super.key,
+    required this.listenable,
+    required this.notifier,
+    required this.index,
+    required this.isActive,
+  });
+
   final ProviderListenable listenable;
   final ProviderListenable notifier;
   final int index;
   final bool isActive;
-
 
   @override
   ConsumerState createState() => _ProgressBarState();
