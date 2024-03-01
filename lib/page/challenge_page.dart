@@ -41,8 +41,7 @@ class ChallengePage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  MyLinearProgress(
-                      listenable: issueProvider, index: 0, minHeight: 10),
+                   MyLinearProgressTimer(listenable: issueProvider),
                 ],
               ),
             ),

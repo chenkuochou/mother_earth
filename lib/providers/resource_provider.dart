@@ -15,7 +15,7 @@ class IssueProviderNotifier extends Notifier<List<IssueModel>> {
     return [
       IssueModel(
         title: 'Pollution',
-        value: 250,
+        value: 1,
         maxValue: 500,
       ),
     ];

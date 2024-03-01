@@ -25,6 +25,6 @@ class IssueModel extends ConsumableModel {
   IssueModel({
     required super.title,
     required super.value,
-   required this.maxValue,
+    required this.maxValue,
   });
 }
