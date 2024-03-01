@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/model/solution_model.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar({
@@ -22,6 +23,7 @@ class ProgressBar extends ConsumerStatefulWidget {
 class _ProgressBarState extends ConsumerState<ProgressBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late SolutionModel solution = ref.read(widget.listenable)[widget.index];
 
   @override
   void initState() {
@@ -29,15 +31,14 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     _animationController = AnimationController(
       vsync: this,
       // duration * gift updates
-      duration: ref.read(widget.listenable)[widget.index].currentDuration,
+      duration: solution.currentDuration,
       lowerBound: 0,
     );
     Future(() {
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          print('producing outputs');
-
           ref.read(widget.notifier).levelUp(widget.index);
+          ref.read(solution.output);
 
           _animationController.duration =
               ref.read(widget.listenable)[widget.index].currentDuration;

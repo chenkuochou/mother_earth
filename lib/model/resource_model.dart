@@ -20,5 +20,11 @@ class ResourceModel extends ConsumableModel {
 }
 
 class IssueModel extends ConsumableModel {
-  IssueModel({required super.title, required super.value});
+  final double maxValue;
+
+  IssueModel({
+    required super.title,
+    required super.value,
+   required this.maxValue,
+  });
 }

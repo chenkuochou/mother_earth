@@ -23,24 +23,16 @@ class ProgressCard extends ConsumerStatefulWidget {
 class _ProgressCardState extends ConsumerState<ProgressCard> {
   bool isActive = false;
   late SolutionModel solution = ref.read(widget.listenable)[widget.index];
-  // Color? maskColor = Colors.grey[900];
-
-  // void updateColor() {
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     maskColor = null;
-  //     setState(() {});
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isActive = !isActive;
-          HapticFeedback.selectionClick();
-        });
-      },
+      onTap: () => isClickable()
+          ? setState(() {
+              isActive = !isActive;
+              HapticFeedback.selectionClick();
+            })
+          : null,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey[400],
@@ -70,18 +62,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               Expanded(
                   child: Image.asset(
                 'assets/img/${solution.assetUrl}.png',
-                color: clickable()
-                // ref
-                //             .watch(widget.listenable)[widget.index]
-                //             .requiredSolution ==
-                //         null
-                //     ? null
-                //     : ref
-                //                 .watch(solution.requiredSolution!.keys.first)[0]
-                //                 .level! >=
-                //             solution.requiredSolution!.values.first
-                        ? null
-                        : Colors.grey[900],
+                color: isClickable() ? null : Colors.grey[900],
               )),
               Center(
                 child: Text(ref
@@ -103,33 +84,35 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     );
   }
 
-  bool clickable() {
-    print('clikable');
-    Map<ProviderListenable, int>? requiredSolution = solution.requiredSolution;
-    // Map<DevelopmentModel, int>? requiredDevelopment =
-    //     solution.requiredDevelopment;
+  bool isClickable() {
+    // final Map<ProviderListenable, List<int>>? reqSolMap =
+    //     solution.requiredSolMap;
+    // final Map<ProviderListenable, List<int>>? reqDevMap =
+    //     solution.requiredDevMap;
 
-    if (requiredSolution == null
-        // && requiredDevelopment == null
-        ) {
+    if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
       return true;
     }
-    // if (requiredSolution != null) {
-    if (ref.watch(requiredSolution.keys.first)[0].level! >=
-        requiredSolution.values.first) {
-      // if (requiredDevelopment != null) {
-      //   if (requiredDevelopment.keys.first.level! >=
-      //       requiredDevelopment.values.first) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // }
-      return true;
+
+    if (solution.requiredSolMap != null) {
+      if (ref
+              .watch(solution.requiredSolution!)[solution.requiredSolutionIndex]
+              .level >=
+          solution.requiredSolutionLevel) {
+        return true;
+      }
     }
+
+    if (solution.requiredDevMap != null) {
+      if (ref
+              .watch(solution.requiredDevelopment!)[
+                  solution.requiredDevelopmentIndex]
+              .level >=
+          solution.requiredDevelopmentLevel) {
+        return true;
+      }
+    }
+
     return false;
-
-    // }
-    // return true;
   }
 }

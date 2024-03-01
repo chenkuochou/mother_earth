@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/resource_model.dart';
 
 class ProgressModel {
   final String title;
@@ -42,10 +41,12 @@ class ProgressModel {
 }
 
 class SolutionModel extends ProgressModel {
-  final Map<ProviderListenable, int>? requiredSolution;
-  final Map<DevelopmentModel, int>? requiredDevelopment;
-  final Map<ResourceModel, double>? consumedResources;
-  final Map<IssueModel, double> outputs;
+  final Map<ProviderListenable, List<int>>?
+      requiredSolMap; //{provider:[index,level]}
+  final Map<ProviderListenable, List<int>>? requiredDevMap;
+  final Map<ProviderListenable, List<double>>?
+      consumedResMap; //{provider:[index,value]}
+  final Map<ProviderListenable, List<double>> outputMap;
 
   SolutionModel({
     required super.title,
@@ -55,14 +56,26 @@ class SolutionModel extends ProgressModel {
     required super.assetUrl,
     super.progress,
     super.isActive,
-    this.requiredSolution,
-    this.requiredDevelopment,
-    this.consumedResources,
-    required this.outputs,
+    this.requiredSolMap,
+    this.requiredDevMap,
+    this.consumedResMap,
+    required this.outputMap,
   });
 
+  ProviderListenable? get requiredSolution => requiredSolMap?.keys.first;
+  int? get requiredSolutionIndex => requiredSolMap?.values.first[0];
+  int? get requiredSolutionLevel => requiredSolMap?.values.first[1];
+  ProviderListenable? get requiredDevelopment => requiredDevMap?.keys.first;
+  int? get requiredDevelopmentIndex => requiredDevMap?.values.first[0];
+  int? get requiredDevelopmentLevel => requiredDevMap?.values.first[1];
+  ProviderListenable get output => outputMap.keys.first;
+  double? get consumedResourcesIndex => consumedResMap?.values.first[0];
+  double? get consumedResourcesLevel => consumedResMap?.values.first[1];
+
   Duration get currentDuration => duration * (1 + gain * level!);
-  double get currentOutput => outputs.values.first * (1 + gain * level!);
+  double get currentOutputIndex => outputMap.values.first[0];
+  double get currentOutputValue =>
+      outputMap.values.first[1] * (1 + gain * level!);
 
   @override
   SolutionModel copyWith({
@@ -73,10 +86,10 @@ class SolutionModel extends ProgressModel {
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<ProviderListenable, int>? requiredSolution,
-    Map<DevelopmentModel, int>? requiredDevelopment,
-    Map<ResourceModel, double>? consumedResources,
-    Map<IssueModel, double>? outputs,
+    Map<ProviderListenable, List<int>>? requiredSolution,
+    Map<ProviderListenable, List<int>>? requiredDevelopment,
+    Map<ProviderListenable, List<double>>? consumedResources,
+    Map<ProviderListenable, List<double>>? outputs,
   }) {
     return SolutionModel(
       title: title ?? this.title,
@@ -86,16 +99,16 @@ class SolutionModel extends ProgressModel {
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
-      requiredSolution: requiredSolution ?? this.requiredSolution,
-      requiredDevelopment: requiredDevelopment ?? this.requiredDevelopment,
-      consumedResources: consumedResources ?? this.consumedResources,
-      outputs: outputs ?? this.outputs,
+      requiredSolMap: requiredSolution ?? requiredSolMap,
+      requiredDevMap: requiredDevelopment ?? requiredDevMap,
+      consumedResMap: consumedResources ?? consumedResMap,
+      outputMap: outputs ?? outputMap,
     );
   }
 }
 
 class DevelopmentModel extends ProgressModel {
-  final Map<ResourceModel, double> outputs;
+  final Map<ProviderListenable, double> outputs;
 
   DevelopmentModel({
     required super.title,
@@ -117,7 +130,7 @@ class DevelopmentModel extends ProgressModel {
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<ResourceModel, double>? outputs,
+    Map<ProviderListenable, double>? outputs,
   }) {
     return DevelopmentModel(
       title: title ?? this.title,
