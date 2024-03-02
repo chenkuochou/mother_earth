@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/solution_model.dart';
+import 'package:mother_earth/providers/resource_provider.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar({
@@ -38,7 +39,12 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           ref.read(widget.notifier).levelUp(widget.index);
-          ref.read(solution.output);
+          ref
+              .read(issueProvider.notifier)
+              .updateLevel(solution.currentOutputIndex.toInt());
+          ref
+              .read(issueProvider.notifier)
+              .updatePositive(solution.currentOutputValue, 1);
 
           _animationController.duration =
               ref.read(widget.listenable)[widget.index].currentDuration;

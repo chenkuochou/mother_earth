@@ -61,6 +61,6 @@ final SolutionModel waterReducing = SolutionModel(
   gain: 1,
   assetUrl: 'waterReduce',
   outputMap: {
-    issueProvider: [1, 1]
+    issueProvider: [1, 2]
   },
 );

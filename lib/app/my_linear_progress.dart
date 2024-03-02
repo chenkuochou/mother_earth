@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/resource_model.dart';
 
 class MyLinearProgress extends ConsumerWidget {
   const MyLinearProgress({
@@ -28,10 +27,14 @@ class MyLinearProgress extends ConsumerWidget {
   }
 }
 
-
 class MyLinearProgressTimer extends ConsumerStatefulWidget {
-  const MyLinearProgressTimer({required this.listenable, super.key});
+  const MyLinearProgressTimer({
+    required this.listenable,
+    required this.index,
+    super.key,
+  });
   final ProviderListenable listenable;
+  final int index;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -39,22 +42,18 @@ class MyLinearProgressTimer extends ConsumerStatefulWidget {
 }
 
 class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
-// final IssueModel issue = 
-
-  late double progress = ref.watch(widget.listenable).value;
-  late double issue;
-  late double solution;
-  late double changes = issue + solution;
+  late double progress = ref.read(widget.listenable)[widget.index].value;
 
   void startTimer() {
     Timer.periodic(
       const Duration(seconds: 1),
       (Timer timer) => setState(
         () {
-          if (progress == 0) {
-            // timer.cancel();
-          } else {
-            progress += changes;
+          print(ref.watch(widget.listenable)[widget.index].changes);
+          progress += ref.watch(widget.listenable)[widget.index].changes;
+          if (progress == 1) {
+            // game end msg
+            timer.cancel();
           }
         },
       ),
