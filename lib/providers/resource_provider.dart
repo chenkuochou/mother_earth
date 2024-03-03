@@ -18,23 +18,25 @@ class IssueProviderNotifier extends Notifier<List<IssueModel>> {
         negative: 2,
         maxValue: 2000,
       ),
-IssueModel(
+      IssueModel(
         title: 'Pollution',
         negative: 1.5,
         maxValue: 2000,
-      ),    ];
+      ),
+    ];
   }
 
   Future<void> updatePositive(double value, int index) async {
     List<IssueModel> newState = [...state];
 
     IssueModel issue = newState[index];
-    newState[index] = issue.copyWith(positive: value);
+    newState[index] = issue.copyWith(positive: issue.value! + value);
 
     // ignore: await_only_futures
     state = await newState;
   }
-Future<void> updateLevel(int index) async {
+
+  Future<void> updateLevel(int index) async {
     List<IssueModel> newState = [...state];
 
     IssueModel issue = newState[index];

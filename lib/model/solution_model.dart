@@ -41,12 +41,11 @@ class ProgressModel {
 }
 
 class SolutionModel extends ProgressModel {
-  final Map<ProviderListenable, List<int>>?
-      requiredSolMap; //{provider:[index,level]}
-  final Map<ProviderListenable, List<int>>? requiredDevMap;
-  final Map<ProviderListenable, List<double>>?
-      consumedResMap; //{provider:[index,value]}
-  final Map<ProviderListenable, List<double>> outputMap;
+  // [title,level]
+  final Map<String, int>? requiredSolMap;
+  final Map<String, int>? requiredDevMap;
+  final Map<String, double>? consumedResMap;
+  final Map<String, double> outputMap;
 
   SolutionModel({
     required super.title,
@@ -62,20 +61,16 @@ class SolutionModel extends ProgressModel {
     required this.outputMap,
   });
 
-  ProviderListenable? get requiredSolution => requiredSolMap?.keys.first;
-  int? get requiredSolutionIndex => requiredSolMap?.values.first[0];
-  int? get requiredSolutionLevel => requiredSolMap?.values.first[1];
+  ProviderListenable? get requiredSolution =>stringToListenable(requiredSolMap?.keys.first) ;
+  int? get requiredSolutionLevel => requiredSolMap?.values.first;
   ProviderListenable? get requiredDevelopment => requiredDevMap?.keys.first;
-  int? get requiredDevelopmentIndex => requiredDevMap?.values.first[0];
-  int? get requiredDevelopmentLevel => requiredDevMap?.values.first[1];
-  ProviderListenable get output => outputMap.keys.first;
-  double? get consumedResourcesIndex => consumedResMap?.values.first[0];
-  double? get consumedResourcesLevel => consumedResMap?.values.first[1];
+  int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
+  ProviderListenable? get consumedResources => consumedResMap?.keys.first;
+  double? get consumedResourcesValue => consumedResMap?.values.first;
 
   Duration get currentDuration => duration * (1 + gain * level!);
-  double get currentOutputIndex => outputMap.values.first[0];
-  double get currentOutputValue =>
-      outputMap.values.first[1] * (1 + gain * level!);
+  ProviderListenable get currentOutputIndex => outputMap.keys.first;
+  double get currentOutputValue => outputMap.values.first * (1 + gain * level!);
 
   @override
   SolutionModel copyWith({
@@ -86,10 +81,10 @@ class SolutionModel extends ProgressModel {
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<ProviderListenable, List<int>>? requiredSolution,
-    Map<ProviderListenable, List<int>>? requiredDevelopment,
-    Map<ProviderListenable, List<double>>? consumedResources,
-    Map<ProviderListenable, List<double>>? outputs,
+    Map<String, int>? requiredSolMap,
+    Map<String, int>? requiredDevMap,
+    Map<String, double>? consumedResMap,
+    Map<String, double>? outputs,
   }) {
     return SolutionModel(
       title: title ?? this.title,
@@ -99,12 +94,17 @@ class SolutionModel extends ProgressModel {
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
-      requiredSolMap: requiredSolution ?? requiredSolMap,
-      requiredDevMap: requiredDevelopment ?? requiredDevMap,
-      consumedResMap: consumedResources ?? consumedResMap,
+      requiredSolMap: requiredSolMap ?? requiredSolMap,
+      requiredDevMap: requiredDevMap ?? requiredDevMap,
+      consumedResMap: consumedResMap ?? consumedResMap,
       outputMap: outputs ?? outputMap,
     );
   }
+
+  ProviderListenable? stringToListenable(String? string) => switch (string) {
+        'requiredSolution' => requiredSolution!,
+        _ => null,
+      };
 }
 
 class DevelopmentModel extends ProgressModel {
