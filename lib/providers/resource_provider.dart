@@ -6,31 +6,32 @@ final resourceProvider = StateProvider<List<double>>((ref) {
   return [0, 0, 0, 0, 0, 0];
 });
 
-final issueProvider = NotifierProvider<IssueProviderNotifier, List<IssueModel>>(
-    IssueProviderNotifier.new);
+final challengeProvider =
+    NotifierProvider<ChallengeProviderNotifier, List<ChallengeModel>>(
+        ChallengeProviderNotifier.new);
 
-class IssueProviderNotifier extends Notifier<List<IssueModel>> {
+class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
   @override
   build() {
-    print('issueProvider');
+    print('challengeProvider');
     return [climateChange, pollution];
   }
 
   Future<void> updatePositive(double value, int index) async {
-    List<IssueModel> newState = [...state];
+    List<ChallengeModel> newState = [...state];
 
-    IssueModel issue = newState[index];
-    newState[index] = issue.copyWith(positive: issue.value! + value);
+    ChallengeModel challenge = newState[index];
+    newState[index] = challenge.copyWith(positive: challenge.value! + value);
 
     // ignore: await_only_futures
     state = await newState;
   }
 
   Future<void> updateLevel(int index) async {
-    List<IssueModel> newState = [...state];
+    List<ChallengeModel> newState = [...state];
 
-    IssueModel issue = newState[index];
-    newState[index] = issue.copyWith(level: issue.level! + 1);
+    ChallengeModel challenge = newState[index];
+    newState[index] = challenge.copyWith(level: challenge.level! + 1);
 
     // ignore: await_only_futures
     state = await newState;

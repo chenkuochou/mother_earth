@@ -38,42 +38,42 @@ class AppBarBottom extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              singleIssue(
+              singleResource(
                   Icon(
                     Icons.paid,
                     color: Colors.amber,
                     size: iconSize,
                   ),
                   ref.watch(pollutionProvider)[0].level!),
-              singleIssue(
+              singleResource(
                   Icon(
                     Icons.rocket,
                     color: Colors.red,
                     size: iconSize,
                   ),
                   11),
-              singleIssue(
+              singleResource(
                   Icon(
                     Icons.favorite_sharp,
                     color: Colors.green,
                     size: iconSize,
                   ),
                   21),
-              singleIssue(
+              singleResource(
                   Icon(
                     Icons.apartment,
                     color: Colors.blue,
                     size: iconSize,
                   ),
                   7),
-              singleIssue(
+              singleResource(
                   Icon(
                     Icons.redeem,
                     color: Colors.purple,
                     size: iconSize,
                   ),
                   0),
-              // singleIssue(
+              // singleResource(
               //     Icon(
               //       Icons.landscape,
               //       color: Colors.grey,
@@ -87,7 +87,7 @@ class AppBarBottom extends ConsumerWidget {
     );
   }
 
-  Widget singleIssue(Icon icon, int value) => Row(
+  Widget singleResource(Icon icon, int value) => Row(
         children: [
           icon,
           const SizedBox(width: 5),

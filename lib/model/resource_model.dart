@@ -23,13 +23,13 @@ class ResourceModel extends ConsumableModel {
   });
 }
 
-class IssueModel extends ConsumableModel {
+class ChallengeModel extends ConsumableModel {
   final int? level;
   final double? positive;
   final double negative;
   final double maxValue;
 
-  IssueModel({
+  ChallengeModel({
     required super.title,
     super.value,
     this.level = 1,
@@ -38,9 +38,9 @@ class IssueModel extends ConsumableModel {
     required this.maxValue,
   });
 
-  double get changes => -(positive! - negative * level!)/maxValue;
+  double get changes => -(positive! - negative * level!) / maxValue;
 
-  IssueModel copyWith({
+  ChallengeModel copyWith({
     String? title,
     double? value,
     int? level,
@@ -48,7 +48,7 @@ class IssueModel extends ConsumableModel {
     double? negative,
     double? maxValue,
   }) {
-    return IssueModel(
+    return ChallengeModel(
       title: title ?? this.title,
       value: value ?? this.value,
       level: level ?? this.level,
