@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/data/resource_data.dart';
 import 'package:mother_earth/model/resource_model.dart';
 
 final resourceProvider = StateProvider<List<double>>((ref) {
@@ -12,18 +13,7 @@ class IssueProviderNotifier extends Notifier<List<IssueModel>> {
   @override
   build() {
     print('issueProvider');
-    return [
-      IssueModel(
-        title: 'Climate Change',
-        negative: 2,
-        maxValue: 2000,
-      ),
-      IssueModel(
-        title: 'Pollution',
-        negative: 1.5,
-        maxValue: 2000,
-      ),
-    ];
+    return [climateChange, pollution];
   }
 
   Future<void> updatePositive(double value, int index) async {

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/model/listenable_item.dart';
 
 class ProgressModel {
   final String title;
@@ -42,10 +43,10 @@ class ProgressModel {
 
 class SolutionModel extends ProgressModel {
   // [title,level]
-  final Map<String, int>? requiredSolMap;
-  final Map<String, int>? requiredDevMap;
-  final Map<String, double>? consumedResMap;
-  final Map<String, double> outputMap;
+  final Map<ListenableItem, int>? requiredSolMap;
+  final Map<ListenableItem, int>? requiredDevMap;
+  final Map<ListenableItem, double>? consumedResMap;
+  final Map<ListenableItem, double> outputMap;
 
   SolutionModel({
     required super.title,
@@ -61,15 +62,19 @@ class SolutionModel extends ProgressModel {
     required this.outputMap,
   });
 
-  ProviderListenable? get requiredSolution =>stringToListenable(requiredSolMap?.keys.first) ;
+  int? get requiredSolutionIndex =>
+      requiredSolMap?.keys.first.notifierIndex;
   int? get requiredSolutionLevel => requiredSolMap?.values.first;
-  ProviderListenable? get requiredDevelopment => requiredDevMap?.keys.first;
+  int? get requiredDevelopmentIndex =>
+      requiredDevMap?.keys.first.notifierIndex;
   int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
-  ProviderListenable? get consumedResources => consumedResMap?.keys.first;
+  int? get consumedResourcesIndex =>
+      consumedResMap?.keys.first.notifierIndex;
   double? get consumedResourcesValue => consumedResMap?.values.first;
 
   Duration get currentDuration => duration * (1 + gain * level!);
-  ProviderListenable get currentOutputIndex => outputMap.keys.first;
+  int get currentOutputIndex =>
+      outputMap.keys.first.notifierIndex;
   double get currentOutputValue => outputMap.values.first * (1 + gain * level!);
 
   @override
@@ -81,10 +86,10 @@ class SolutionModel extends ProgressModel {
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<String, int>? requiredSolMap,
-    Map<String, int>? requiredDevMap,
-    Map<String, double>? consumedResMap,
-    Map<String, double>? outputs,
+    Map<ListenableItem, int>? requiredSolMap,
+    Map<ListenableItem, int>? requiredDevMap,
+    Map<ListenableItem, double>? consumedResMap,
+    Map<ListenableItem, double>? outputs,
   }) {
     return SolutionModel(
       title: title ?? this.title,
@@ -100,15 +105,10 @@ class SolutionModel extends ProgressModel {
       outputMap: outputs ?? outputMap,
     );
   }
-
-  ProviderListenable? stringToListenable(String? string) => switch (string) {
-        'requiredSolution' => requiredSolution!,
-        _ => null,
-      };
 }
 
 class DevelopmentModel extends ProgressModel {
-  final Map<ProviderListenable, double> outputs;
+  final Map<ListenableItem, double>? outputs;
 
   DevelopmentModel({
     required super.title,
@@ -118,7 +118,7 @@ class DevelopmentModel extends ProgressModel {
     required super.assetUrl,
     super.progress,
     super.isActive,
-    required this.outputs,
+     this.outputs,
   });
 
   @override
@@ -130,7 +130,7 @@ class DevelopmentModel extends ProgressModel {
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<ProviderListenable, double>? outputs,
+    Map<ListenableItem, double>? outputs,
   }) {
     return DevelopmentModel(
       title: title ?? this.title,

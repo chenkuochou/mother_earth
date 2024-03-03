@@ -41,7 +41,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
           ref.read(widget.notifier).levelUp(widget.index);
           ref
               .read(issueProvider.notifier)
-              .updateLevel(solution.currentOutputIndex.toInt());
+              .updateLevel(solution.currentOutputIndex);
           ref
               .read(issueProvider.notifier)
               .updatePositive(solution.currentOutputValue, 1);

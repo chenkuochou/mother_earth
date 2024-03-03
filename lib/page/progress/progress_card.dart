@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
+import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
@@ -96,7 +97,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
     if (solution.requiredSolMap != null) {
       if (ref
-              .watch(solution.requiredSolution!)[solution.requiredSolutionIndex]
+              .watch(widget.listenable)[solution.requiredSolutionIndex]
               .level >=
           solution.requiredSolutionLevel) {
         return true;
@@ -105,10 +106,10 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
     if (solution.requiredDevMap != null) {
       if (ref
-              .watch(solution.requiredDevelopment!)[
-                  solution.requiredDevelopmentIndex]
-              .level >=
-          solution.requiredDevelopmentLevel) {
+              .watch(developmentProvider)[
+                  solution.requiredDevelopmentIndex!]
+              .level! >=
+          solution.requiredDevelopmentLevel!) {
         return true;
       }
     }

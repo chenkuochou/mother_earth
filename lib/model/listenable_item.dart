@@ -1,16 +1,20 @@
-import 'package:mother_earth/data/solution_data.dart';
 
 enum ListenableItem {
   polAirRenewable,
   polAirEV,
   polAirRegulation,
-  polWaterReducing
+  polWaterReducing,
+
+  chaClimateChange,
+  challengePollution,
   ;
 
-   get provider => switch (this) {
-        ListenableItem.polAirRenewable => airRenewable,
-        ListenableItem.polAirEV => airEV,
-        ListenableItem.polAirRegulation => airRegulation,
-        ListenableItem.polWaterReducing => waterReducing,
+  get notifierIndex => switch (this) {
+        ListenableItem.polAirRenewable => 0,
+        ListenableItem.polAirEV => 1,
+        ListenableItem.polAirRegulation => 2,
+        ListenableItem.polWaterReducing => 3,
+        ListenableItem.chaClimateChange => 0,
+        ListenableItem.challengePollution => 1,
       };
 }

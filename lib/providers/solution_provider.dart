@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/data/solution_data.dart';
 import 'package:mother_earth/model/solution_model.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
 
 final pollutionProvider =
     NotifierProvider<PollutionNotifier, List<SolutionModel>>(
@@ -21,3 +21,12 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   }
 }
 
+final developmentProvider = NotifierProvider<DevelopmentNotifier, List<DevelopmentModel>>(
+        DevelopmentNotifier.new);
+
+class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
+  @override
+   build() {
+    return [];
+  }
+}
