@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/solution_model.dart';
+import 'package:mother_earth/page/challenge_page.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
     super.key,
-    required this.listenable,
-    required this.notifier,
+    // required this.listenable,
+    // required this.notifier,
     required this.index,
   });
-  final ProviderListenable listenable;
-  final ProviderListenable notifier;
+  // final ProviderListenable listenable;
+  // final ProviderListenable notifier;
   final int index;
 
   @override
@@ -23,10 +24,40 @@ class ProgressCard extends ConsumerStatefulWidget {
 
 class _ProgressCardState extends ConsumerState<ProgressCard> {
   bool isActive = false;
-  late SolutionModel solution = ref.read(widget.listenable)[widget.index];
 
   @override
   Widget build(BuildContext context) {
+    final ProviderListenable listenable2 =
+        InheritedProviders.of(context).listenable;
+    final SolutionModel solution = ref.read(listenable2)[widget.index];
+
+    final ProviderListenable notifier2 =
+        InheritedProviders.of(context).notifier;
+
+    bool isClickable() {
+      if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
+        return true;
+      }
+
+      if (solution.requiredSolMap != null) {
+        if (ref.watch(listenable2)[solution.requiredSolutionIndex].level >=
+            solution.requiredSolutionLevel) {
+          return true;
+        }
+      }
+
+      if (solution.requiredDevMap != null) {
+        if (ref
+                .watch(developmentProvider)[solution.requiredDevelopmentIndex!]
+                .level! >=
+            solution.requiredDevelopmentLevel!) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     return GestureDetector(
       onTap: () => isClickable()
           ? setState(() {
@@ -66,15 +97,13 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 color: isClickable() ? null : Colors.grey[900],
               )),
               Center(
-                child: Text(ref
-                    .watch(widget.listenable)[widget.index]
-                    .level
-                    .toString()),
+                child:
+                    Text(ref.watch(listenable2)[widget.index].level.toString()),
               ),
               const SizedBox(height: 5),
               ProgressBar(
-                listenable: widget.listenable,
-                notifier: widget.notifier,
+                listenable: listenable2,
+                notifier: notifier2,
                 index: widget.index,
                 isActive: isActive,
               ),
@@ -83,37 +112,5 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
         }),
       ),
     );
-  }
-
-  bool isClickable() {
-    // final Map<ProviderListenable, List<int>>? reqSolMap =
-    //     solution.requiredSolMap;
-    // final Map<ProviderListenable, List<int>>? reqDevMap =
-    //     solution.requiredDevMap;
-
-    if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
-      return true;
-    }
-
-    if (solution.requiredSolMap != null) {
-      if (ref
-              .watch(widget.listenable)[solution.requiredSolutionIndex]
-              .level >=
-          solution.requiredSolutionLevel) {
-        return true;
-      }
-    }
-
-    if (solution.requiredDevMap != null) {
-      if (ref
-              .watch(developmentProvider)[
-                  solution.requiredDevelopmentIndex!]
-              .level! >=
-          solution.requiredDevelopmentLevel!) {
-        return true;
-      }
-    }
-
-    return false;
   }
 }

@@ -7,13 +7,13 @@ class ProgressGroup extends StatelessWidget {
     super.key,
     required this.list,
     required this.previousItems,
-    required this.listenable,
-    required this.notifier,
+    // required this.listenable,
+    // required this.notifier,
   });
   final List list;
   final int previousItems;
-  final ProviderListenable listenable;
-  final ProviderListenable notifier;
+  // final ProviderListenable listenable;
+  // final ProviderListenable notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class ProgressGroup extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ProgressCard(
-              listenable: listenable,
-              notifier: notifier,
+              // listenable: listenable,
+              // notifier: notifier,
               index: previousItems + index),
         );
       },
