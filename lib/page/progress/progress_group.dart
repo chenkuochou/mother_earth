@@ -20,8 +20,6 @@ class ProgressGroup extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ProgressCard(
-              // listenable: listenable,
-              // notifier: notifier,
               index: previousItems + index),
         );
       },

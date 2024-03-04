@@ -49,7 +49,7 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
       const Duration(seconds: 1),
       (Timer timer) => setState(
         () {
-          print(ref.watch(widget.listenable)[widget.index].changes);
+          // print(ref.watch(widget.listenable)[widget.index].changes);
           progress += ref.watch(widget.listenable)[widget.index].changes;
           if (progress == 1) {
             // game end msg
@@ -68,11 +68,30 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return LinearProgressIndicator(
-      value: progress,
-      color: Colors.green,
-      minHeight: 15,
-      backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
+    return Stack(
+      children: [
+        LinearProgressIndicator(
+          value: progress,
+          color: Colors.green,
+          minHeight: 20,
+          backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                '${(progress * 100).toStringAsFixed(3).toString()}%',
+                style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

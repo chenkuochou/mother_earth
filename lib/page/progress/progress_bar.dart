@@ -38,14 +38,19 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     Future(() {
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
+          // update solution level
+          
           ref.read(widget.notifier).levelUp(widget.index);
+          // update challenge level
           ref
               .read(challengeProvider.notifier)
               .updateLevel(solution.currentOutputIndex);
-          ref
-              .read(challengeProvider.notifier)
-              .updatePositive(solution.currentOutputValue, 1);
+          // update challenge positive
+          ref.read(challengeProvider.notifier).updatePositive(
+              index: solution.currentOutputIndex,
+              value: solution.currentOutputValue);
 
+          // increase solution duration & reset animation
           _animationController.duration =
               ref.read(widget.listenable)[widget.index].currentDuration;
           _animationController.repeat();

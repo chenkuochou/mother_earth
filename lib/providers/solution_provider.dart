@@ -11,6 +11,7 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   build() => [airRenewable, airEV, airRegulation, waterReducing];
 
   Future<void> levelUp(int index) async {
+    print(state.length);
     List<SolutionModel> newState = [...state];
 
     SolutionModel solution = newState[index];
@@ -21,12 +22,13 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   }
 }
 
-final developmentProvider = NotifierProvider<DevelopmentNotifier, List<DevelopmentModel>>(
+final developmentProvider =
+    NotifierProvider<DevelopmentNotifier, List<DevelopmentModel>>(
         DevelopmentNotifier.new);
 
 class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
   @override
-   build() {
+  build() {
     return [];
   }
 }

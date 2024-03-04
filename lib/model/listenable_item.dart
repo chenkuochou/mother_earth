@@ -1,4 +1,3 @@
-
 enum ListenableItem {
   polAirRenewable,
   polAirEV,
@@ -9,7 +8,7 @@ enum ListenableItem {
   challengePollution,
   ;
 
-  get notifierIndex => switch (this) {
+  get myIndex => switch (this) {
         ListenableItem.polAirRenewable => 0,
         ListenableItem.polAirEV => 1,
         ListenableItem.polAirRegulation => 2,

@@ -62,20 +62,19 @@ class SolutionModel extends ProgressModel {
     required this.outputMap,
   });
 
-  int? get requiredSolutionIndex =>
-      requiredSolMap?.keys.first.notifierIndex;
+  int? get requiredSolutionIndex => requiredSolMap?.keys.first.myIndex;
   int? get requiredSolutionLevel => requiredSolMap?.values.first;
-  int? get requiredDevelopmentIndex =>
-      requiredDevMap?.keys.first.notifierIndex;
+
+  int? get requiredDevelopmentIndex => requiredDevMap?.keys.first.myIndex;
   int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
-  int? get consumedResourcesIndex =>
-      consumedResMap?.keys.first.notifierIndex;
+
+  int? get consumedResourcesIndex => consumedResMap?.keys.first.myIndex;
   double? get consumedResourcesValue => consumedResMap?.values.first;
 
-  Duration get currentDuration => duration * (1 + gain * level!);
-  int get currentOutputIndex =>
-      outputMap.keys.first.notifierIndex;
+  int get currentOutputIndex => outputMap.keys.first.myIndex;
   double get currentOutputValue => outputMap.values.first * (1 + gain * level!);
+
+  Duration get currentDuration => duration * (1 + gain * level!);
 
   @override
   SolutionModel copyWith({
@@ -118,7 +117,7 @@ class DevelopmentModel extends ProgressModel {
     required super.assetUrl,
     super.progress,
     super.isActive,
-     this.outputs,
+    this.outputs,
   });
 
   @override

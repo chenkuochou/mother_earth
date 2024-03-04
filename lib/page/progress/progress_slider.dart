@@ -15,7 +15,7 @@ class ProgressSlider extends StatelessWidget {
     const double bgHeight = 175; //constraints.maxHeight * 0.25;
     const double groupPadding = 5;
     const double groupTitleHeight = 15;
-    const double groupTitleTopPadding = 5;
+    const double groupTitleTopPadding = 3;
     const double progressGroupHeight =
         bgHeight - groupTitleHeight - groupTitleTopPadding;
 

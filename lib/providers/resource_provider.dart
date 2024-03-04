@@ -13,26 +13,28 @@ final challengeProvider =
 class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
   @override
   build() {
-    print('challengeProvider');
     return [climateChange, pollution];
   }
 
-  Future<void> updatePositive(double value, int index) async {
-    List<ChallengeModel> newState = [...state];
-
-    ChallengeModel challenge = newState[index];
-    newState[index] = challenge.copyWith(positive: challenge.value! + value);
-
-    // ignore: await_only_futures
-    state = await newState;
-  }
-
   Future<void> updateLevel(int index) async {
-    List<ChallengeModel> newState = [...state];
+    List<ChallengeModel> newState = state;
 
     ChallengeModel challenge = newState[index];
     newState[index] = challenge.copyWith(level: challenge.level! + 1);
 
+    // print(newState[index].level);
+    // ignore: await_only_futures
+    state = await newState;
+  }
+
+  Future<void> updatePositive(
+      {required int index, required double value}) async {
+    List<ChallengeModel> newState = state;
+
+    ChallengeModel challenge = newState[index];
+    newState[index] = challenge.copyWith(positive: challenge.positive! + value);
+
+    // print(newState[index].positive);
     // ignore: await_only_futures
     state = await newState;
   }
