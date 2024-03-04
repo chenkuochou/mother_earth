@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_linear_progress.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/page/progress/progress_slider.dart';
+import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/resource_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
@@ -54,9 +55,6 @@ class ChallengePage extends ConsumerWidget {
                   ref.read(pollutionProvider).sublist(0, 3),
                   ref.read(pollutionProvider).sublist(3),
                 ],
-                // constraints: constraints,
-                // listenable: pollutionProvider,
-                // notifier: pollutionProvider.notifier,
               ),
             ),
           ],
@@ -64,21 +62,4 @@ class ChallengePage extends ConsumerWidget {
       ),
     );
   }
-}
-
-class InheritedProviders extends InheritedWidget {
-  const InheritedProviders({
-    super.key,
-    required this.listenable,
-    required this.notifier,
-    required super.child,
-  });
-  final ProviderListenable listenable;
-  final ProviderListenable notifier;
-
-  static InheritedProviders of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<InheritedProviders>()!;
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
 }

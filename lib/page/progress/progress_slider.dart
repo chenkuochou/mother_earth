@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_group.dart';
 
@@ -7,15 +6,9 @@ class ProgressSlider extends StatelessWidget {
   const ProgressSlider({
     super.key,
     required this.groupList,
-    // required this.constraints,
-    // required this.listenable,
-    // required this.notifier,
   });
 
   final List<List<SolutionModel>> groupList;
-  // final BoxConstraints constraints;
-  // final ProviderListenable listenable;
-  // final ProviderListenable notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +50,6 @@ class ProgressSlider extends StatelessWidget {
                       child: ProgressGroup(
                         list: groupList[index],
                         previousItems: countPreviousItems(index),
-                        // listenable: listenable,
-                        // notifier: notifier,
                       )),
                 ],
               )),
