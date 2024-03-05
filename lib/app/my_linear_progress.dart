@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/providers/resource_provider.dart';
 
 class MyLinearProgress extends ConsumerWidget {
   const MyLinearProgress({
@@ -31,10 +33,12 @@ class MyLinearProgress extends ConsumerWidget {
 class MyLinearProgressTimer extends ConsumerStatefulWidget {
   const MyLinearProgressTimer({
     required this.listenable,
+    required this.notifier,
     required this.index,
     super.key,
   });
   final ProviderListenable listenable;
+  final ProviderListenable notifier;
   final int index;
 
   @override
@@ -43,14 +47,18 @@ class MyLinearProgressTimer extends ConsumerStatefulWidget {
 }
 
 class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
+  late Timer _timer;
   late double progress = ref.read(widget.listenable)[widget.index].value;
 
   void startTimer() {
-    Timer.periodic(
+    _timer = Timer.periodic(
       const Duration(seconds: 1),
       (Timer timer) => setState(
         () {
           progress += ref.watch(widget.listenable)[widget.index].changes;
+          ref
+              .read(widget.notifier)
+              .updateValue(index: widget.index, value: progress);
           // debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
           if (progress == 1) {
@@ -66,6 +74,12 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
   void initState() {
     startTimer();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

@@ -16,7 +16,7 @@ final SolutionModel airEV = SolutionModel(
   gain: 1.5,
   assetUrl: 'airEV',
   requiredSolMap: {ListenableItem.polAirRenewable: 1},
-  outputMap: {ListenableItem.challengePollution: 3},
+  outputMap: {ListenableItem.challengePollution: 1.5},
 );
 
 final SolutionModel airRegulation = SolutionModel(
@@ -24,7 +24,7 @@ final SolutionModel airRegulation = SolutionModel(
   duration: const Duration(seconds: 30),
   gain: 2,
   assetUrl: 'airRegulation',
-  outputMap: {ListenableItem.challengePollution: 5},
+  outputMap: {ListenableItem.challengePollution: 2},
 );
 
 final SolutionModel waterReducing = SolutionModel(

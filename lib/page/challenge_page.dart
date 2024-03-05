@@ -13,6 +13,7 @@ class ChallengePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     Widget section({
       required String title,
       required ProviderListenable listenable,
@@ -52,6 +53,7 @@ class ChallengePage extends ConsumerWidget {
                               : Colors.green.shade600,
                           size: 17,
                         ),
+                        const SizedBox(width: 2),
                         myText(
                           changes.toString(),
                           bold: true,
@@ -66,6 +68,7 @@ class ChallengePage extends ConsumerWidget {
                 ),
                 MyLinearProgressTimer(
                     listenable: challengeProvider,
+                    notifier: challengeProvider.notifier,
                     index: listenableItemChallengeIndex),
               ],
             ),

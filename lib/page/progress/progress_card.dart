@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/app/my_formatted_number.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/resource_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
@@ -64,9 +65,9 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               color: color,
               size: 15,
             ),
-            const SizedBox(width: 3),
-            myText('-${value.toStringAsFixed(0)}',
-                color: Colors.green.shade600, size: 13, bold: true),
+            const SizedBox(width: 2),
+            myText('-${myFormattedNumber(value)}',
+                color: Colors.green.shade600, size: 12, bold: true),
           ],
         );
 
@@ -113,8 +114,8 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    iconValue(
-                        challenge.icon, challenge.color, ref.watch(listenable)[widget.index].outputValue),
+                    iconValue(challenge.icon, challenge.color,
+                        ref.watch(listenable)[widget.index].outputValue),
                   ],
                 ),
               ),
