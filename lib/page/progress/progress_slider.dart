@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_group.dart';
 
 class ProgressSlider extends StatelessWidget {
@@ -8,7 +7,7 @@ class ProgressSlider extends StatelessWidget {
     required this.groupList,
   });
 
-  final List<List<SolutionModel>> groupList;
+  final List<List<dynamic>> groupList;
 
   @override
   Widget build(BuildContext context) {

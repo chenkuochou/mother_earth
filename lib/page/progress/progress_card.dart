@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/model/resource_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
+import 'package:mother_earth/providers/resource_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
@@ -23,12 +25,13 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
   @override
   Widget build(BuildContext context) {
-    final ProviderListenable listenable2 =
+    final ProviderListenable listenable =
         InheritedProviders.of(context).listenable;
-    final SolutionModel solution = ref.read(listenable2)[widget.index];
+    final SolutionModel solution = ref.read(listenable)[widget.index];
 
-    final ProviderListenable notifier2 =
-        InheritedProviders.of(context).notifier;
+    final ProviderListenable notifier = InheritedProviders.of(context).notifier;
+    final ChallengeModel challenge =
+        ref.read(challengeProvider)[solution.outputIndex];
 
     bool isClickable() {
       if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
@@ -36,7 +39,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
       }
 
       if (solution.requiredSolMap != null) {
-        if (ref.watch(listenable2)[solution.requiredSolutionIndex].level >=
+        if (ref.watch(listenable)[solution.requiredSolutionIndex].level >=
             solution.requiredSolutionLevel) {
           return true;
         }
@@ -53,6 +56,19 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
       return false;
     }
+
+    Row iconValue(IconData icon, Color color, double value) => Row(
+          children: [
+            Icon(
+              icon,
+              color: color,
+              size: 15,
+            ),
+            const SizedBox(width: 3),
+            myText('-${value.toStringAsFixed(0)}',
+                color: Colors.green.shade600, size: 13, bold: true),
+          ],
+        );
 
     return GestureDetector(
       onTap: () => isClickable()
@@ -90,16 +106,22 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               Expanded(
                   child: Image.asset(
                 'assets/img/${solution.assetUrl}.png',
-                color: isClickable() ? null : Colors.grey[900],
+                color: isClickable() ? null : Colors.grey.shade900,
               )),
-              Center(
-                child:
-                    Text(ref.watch(listenable2)[widget.index].level.toString()),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    iconValue(
+                        challenge.icon, challenge.color, ref.watch(listenable)[widget.index].outputValue),
+                  ],
+                ),
               ),
               const SizedBox(height: 5),
               ProgressBar(
-                listenable: listenable2,
-                notifier: notifier2,
+                listenable: listenable,
+                notifier: notifier,
                 index: widget.index,
                 isActive: isActive,
               ),

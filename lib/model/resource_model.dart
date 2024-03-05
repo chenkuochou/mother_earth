@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 class ConsumableModel {
   final String title;
   final double? value;
+  final IconData icon;
+  final Color color;
 
   ConsumableModel({
     required this.title,
     this.value = 0,
+    required this.icon,
+    required this.color,
   });
 }
 
 class ResourceModel extends ConsumableModel {
-  final IconData icon;
-  final Color color;
-
   ResourceModel({
     required super.title,
     required super.value,
-    required this.icon,
-    required this.color,
+    required super.icon,
+    required super.color,
   });
 }
 
@@ -36,6 +37,8 @@ class ChallengeModel extends ConsumableModel {
     this.positive = 0,
     required this.negative,
     required this.maxValue,
+    required super.icon,
+    required super.color,
   });
 
   double get changes => (-positive! + negative * level!) / maxValue;
@@ -47,6 +50,8 @@ class ChallengeModel extends ConsumableModel {
     double? positive,
     double? negative,
     double? maxValue,
+    IconData? icon,
+    Color? color,
   }) {
     return ChallengeModel(
       title: title ?? this.title,
@@ -55,6 +60,13 @@ class ChallengeModel extends ConsumableModel {
       positive: positive ?? this.positive,
       negative: negative ?? this.negative,
       maxValue: maxValue ?? this.maxValue,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
     );
+  }
+
+  @override
+  String toString() {
+    return 'ChallengeModel(level: $level, positive: $positive, negative: $negative, maxValue: $maxValue)';
   }
 }

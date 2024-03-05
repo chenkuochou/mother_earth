@@ -11,7 +11,6 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   build() => [airRenewable, airEV, airRegulation, waterReducing];
 
   Future<void> levelUp(int index) async {
-    print(state.length);
     List<SolutionModel> newState = [...state];
 
     SolutionModel solution = newState[index];

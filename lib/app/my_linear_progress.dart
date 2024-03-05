@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/app/my_text.dart';
 
 class MyLinearProgress extends ConsumerWidget {
   const MyLinearProgress({
@@ -49,10 +50,11 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
       const Duration(seconds: 1),
       (Timer timer) => setState(
         () {
-          // print(ref.watch(widget.listenable)[widget.index].changes);
           progress += ref.watch(widget.listenable)[widget.index].changes;
+          // debugPrint(progress.toString());
+          // debugPrint(ref.read(widget.listenable)[widget.index].toString());
           if (progress == 1) {
-            // game end msg
+            /// TODO: game end msg
             timer.cancel();
           }
         },
@@ -71,23 +73,23 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
     return Stack(
       children: [
         LinearProgressIndicator(
-          value: progress,
+          value: progress < 0 ? 0 : progress,
           color: Colors.green,
           minHeight: 20,
           backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 3),
+          padding: const EdgeInsets.only(right: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                '${(progress * 100).toStringAsFixed(3).toString()}%',
-                style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
+              myText(
+                  progress < 0
+                      ? '0%'
+                      : '${(progress * 100).toStringAsFixed(2).toString()}%',
+                  size: 13,
+                  bold: true,
+                  color: Colors.black54),
             ],
           ),
         ),

@@ -13,52 +13,89 @@ class ChallengePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget section({
+      required String title,
+      required ProviderListenable listenable,
+      required ProviderListenable notifier,
+      required List<List<int>> groupListIndex,
+      required int listenableItemChallengeIndex,
+    }) {
+      final double changes =
+          ref.watch(challengeProvider)[listenableItemChallengeIndex].changes;
+
+      List<List> groupList(var list, List<List<int>> indexes) {
+        List<List> result = [];
+        for (int i = 0; i < indexes.length; i++) {
+          result.add(list.sublist(
+              indexes[i][0], indexes[i][1] == 0 ? null : indexes[i][1]));
+        }
+        return result;
+      }
+
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    myText(title, bold: true),
+                    Wrap(
+                      children: [
+                        Icon(
+                          changes > 0 ? Icons.trending_up : Icons.trending_down,
+                          color: changes > 0
+                              ? Colors.red.shade600
+                              : Colors.green.shade600,
+                          size: 17,
+                        ),
+                        myText(
+                          changes.toString(),
+                          bold: true,
+                          color: changes > 0
+                              ? Colors.red.shade600
+                              : Colors.green.shade600,
+                          size: 12,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                MyLinearProgressTimer(
+                    listenable: challengeProvider,
+                    index: listenableItemChallengeIndex),
+              ],
+            ),
+          ),
+          InheritedProviders(
+            listenable: listenable,
+            notifier: notifier,
+            child: ProgressSlider(
+              groupList: groupList(ref.read(listenable), groupListIndex),
+            ),
+          ),
+        ],
+      );
+    }
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) => Container(
         color: const Color(0xFFE6DBCA).withOpacity(0.5),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      myText('Pollution', bold: true),
-                      Wrap(
-                        children: [
-                          const Icon(
-                            Icons.trending_up,
-                            color: Colors.green,
-                            // size: 20,
-                          ),
-                          myText(
-                            ' +24',
-                            bold: true,
-                            color: Colors.green,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  MyLinearProgressTimer(
-                      listenable: challengeProvider,
-                      index: ListenableItem.challengePollution.myIndex),
+            section(
+                title: 'Pollution',
+                listenable: pollutionProvider,
+                notifier: pollutionProvider.notifier,
+                groupListIndex: [
+                  [0, 3],
+                  [3, 0],
                 ],
-              ),
-            ),
-            InheritedProviders(
-              listenable: pollutionProvider,
-              notifier: pollutionProvider.notifier,
-              child: ProgressSlider(
-                groupList: [
-                  ref.read(pollutionProvider).sublist(0, 3),
-                  ref.read(pollutionProvider).sublist(3),
-                ],
-              ),
-            ),
+                listenableItemChallengeIndex:
+                    ListenableItem.challengePollution.myIndex),
           ],
         ),
       ),

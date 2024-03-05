@@ -22,14 +22,14 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
     ChallengeModel challenge = newState[index];
     newState[index] = challenge.copyWith(level: challenge.level! + 1);
 
-    // print(newState[index].level);
     // ignore: await_only_futures
     state = await newState;
+    print(state[index].level);
   }
 
   Future<void> updatePositive(
       {required int index, required double value}) async {
-    List<ChallengeModel> newState = state;
+    List<ChallengeModel> newState = [...state];
 
     ChallengeModel challenge = newState[index];
     newState[index] = challenge.copyWith(positive: challenge.positive! + value);
@@ -37,5 +37,6 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
     // print(newState[index].positive);
     // ignore: await_only_futures
     state = await newState;
+    print(state[index].positive);
   }
 }
