@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_formatted_number.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/model/resource_model.dart';
+import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {

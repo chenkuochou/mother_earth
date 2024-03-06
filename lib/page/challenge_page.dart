@@ -5,7 +5,7 @@ import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 import 'package:mother_earth/page/progress/progress_slider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class ChallengePage extends ConsumerWidget {
@@ -55,7 +55,7 @@ class ChallengePage extends ConsumerWidget {
                         ),
                         const SizedBox(width: 2),
                         myText(
-                          changes.toString(),
+                          changes.toStringAsFixed(4),
                           bold: true,
                           color: changes > 0
                               ? Colors.red.shade600

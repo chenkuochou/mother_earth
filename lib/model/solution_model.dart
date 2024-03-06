@@ -72,9 +72,9 @@ class SolutionModel extends ProgressModel {
   double? get consumedResourcesValue => consumedResMap?.values.first;
 
   int get outputIndex => outputMap.keys.first.myIndex;
-  double get outputValue => outputMap.values.first * (1 + gain * level!);
+  double get outputValue => outputMap.values.first * (1 +  level!);
 
-  Duration get currentDuration => duration * (1 + gain * level!);
+  Duration get currentDuration => duration * (1 +  level!);
 
   @override
   SolutionModel copyWith({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/solution_model.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar({
@@ -47,7 +47,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
               .updateLevel(solution.outputIndex);
           // update challenge positive
           ref.read(challengeProvider.notifier).updatePositive(
-              index: solution.outputIndex, value: solution.outputValue);
+              index: solution.outputIndex, value: ref.read(widget.listenable)[widget.index].outputValue);
 
           // increase solution duration & reset animation
           _animationController.duration =

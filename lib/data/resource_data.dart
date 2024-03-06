@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mother_earth/model/resource_model.dart';
+import 'package:mother_earth/model/challenge_model.dart';
 
 /// Challenge
 final ChallengeModel climateChange = ChallengeModel(

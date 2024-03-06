@@ -14,27 +14,27 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
           duration: const Duration(seconds: 1),
           gain: 1,
           assetUrl: 'airRenewable',
-          outputMap: {ListenableItem.challengePollution: 1},
+          outputMap: {ListenableItem.challengePollution: 0.1},
         ),
         SolutionModel(
           title: 'Electric Cars',
-          duration: const Duration(seconds: 10),
+          duration: const Duration(seconds: 5),
           gain: 1.5,
           assetUrl: 'airEV',
-          requiredSolMap: {ListenableItem.polAirRenewable: 1},
-          outputMap: {ListenableItem.challengePollution: 1.5},
+          requiredSolMap: {ListenableItem.polAirRenewable: 3},
+          outputMap: {ListenableItem.challengePollution: 0.15},
         ),
         SolutionModel(
           title: 'Air Regulation',
-          duration: const Duration(seconds: 30),
+          duration: const Duration(seconds: 10),
           gain: 2,
           assetUrl: 'airRegulation',
-          requiredSolMap: {ListenableItem.polAirEV: 2},
-          outputMap: {ListenableItem.challengePollution: 2},
+          requiredSolMap: {ListenableItem.polAirEV: 5},
+          outputMap: {ListenableItem.challengePollution: 0.25},
         ),
         SolutionModel(
           title: 'Reducing use',
-          duration: const Duration(seconds: 1),
+          duration: const Duration(seconds: 5),
           gain: 1,
           assetUrl: 'waterReduce',
           outputMap: {ListenableItem.challengePollution: 2},
@@ -42,13 +42,18 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
       ];
 
   Future<void> levelUp(int index) async {
-    List<SolutionModel> newState = [...state];
+    List<SolutionModel> newState = state;
 
     SolutionModel solution = newState[index];
     newState[index] = solution.copyWith(level: solution.level! + 1);
 
     // ignore: await_only_futures
     state = await newState;
+    // print(state[index].outputValue);
+    // print(state[index].outputMap.values.first);
+    // print(state[index].gain);
+    // print(state[index].level);
+    // print(state[index].outputMap.values.first * (1 + state[index].gain * state[index].level!));
   }
 }
 

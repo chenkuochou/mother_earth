@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/resource_model.dart';
+import 'package:mother_earth/model/challenge_model.dart';
 
 final healthProvider = Provider<double>((ref) {
-  return ref
-      .watch(challengeProvider)
-      .map((item) => item.value!)
-      .reduce((a, b) => a + b);
+  return 1 -
+      ref
+          .watch(challengeProvider)
+          .map((item) => item.value!)
+          .reduce((a, b) => a + b);
 });
 
 final resourceProvider = StateProvider<List<double>>((ref) {
@@ -30,7 +31,7 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
       ),
       ChallengeModel(
         title: 'Pollution',
-        negative: 1.5,
+        negative: 0.2, //1.5,
         maxValue: 2000,
         icon: Icons.factory,
         color: Colors.grey.shade600,
@@ -51,19 +52,18 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
 
   Future<void> updatePositive(
       {required int index, required double value}) async {
-    List<ChallengeModel> newState = [...state];
+    // print(value);
+    List<ChallengeModel> newState = state;
 
     ChallengeModel challenge = newState[index];
-    newState[index] = challenge.copyWith(positive: challenge.positive! + value);
+    newState[index] = challenge.copyWith(positive: value);
 
-    // print(newState[index].positive);
     // ignore: await_only_futures
     state = await newState;
-    // print(state[index].positive);
+    // print('Positive: ${state[index].positive}');
   }
 
-  Future<void> updateValue(
-      {required int index, required double value}) async {
+  Future<void> updateValue({required int index, required double value}) async {
     List<ChallengeModel> newState = [...state];
 
     ChallengeModel challenge = newState[index];

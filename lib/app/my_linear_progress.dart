@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
 
 class MyLinearProgress extends ConsumerWidget {
   const MyLinearProgress({

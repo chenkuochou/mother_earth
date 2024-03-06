@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/providers/resource_provider.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 
 class AppBarFlexible extends ConsumerWidget {
   const AppBarFlexible({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final double health = ref.watch(healthProvider);
 
     Widget healthAndLevel() => Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,8 +38,14 @@ class AppBarFlexible extends ConsumerWidget {
                   ],
                 ),
                 LinearProgressIndicator(
-                  value: ref.watch(healthProvider),
-                  color: Colors.red,
+                  value: health > 0 ? health : 0,
+                  color: health > 0.75
+                      ? Colors.green
+                      : health > 0.5
+                          ? Colors.yellow.shade600
+                          : health > 0.25
+                              ? Colors.orange
+                              : Colors.red,
                 )
               ],
             ),
@@ -56,7 +63,7 @@ class AppBarFlexible extends ConsumerWidget {
             ),
           ],
         );
-        
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 50, left: 10, right: 20),
@@ -89,6 +96,4 @@ class AppBarFlexible extends ConsumerWidget {
       ),
     );
   }
-
-  
 }
