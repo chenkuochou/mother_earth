@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +23,6 @@ class ProgressCard extends ConsumerStatefulWidget {
 }
 
 class _ProgressCardState extends ConsumerState<ProgressCard> {
-  bool isActive = false;
-
   @override
   Widget build(BuildContext context) {
     final ProviderListenable listenable =
@@ -33,6 +32,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ProviderListenable notifier = InheritedProviders.of(context).notifier;
     final ChallengeModel challenge =
         ref.read(challengeProvider)[solution.outputIndex];
+    bool isActive = ref.watch(listenable)[widget.index].isActive;
 
     bool isClickable() {
       if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
@@ -74,8 +74,19 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     return GestureDetector(
       onTap: () => isClickable()
           ? setState(() {
-              isActive = !isActive;
-              HapticFeedback.selectionClick();
+              if (!isActive) {
+                ref
+                    .read(notifier)
+                    .toggleActive(index: widget.index, isActive: true);
+                // isActive = !isActive;
+                HapticFeedback.selectionClick();
+              } else {
+                ref
+                    .read(notifier)
+                    .toggleActive(index: widget.index, isActive: false);
+
+                HapticFeedback.selectionClick();
+              }
             })
           : null,
       child: Container(
@@ -96,12 +107,13 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: SizedBox(
-                  width: constraints.maxWidth,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: myText(solution.title, bold: true),
-                  ),
+                child: AutoSizeText(
+                  maxFontSize: 14,
+                  minFontSize: 10,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  solution.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(

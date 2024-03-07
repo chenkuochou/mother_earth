@@ -71,12 +71,19 @@ class AppBarFlexible extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ShaderMask(
-              blendMode: BlendMode.dstIn,
+              blendMode: health < 0.75 ? BlendMode.modulate : BlendMode.dstIn,
               shaderCallback: (Rect bounds) {
                 return RadialGradient(
                   center: Alignment.topLeft,
                   radius: 1.0,
-                  colors: <Color>[Colors.yellow, Colors.deepOrange.shade900],
+                  colors: <Color>[
+                    Colors.yellow,
+                    health > 0.5
+                        ? Colors.grey
+                        : health > 0.25
+                            ? Colors.deepOrange
+                            : Colors.black
+                  ],
                   tileMode: TileMode.mirror,
                 ).createShader(bounds);
               },

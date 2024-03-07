@@ -24,7 +24,7 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
     return [
       ChallengeModel(
         title: 'Climate Change',
-        negative: 2,
+        negative: 0.2,
         maxValue: 2000,
         icon: Icons.air,
         color: Colors.green,
@@ -60,7 +60,8 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
 
     // ignore: await_only_futures
     state = await newState;
-    // print('Positive: ${state[index].positive}');
+    print('Positive: ${state[index].positive}');
+    print('Negative: ${state[index].negative * state[index].level!}');
   }
 
   Future<void> updateValue({required int index, required double value}) async {

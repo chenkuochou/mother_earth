@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 
 class ProgressModel {
@@ -42,7 +41,6 @@ class ProgressModel {
 }
 
 class SolutionModel extends ProgressModel {
-  // [title,level]
   final Map<ListenableItem, int>? requiredSolMap;
   final Map<ListenableItem, int>? requiredDevMap;
   final Map<ListenableItem, double>? consumedResMap;

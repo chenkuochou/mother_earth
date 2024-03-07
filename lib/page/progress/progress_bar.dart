@@ -47,7 +47,8 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
               .updateLevel(solution.outputIndex);
           // update challenge positive
           ref.read(challengeProvider.notifier).updatePositive(
-              index: solution.outputIndex, value: ref.read(widget.listenable)[widget.index].outputValue);
+              index: solution.outputIndex,
+              value: ref.read(widget.listenable)[widget.index].outputValue);
 
           // increase solution duration & reset animation
           _animationController.duration =
@@ -94,7 +95,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Level: ${ref.watch(widget.listenable)[widget.index].level.toString()}',
+                      'Level ${ref.watch(widget.listenable)[widget.index].level.toString()}',
                       style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
