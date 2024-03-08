@@ -29,7 +29,7 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
           title: 'Air Regulation',
           duration: const Duration(seconds: 10),
           assetUrl: 'airRegulation',
-          requiredSolMap: {ListenableItem.polAirEV: 5},
+          // requiredSolMap: {ListenableItem.polAirEV: 5},
           consumedResMap: {ListenableItem.resPeople: 10},
           outputMap: {ListenableItem.challengePollution: 0.25},
         ),

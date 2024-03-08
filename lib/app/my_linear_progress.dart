@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 
 class MyLinearProgress extends ConsumerWidget {
   const MyLinearProgress({
@@ -45,13 +46,14 @@ class MyLinearProgressTimer extends ConsumerStatefulWidget {
 }
 
 class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
-  late Timer _timer;
+  late Timer _timer = Timer.periodic(const Duration(seconds: 1), (_) {});
   late double progress = ref.read(widget.listenable)[widget.index].value;
+  bool isTimerActive = true;
 
   void startTimer() {
     _timer = Timer.periodic(
       const Duration(seconds: 1),
-      (Timer timer) => setState(
+      (_) => setState(
         () {
           progress += ref.watch(widget.listenable)[widget.index].changes;
           ref
@@ -59,19 +61,25 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
               .updateValue(index: widget.index, value: progress);
           // debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
-          if (progress == 0.01) {
+          if (progress > 1) {
             /// TODO: game end msg
-            timer.cancel();
+            _timer.cancel();
           }
         },
       ),
     );
   }
 
+  void cancelTimer() {
+    _timer.cancel();
+  }
+
   @override
   void initState() {
-    startTimer();
     super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    startTimer();
+    // });
   }
 
   @override
@@ -87,7 +95,7 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
         LinearProgressIndicator(
           value: progress < 0 ? 0 : progress,
           color: Colors.green,
-          minHeight: 20,
+          minHeight: 25,
           backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
         ),
         Padding(
@@ -102,6 +110,18 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
                   size: 13,
                   bold: true,
                   color: Colors.black54),
+              Center(
+                  child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isTimerActive = !isTimerActive;
+                          ref.read(gameTimerProvider.notifier).toggle();
+                        });
+                        isTimerActive ? startTimer() : cancelTimer();
+                      },
+                      // isTimerActive ? cancelTimer() : startTimer(),
+                      child: Icon(
+                          isTimerActive ? Icons.pause : Icons.play_arrow))),
             ],
           ),
         ),

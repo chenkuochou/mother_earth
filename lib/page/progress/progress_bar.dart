@@ -35,6 +35,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       duration: solution.currentDuration,
       lowerBound: 0,
     );
+
     Future(() {
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -72,8 +73,13 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       builder: (_, __) {
         double value = _animationController.value;
 
+        
+
         if (widget.isActive) {
           _animationController.forward();
+          if (ref.watch(gameTimerProvider)) {
+            _animationController.stop();
+          }
         } else {
           _animationController.stop();
         }

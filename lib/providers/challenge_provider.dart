@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 
+final gameTimerProvider =
+    NotifierProvider<GameTimerNotifier, bool>(GameTimerNotifier.new);
+
+class GameTimerNotifier extends Notifier<bool> {
+  @override
+  build() => false;
+  void toggle() {
+    state = !state;
+  }
+}
+
 final healthProvider = Provider<double>((ref) {
   return 1 -
       ref
@@ -30,7 +41,7 @@ class ChallengeNotifier extends Notifier<List<ChallengeModel>> {
         negative: 0.2, //1.5,
         maxValue: 2000,
         icon: Icons.factory,
-        color: Colors.grey.shade600,
+        color: Colors.brown.shade600,
       )
     ];
   }

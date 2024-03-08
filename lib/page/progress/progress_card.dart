@@ -32,11 +32,14 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ProviderListenable notifier = InheritedProviders.of(context).notifier;
     final ChallengeModel challenge =
         ref.read(challengeProvider)[solution.outputIndex];
+    final ResourceModel resource =
+        ref.read(resourceProvider)[solution.consumedResourcesIndex ?? 0];
+
     final int solutionIndex = InheritedProviders.of(context).solutionIndex;
     bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
 
     bool isClickable() {
-      if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
+      if (solution.requiredSolMap == null && solution.consumedResMap == null) {
         return true;
       }
 
@@ -47,11 +50,11 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
         }
       }
 
-      if (solution.requiredDevMap != null) {
+      if (solution.consumedResMap != null) {
         if (ref
-                .watch(developmentProvider)[solution.requiredDevelopmentIndex!]
-                .level! >=
-            solution.requiredDevelopmentLevel!) {
+                .watch(resourceProvider)[solution.consumedResourcesIndex!]
+                .value! >=
+            solution.consumedResourcesValue!) {
           return true;
         }
       }
@@ -59,16 +62,18 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
       return false;
     }
 
-    Row iconValue(IconData icon, Color color, double value) => Row(
+    Row iconValue(
+            IconData icon, Color iconColor, double value, Color valueColor) =>
+        Row(
           children: [
             Icon(
               icon,
-              color: color,
+              color: iconColor,
               size: 15,
             ),
             const SizedBox(width: 2),
             myText('-${myFormattedNumber(value)}',
-                color: Colors.green.shade600, size: 12, bold: true),
+                color: valueColor, size: 12, bold: true),
           ],
         );
 
@@ -119,18 +124,41 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 ),
               ),
               Expanded(
-                  child: Image.asset(
-                'assets/img/${solution.assetUrl}.png',
-                color: isClickable() ? null : Colors.grey.shade900,
-              )),
+                child: Image.asset(
+                  'assets/img/${solution.assetUrl}.png',
+                  color: isClickable() ? null : Colors.grey.shade900,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    iconValue(challenge.icon, challenge.color,
-                        ref.watch(listenable)[widget.index].outputValue),
-                    
+                    isClickable()
+                        ? iconValue(
+                            challenge.icon,
+                            challenge.color,
+                            ref.watch(listenable)[widget.index].outputValue,
+                            Colors.green.shade600,
+                          )
+                        : solution.requiredSolMap != null
+                            ? AutoSizeText(
+                                maxFontSize: 12,
+                                minFontSize: 9,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade600,
+                                ),
+                                '${ref.read(listenable)[solution.requiredSolutionIndex].title} ${ref.read(listenable)[solution.requiredSolutionIndex].level}/${solution.requiredSolutionLevel}')
+                            : iconValue(
+                                resource.icon,
+                                Colors.grey.shade600,
+                                ref
+                                    .watch(listenable)[widget.index]
+                                    .consumedResourcesValue,
+                                Colors.grey.shade600),
                   ],
                 ),
               ),
