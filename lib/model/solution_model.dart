@@ -41,7 +41,7 @@ class ProgressModel {
 
 class SolutionModel extends ProgressModel {
   final Map<ListenableItem, int>? requiredSolMap;
-  final Map<ListenableItem, int>? requiredDevMap;
+  // final Map<ListenableItem, int>? requiredDevMap;
   final Map<ListenableItem, double>? consumedResMap;
 
   SolutionModel({
@@ -53,15 +53,15 @@ class SolutionModel extends ProgressModel {
     super.progress,
     super.isActive,
     this.requiredSolMap,
-    this.requiredDevMap,
+    // this.requiredDevMap,
     this.consumedResMap,
   });
 
   int? get requiredSolutionIndex => requiredSolMap?.keys.first.myIndex;
   int? get requiredSolutionLevel => requiredSolMap?.values.first;
 
-  int? get requiredDevelopmentIndex => requiredDevMap?.keys.first.myIndex;
-  int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
+  // int? get requiredDevelopmentIndex => requiredDevMap?.keys.first.myIndex;
+  // int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
 
   int? get consumedResourcesIndex => consumedResMap?.keys.first.myIndex;
   double? get consumedResourcesValue => consumedResMap?.values.first;
@@ -80,7 +80,7 @@ class SolutionModel extends ProgressModel {
     double? progress,
     bool? isActive,
     Map<ListenableItem, int>? requiredSolMap,
-    Map<ListenableItem, int>? requiredDevMap,
+    // Map<ListenableItem, int>? requiredDevMap,
     Map<ListenableItem, double>? consumedResMap,
     Map<ListenableItem, double>? outputs,
   }) {
@@ -92,7 +92,7 @@ class SolutionModel extends ProgressModel {
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
       requiredSolMap: requiredSolMap ?? requiredSolMap,
-      requiredDevMap: requiredDevMap ?? requiredDevMap,
+      // requiredDevMap: requiredDevMap ?? requiredDevMap,
       consumedResMap: consumedResMap ?? consumedResMap,
       outputMap: outputs ?? outputMap,
     );
