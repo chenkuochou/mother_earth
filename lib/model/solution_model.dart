@@ -3,8 +3,8 @@ import 'package:mother_earth/model/listenable_item.dart';
 class ProgressModel {
   final String title;
   final Duration duration;
-  final int? level;
-  final double gain;
+  int? level;
+  final Map<ListenableItem, double> outputMap;
   final String assetUrl;
   double? progress;
   bool? isActive;
@@ -13,9 +13,9 @@ class ProgressModel {
     required this.title,
     required this.duration,
     this.level = 0,
-    required this.gain,
+    required this.outputMap,
     required this.assetUrl,
-    double? progress,
+    this.progress = 0,
     this.isActive = false,
   });
 
@@ -23,7 +23,6 @@ class ProgressModel {
     String? title,
     Duration? duration,
     int? level,
-    double? gain,
     String? assetUrl,
     double? progress,
     bool? isActive,
@@ -32,7 +31,7 @@ class ProgressModel {
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
-      gain: gain ?? this.gain,
+      outputMap: outputMap,
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
@@ -44,20 +43,18 @@ class SolutionModel extends ProgressModel {
   final Map<ListenableItem, int>? requiredSolMap;
   final Map<ListenableItem, int>? requiredDevMap;
   final Map<ListenableItem, double>? consumedResMap;
-  final Map<ListenableItem, double> outputMap;
 
   SolutionModel({
     required super.title,
     required super.duration,
     super.level,
-    required super.gain,
+    required super.outputMap,
     required super.assetUrl,
     super.progress,
     super.isActive,
     this.requiredSolMap,
     this.requiredDevMap,
     this.consumedResMap,
-    required this.outputMap,
   });
 
   int? get requiredSolutionIndex => requiredSolMap?.keys.first.myIndex;
@@ -70,16 +67,15 @@ class SolutionModel extends ProgressModel {
   double? get consumedResourcesValue => consumedResMap?.values.first;
 
   int get outputIndex => outputMap.keys.first.myIndex;
-  double get outputValue => outputMap.values.first * (1 +  level!);
+  double get outputValue => outputMap.values.first * (1 + level!);
 
-  Duration get currentDuration => duration * (1 +  level!);
+  Duration get currentDuration => duration * (1 + level!);
 
   @override
   SolutionModel copyWith({
     String? title,
     Duration? duration,
     int? level,
-    double? gain,
     String? assetUrl,
     double? progress,
     bool? isActive,
@@ -92,7 +88,6 @@ class SolutionModel extends ProgressModel {
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
-      gain: gain ?? this.gain,
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
@@ -105,39 +100,38 @@ class SolutionModel extends ProgressModel {
 }
 
 class DevelopmentModel extends ProgressModel {
-  final Map<ListenableItem, double>? outputs;
-
   DevelopmentModel({
     required super.title,
     required super.duration,
     super.level,
-    required super.gain,
     required super.assetUrl,
     super.progress,
     super.isActive,
-    this.outputs,
+    required super.outputMap,
   });
+
+  Duration get currentDuration => duration * (1 + level!);
+  int get outputIndex => outputMap.keys.first.myIndex;
+  double get outputValue => outputMap.values.first * (1 + level!);
 
   @override
   DevelopmentModel copyWith({
     String? title,
     Duration? duration,
     int? level,
-    double? gain,
     String? assetUrl,
     double? progress,
     bool? isActive,
-    Map<ListenableItem, double>? outputs,
+    Map<ListenableItem, double>? outputMap,
   }) {
     return DevelopmentModel(
       title: title ?? this.title,
       duration: duration ?? this.duration,
       level: level ?? this.level,
-      gain: gain ?? this.gain,
       assetUrl: assetUrl ?? this.assetUrl,
       progress: progress ?? this.progress,
       isActive: isActive ?? this.isActive,
-      outputs: outputs ?? this.outputs,
+      outputMap: outputMap ?? this.outputMap,
     );
   }
 }

@@ -15,8 +15,12 @@ class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
     super.key,
     required this.index,
+    // required this.toggleActivation,
+    // required this.activation,
   });
   final int index;
+  // final Function toggleActivation;
+  // final List<bool> activation;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ProgressCardState();
@@ -25,6 +29,8 @@ class ProgressCard extends ConsumerStatefulWidget {
 class _ProgressCardState extends ConsumerState<ProgressCard> {
   @override
   Widget build(BuildContext context) {
+    // bool isActive = widget.activation[widget.index];
+
     final ProviderListenable listenable =
         InheritedProviders.of(context).listenable;
     final SolutionModel solution = ref.read(listenable)[widget.index];
@@ -32,7 +38,8 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ProviderListenable notifier = InheritedProviders.of(context).notifier;
     final ChallengeModel challenge =
         ref.read(challengeProvider)[solution.outputIndex];
-    bool isActive = ref.watch(listenable)[widget.index].isActive;
+    final int solutionIndex = InheritedProviders.of(context).solutionIndex;
+    bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
 
     bool isClickable() {
       if (solution.requiredSolMap == null && solution.requiredDevMap == null) {
@@ -72,23 +79,28 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
         );
 
     return GestureDetector(
-      onTap: () => isClickable()
-          ? setState(() {
-              if (!isActive) {
-                ref
-                    .read(notifier)
-                    .toggleActive(index: widget.index, isActive: true);
-                // isActive = !isActive;
-                HapticFeedback.selectionClick();
-              } else {
-                ref
-                    .read(notifier)
-                    .toggleActive(index: widget.index, isActive: false);
+      onTap: () {
+        isClickable()
+            ? 
+            // widget.toggleActivation(isActive, widget.index)
+            setState(() {
+                if (!isActive) {
+                  ref.read(activationProvider.notifier).toggleActive(
+                      solutionIndex: solutionIndex,
+                      index: widget.index,
+                      isActive: true);
+                  // isActive = !isActive;
+                } else {
+                  ref.read(activationProvider.notifier).toggleActive(
+                      solutionIndex: solutionIndex,
+                      index: widget.index,
+                      isActive: false);
 
-                HapticFeedback.selectionClick();
-              }
-            })
-          : null,
+                }
+                  HapticFeedback.selectionClick();
+              })
+            : null;
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey[400],

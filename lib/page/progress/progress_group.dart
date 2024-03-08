@@ -6,9 +6,13 @@ class ProgressGroup extends StatelessWidget {
     super.key,
     required this.list,
     required this.previousItems,
+    // required this.toggleActivation,
+    // required this.activation,
   });
   final List list;
   final int previousItems;
+  // final Function toggleActivation;
+  // final List<bool> activation;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,10 @@ class ProgressGroup extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ProgressCard(
-              index: previousItems + index),
+            index: previousItems + index,
+            // toggleActivation: toggleActivation,
+            // activation: activation,
+          ),
         );
       },
       shrinkWrap: true,

@@ -13,12 +13,12 @@ class ChallengePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
     Widget section({
       required String title,
       required ProviderListenable listenable,
       required ProviderListenable notifier,
       required List<List<int>> groupListIndex,
+      required int solutionIndex,
       required int listenableItemChallengeIndex,
     }) {
       final double changes =
@@ -76,6 +76,7 @@ class ChallengePage extends ConsumerWidget {
           InheritedProviders(
             listenable: listenable,
             notifier: notifier,
+            solutionIndex: solutionIndex,
             child: ProgressSlider(
               groupList: groupList(ref.read(listenable), groupListIndex),
             ),
@@ -97,6 +98,7 @@ class ChallengePage extends ConsumerWidget {
                   [0, 3],
                   [3, 0],
                 ],
+                solutionIndex: 1,
                 listenableItemChallengeIndex:
                     ListenableItem.challengePollution.myIndex),
           ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/model/challenge_model.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
 class AppBarBottom extends ConsumerWidget {
@@ -10,6 +12,8 @@ class AppBarBottom extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<ResourceModel> resources = ref.watch(resourceProvider);
+
     return Container(
       // color: Colors.grey.withOpacity(0.2),
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -38,48 +42,14 @@ class AppBarBottom extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              singleResource(
-                  Icon(
-                    Icons.paid,
-                    color: Colors.amber,
-                    size: iconSize,
-                  ),
-                  ref.watch(pollutionProvider)[0].level!),
-              singleResource(
-                  Icon(
-                    Icons.rocket,
-                    color: Colors.red,
-                    size: iconSize,
-                  ),
-                  11),
-              singleResource(
-                  Icon(
-                    Icons.favorite_sharp,
-                    color: Colors.green,
-                    size: iconSize,
-                  ),
-                  21),
-              singleResource(
-                  Icon(
-                    Icons.apartment,
-                    color: Colors.blue,
-                    size: iconSize,
-                  ),
-                  7),
-              singleResource(
-                  Icon(
-                    Icons.redeem,
-                    color: Colors.purple,
-                    size: iconSize,
-                  ),
-                  0),
-              // singleResource(
-              //     Icon(
-              //       Icons.landscape,
-              //       color: Colors.grey,
-              //       size: iconSize,
-              //     ),
-              //     7),
+              for (var resource in resources)
+                singleResource(
+                    Icon(
+                      resource.icon,
+                      color: resource.color,
+                      size: iconSize,
+                    ),
+                    resource.value ?? 0),
             ],
           ),
         ],
@@ -87,7 +57,7 @@ class AppBarBottom extends ConsumerWidget {
     );
   }
 
-  Widget singleResource(Icon icon, int value) => Row(
+  Widget singleResource(Icon icon, double value) => Row(
         children: [
           icon,
           const SizedBox(width: 5),

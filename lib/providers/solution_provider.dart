@@ -15,14 +15,12 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
         SolutionModel(
           title: 'Renewable',
           duration: const Duration(seconds: 1),
-          gain: 1,
           assetUrl: 'airRenewable',
           outputMap: {ListenableItem.challengePollution: 0.1},
         ),
         SolutionModel(
           title: 'Electric Cars',
           duration: const Duration(seconds: 5),
-          gain: 1.5,
           assetUrl: 'airEV',
           requiredSolMap: {ListenableItem.polAirRenewable: 3},
           outputMap: {ListenableItem.challengePollution: 0.15},
@@ -30,7 +28,6 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
         SolutionModel(
           title: 'Air Regulation',
           duration: const Duration(seconds: 10),
-          gain: 2,
           assetUrl: 'airRegulation',
           requiredSolMap: {ListenableItem.polAirEV: 5},
           outputMap: {ListenableItem.challengePollution: 0.25},
@@ -38,7 +35,6 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
         SolutionModel(
           title: 'Reducing use',
           duration: const Duration(seconds: 5),
-          gain: 1,
           assetUrl: 'waterReduce',
           outputMap: {ListenableItem.challengePollution: 2},
         )
@@ -53,36 +49,34 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
     state = await newState;
     // print(state[index].outputValue);
     // print(state[index].outputMap.values.first);
-    // print(state[index].gain);
     // print(state[index].level);
-    // print(state[index].outputMap.values.first * (1 + state[index].gain * state[index].level!));
   }
 
-  Future<void> toggleActive(
-      {required int index, required bool isActive}) async {
-    List<SolutionModel> newState = state;
-    SolutionModel solution = newState[index];
+  // Future<void> toggleActive(
+  //     {required int index, required bool isActive}) async {
+  //   List<SolutionModel> newState = state;
+  //   SolutionModel solution = newState[index];
 
-    if (isActive) {
-      newState[index] = solution.copyWith(isActive: isActive);
+  //   if (isActive) {
+  //     newState[index] = solution.copyWith(isActive: isActive);
 
-      for (int i = 0; i < newState.length; i++) {
-        if (i != index && newState[i].isActive == true) {
-          newState[i] = newState[i].copyWith(isActive: false);
-        }
-      }
+  //     for (int i = 0; i < newState.length; i++) {
+  //       if (i != index && newState[i].isActive == true) {
+  //         newState[i] = newState[i].copyWith(isActive: false);
+  //       }
+  //     }
 
-      state = await newState;
-      return;
-    } else {
-      newState[index] = solution.copyWith(isActive: isActive);
+  //     state = await newState;
+  //     return;
+  //   } else {
+  //     newState[index] = solution.copyWith(isActive: isActive);
 
-      ref.read(challengeProvider.notifier).updatePositive(
-          index: ListenableItem.challengePollution.myIndex, value: 0);
+  //     ref.read(challengeProvider.notifier).updatePositive(
+  //         index: ListenableItem.challengePollution.myIndex, value: 0);
 
-      state = await newState;
-    }
-  }
+  //     state = await newState;
+  //   }
+  // }
 }
 
 final developmentProvider =
@@ -94,12 +88,57 @@ class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
   build() {
     return [
       DevelopmentModel(
-        title: 'Cost',
-        duration: const Duration(seconds: 10),
-        gain: 2,
+        title: 'Education',
+        duration: const Duration(seconds: 5),
         assetUrl: 'assetUrl',
-        outputs: null,
+        outputMap: {},
       )
     ];
+  }
+}
+
+final activationProvider =
+    NotifierProvider<ActivationNotifier, List<List<bool>>>(
+        ActivationNotifier.new);
+
+class ActivationNotifier extends Notifier<List<List<bool>>> {
+  @override
+  build() {
+    return [
+      [],
+      // List<bool>.filled(ref.read(climateProvider).length, false,
+      //     growable: false),
+      List<bool>.filled(ref.read(pollutionProvider).length, false,
+          growable: false),
+    ];
+  }
+
+  Future<void> toggleActive({
+    required int solutionIndex,
+    required int index,
+    required bool isActive,
+  }) async {
+    List<List<bool>> newState = state;
+    List<bool> activations = newState[solutionIndex];
+
+    if (isActive) {
+      activations[index] = true;
+
+      for (int i = 0; i < activations.length; i++) {
+        if (i != index && activations[i] == true) {
+          activations[i] = false;
+        }
+      }
+      newState[solutionIndex] = activations;
+      state = await newState;
+      return;
+    } else {
+      activations[index] = false;
+
+      ref.read(challengeProvider.notifier).updatePositive(
+          index: ListenableItem.challengePollution.myIndex, value: 0);
+
+      state = await newState;
+    }
   }
 }

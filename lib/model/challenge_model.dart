@@ -18,7 +18,7 @@ class ConsumableModel {
 class ResourceModel extends ConsumableModel {
   ResourceModel({
     required super.title,
-    required super.value,
+     super.value,
     required super.icon,
     required super.color,
   });

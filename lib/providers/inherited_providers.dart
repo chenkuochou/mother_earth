@@ -6,10 +6,12 @@ class InheritedProviders extends InheritedWidget {
     super.key,
     required this.listenable,
     required this.notifier,
+    required this.solutionIndex,
     required super.child,
   });
   final ProviderListenable listenable;
   final ProviderListenable notifier;
+  final int solutionIndex;
 
   static InheritedProviders of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<InheritedProviders>()!;

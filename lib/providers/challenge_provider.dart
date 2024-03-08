@@ -10,15 +10,11 @@ final healthProvider = Provider<double>((ref) {
           .reduce((a, b) => a + b);
 });
 
-final resourceProvider = StateProvider<List<double>>((ref) {
-  return [0, 0, 0, 0, 0, 0];
-});
-
 final challengeProvider =
-    NotifierProvider<ChallengeProviderNotifier, List<ChallengeModel>>(
-        ChallengeProviderNotifier.new);
+    NotifierProvider<ChallengeNotifier, List<ChallengeModel>>(
+        ChallengeNotifier.new);
 
-class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
+class ChallengeNotifier extends Notifier<List<ChallengeModel>> {
   @override
   build() {
     return [
@@ -60,8 +56,8 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
 
     // ignore: await_only_futures
     state = await newState;
-    print('Positive: ${state[index].positive}');
-    print('Negative: ${state[index].negative * state[index].level!}');
+    // print('Positive: ${state[index].positive}');
+    // print('Negative: ${state[index].negative * state[index].level!}');
   }
 
   Future<void> updateValue({required int index, required double value}) async {
@@ -74,5 +70,42 @@ class ChallengeProviderNotifier extends Notifier<List<ChallengeModel>> {
     // ignore: await_only_futures
     state = await newState;
     // print(state[index].value);
+  }
+}
+
+final resourceProvider =
+    NotifierProvider<ResourceNotifier, List<ResourceModel>>(
+        ResourceNotifier.new);
+
+class ResourceNotifier extends Notifier<List<ResourceModel>> {
+  @override
+  build() {
+    return [
+      ResourceModel(
+        title: 'Money',
+        icon: Icons.paid,
+        color: Colors.amber.shade600,
+      ),
+      ResourceModel(
+        title: 'Tech',
+        icon: Icons.rocket_launch,
+        color: Colors.red.shade600,
+      ),
+      ResourceModel(
+        title: 'People',
+        icon: Icons.favorite_sharp,
+        color: Colors.green.shade600,
+      ),
+      ResourceModel(
+        title: 'Industry',
+        icon: Icons.apartment,
+        color: Colors.blue.shade600,
+      ),
+      ResourceModel(
+        title: 'Gift',
+        icon: Icons.redeem,
+        color: Colors.purple.shade600,
+      ),
+    ];
   }
 }
