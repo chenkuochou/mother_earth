@@ -30,6 +30,7 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
           duration: const Duration(seconds: 10),
           assetUrl: 'airRegulation',
           requiredSolMap: {ListenableItem.polAirEV: 5},
+          requiredDevMap: {ListenableItem.devEducation: 3},
           outputMap: {ListenableItem.challengePollution: 0.25},
         ),
         SolutionModel(
@@ -51,32 +52,6 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
     // print(state[index].outputMap.values.first);
     // print(state[index].level);
   }
-
-  // Future<void> toggleActive(
-  //     {required int index, required bool isActive}) async {
-  //   List<SolutionModel> newState = state;
-  //   SolutionModel solution = newState[index];
-
-  //   if (isActive) {
-  //     newState[index] = solution.copyWith(isActive: isActive);
-
-  //     for (int i = 0; i < newState.length; i++) {
-  //       if (i != index && newState[i].isActive == true) {
-  //         newState[i] = newState[i].copyWith(isActive: false);
-  //       }
-  //     }
-
-  //     state = await newState;
-  //     return;
-  //   } else {
-  //     newState[index] = solution.copyWith(isActive: isActive);
-
-  //     ref.read(challengeProvider.notifier).updatePositive(
-  //         index: ListenableItem.challengePollution.myIndex, value: 0);
-
-  //     state = await newState;
-  //   }
-  // }
 }
 
 final developmentProvider =
@@ -91,7 +66,7 @@ class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
         title: 'Education',
         duration: const Duration(seconds: 5),
         assetUrl: 'assetUrl',
-        outputMap: {},
+        outputMap: {ListenableItem.resTech: 3},
       )
     ];
   }

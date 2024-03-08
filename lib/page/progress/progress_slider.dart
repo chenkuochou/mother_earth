@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/page/progress/progress_group.dart';
 
 class ProgressSlider extends ConsumerWidget {
-  const ProgressSlider({super.key,
+  const ProgressSlider({
+    super.key,
     required this.groupList,
   });
   final List<List<dynamic>> groupList;
 
- 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const double bgHeight = 175; //constraints.maxHeight * 0.25;
@@ -17,40 +17,6 @@ class ProgressSlider extends ConsumerWidget {
     const double groupTitleTopPadding = 3;
     const double progressGroupHeight =
         bgHeight - groupTitleHeight - groupTitleTopPadding;
-
-    // List<bool> activations = List<bool>.filled(
-    //     ref.read(InheritedProviders.of(context).listenable).length, false,
-    //     growable: false);
-
-    // void toggleActivation(bool isActive, int index) {
-    //   setState(() {
-    //     if (!isActive) {
-    //       // ref.read(activationProvider.notifier).toggleActive(
-    //       //     solutionIndex: solutionIndex,
-    //       //     index: widget.index,
-    //       //     isActive: true);
-    //       // isActive = !isActive;
-    //       activations[index] = true;
-    //       for (int i = 0; i < activations.length; i++) {
-    //         if (i != index && activations[i] == true) {
-    //           activations[i] = false;
-    //         }
-    //       }
-    //       print(activations.toString());
-    //     } else {
-    //       // ref.read(activationProvider.notifier).toggleActive(
-    //       //     solutionIndex: solutionIndex,
-    //       //     index: widget.index,
-    //       //     isActive: false);
-    //       activations[index] = false;
-
-    //       ref.read(challengeProvider.notifier).updatePositive(
-    //           index: ListenableItem.challengePollution.myIndex, value: 0);
-    //       print('false');
-    //     }
-    //   });
-    //   HapticFeedback.selectionClick();
-    // }
 
     return SizedBox(
       // color: const Color(0xFFE6DBCA).withOpacity(0.5),

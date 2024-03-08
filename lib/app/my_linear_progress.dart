@@ -59,7 +59,7 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
               .updateValue(index: widget.index, value: progress);
           // debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
-          if (progress == 1) {
+          if (progress == 0.01) {
             /// TODO: game end msg
             timer.cancel();
           }

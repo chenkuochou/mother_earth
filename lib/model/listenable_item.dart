@@ -6,6 +6,14 @@ enum ListenableItem {
 
   chaClimateChange,
   challengePollution,
+
+  devEducation,
+
+  resMoney,
+  resTech,
+  resPeople,
+  resIndustry,
+  resGift,
   ;
 
   get myIndex => switch (this) {
@@ -15,5 +23,11 @@ enum ListenableItem {
         ListenableItem.polWaterReducing => 3,
         ListenableItem.chaClimateChange => 0,
         ListenableItem.challengePollution => 1,
+        ListenableItem.devEducation => 0,
+        ListenableItem.resMoney => 0,
+        ListenableItem.resTech => 1,
+        ListenableItem.resPeople => 2,
+        ListenableItem.resIndustry => 3,
+        ListenableItem.resGift => 4,
       };
 }

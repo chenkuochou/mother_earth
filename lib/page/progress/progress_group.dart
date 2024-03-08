@@ -6,13 +6,9 @@ class ProgressGroup extends StatelessWidget {
     super.key,
     required this.list,
     required this.previousItems,
-    // required this.toggleActivation,
-    // required this.activation,
   });
   final List list;
   final int previousItems;
-  // final Function toggleActivation;
-  // final List<bool> activation;
 
   @override
   Widget build(BuildContext context) {
