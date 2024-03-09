@@ -60,9 +60,6 @@ class SolutionModel extends ProgressModel {
   int? get requiredSolutionIndex => requiredSolMap?.keys.first.myIndex;
   int? get requiredSolutionLevel => requiredSolMap?.values.first;
 
-  // int? get requiredDevelopmentIndex => requiredDevMap?.keys.first.myIndex;
-  // int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
-
   int? get consumedResourcesIndex => consumedResMap?.keys.first.myIndex;
   double? get consumedResourcesValue => consumedResMap?.values.first;
 
@@ -100,6 +97,8 @@ class SolutionModel extends ProgressModel {
 }
 
 class DevelopmentModel extends ProgressModel {
+  final Map<ListenableItem, int>? requiredDevMap;
+
   DevelopmentModel({
     required super.title,
     required super.duration,
@@ -107,12 +106,15 @@ class DevelopmentModel extends ProgressModel {
     required super.assetUrl,
     super.progress,
     super.isActive,
+    this.requiredDevMap,
     required super.outputMap,
   });
 
-  Duration get currentDuration => duration * (1 + level!);
   int get outputIndex => outputMap.keys.first.myIndex;
   double get outputValue => outputMap.values.first * (1 + level!);
+  int? get requiredDevelopmentIndex => requiredDevMap?.keys.first.myIndex;
+  int? get requiredDevelopmentLevel => requiredDevMap?.values.first;
+  Duration get currentDuration => duration * (1 + level!);
 
   @override
   DevelopmentModel copyWith({

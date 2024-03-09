@@ -25,17 +25,13 @@ class AppBarNavigation extends StatelessWidget {
           label: 'Challenges',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.construction),
-          icon: Icon(
-            Icons.construction_outlined,
-          ),
+          selectedIcon: Icon(Icons.bolt, size: 28),
+          icon: Icon(Icons.bolt_outlined, size: 28),
           label: 'Development',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.military_tech),
-          icon: Icon(
-            Icons.military_tech_outlined,
-          ),
+          selectedIcon: Icon(Icons.military_tech, size: 28),
+          icon: Icon(Icons.military_tech_outlined, size: 28),
           label: 'Achievement',
         ),
       ],

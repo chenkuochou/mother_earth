@@ -18,10 +18,24 @@ class ConsumableModel {
 class ResourceModel extends ConsumableModel {
   ResourceModel({
     required super.title,
-     super.value,
+    super.value,
     required super.icon,
     required super.color,
   });
+
+  ResourceModel copyWith({
+    String? title,
+    double? value,
+    IconData? icon,
+    Color? color,
+  }) {
+    return ResourceModel(
+      title: title ?? this.title,
+      value: value ?? this.value,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
+    );
+  }
 }
 
 class ChallengeModel extends ConsumableModel {

@@ -49,8 +49,14 @@ final developmentProvider =
 
 class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
   @override
-  build() {
-    return developmentData;
+  build() => developmentData;
+
+  Future<void> levelUp(int index) async {
+    List<DevelopmentModel> newState = state;
+
+    DevelopmentModel development = newState[index];
+    newState[index] = development.copyWith(level: development.level! + 1);
+
+    state = await newState;
   }
 }
-

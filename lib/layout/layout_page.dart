@@ -4,6 +4,7 @@ import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
 import 'package:mother_earth/page/challenge_page.dart';
 import 'package:mother_earth/layout/app_bar_bottom.dart';
+import 'package:mother_earth/page/develpment_page.dart';
 
 class LayoutPage extends StatefulWidget {
   const LayoutPage({super.key});
@@ -13,7 +14,7 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
-  int pageIndex = 0;
+  int pageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +27,7 @@ class _LayoutPageState extends State<LayoutPage> {
               // elevation: 0,
               scrolledUnderElevation: 0,
               flexibleSpace: const AppBarFlexible(),
-              // leading: Padding(
-              //   padding: const EdgeInsets.only(left: 10),
-              //   child: Lottie.network(
-              //       'https://lottie.host/9b686d12-5423-4cba-a0c9-5a7cbc637664/NKFHCHs6kY.json',
-              //       fit: BoxFit.contain),
-              // ),
-              // title: const Text('Mother Earth'),
-              // actions: const [],
+
               toolbarHeight: 120,
               bottom: const PreferredSize(
                 preferredSize: Size.fromHeight(20),
@@ -45,9 +39,7 @@ class _LayoutPageState extends State<LayoutPage> {
         index: pageIndex,
         children: const [
           ChallengePage(),
-          Center(
-            child: Text('Development'),
-          ),
+          DevelopmentPage(),
           Center(
             child: Text('Achievements'),
           ),

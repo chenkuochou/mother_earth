@@ -8,12 +8,14 @@ import 'package:mother_earth/providers/inherited_providers.dart';
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar({
     super.key,
+    required this.isForSolution,
     required this.listenable,
     required this.notifier,
     required this.index,
     required this.isActive,
   });
 
+  final bool isForSolution;
   final ProviderListenable listenable;
   final ProviderListenable notifier;
   final int index;
@@ -26,7 +28,7 @@ class ProgressBar extends ConsumerStatefulWidget {
 class _ProgressBarState extends ConsumerState<ProgressBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late SolutionModel solution = ref.read(widget.listenable)[widget.index];
+  late var solution = ref.read(widget.listenable)[widget.index];
 
   @override
   void initState() {
@@ -42,16 +44,26 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       _animationController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           // update solution level
-
           ref.read(widget.notifier).levelUp(widget.index);
+
           // update challenge level
-          ref
-              .read(challengeProvider.notifier)
-              .updateLevel(solution.outputIndex);
+          if (widget.isForSolution) {
+            ref
+                .read(challengeProvider.notifier)
+                .updateLevel(solution.outputIndex);
+          }
+
           // update challenge positive
-          ref.read(challengeProvider.notifier).updatePositive(
-              index: solution.outputIndex,
-              value: ref.read(widget.listenable)[widget.index].outputValue);
+          if (widget.isForSolution) {
+            ref.read(challengeProvider.notifier).updatePositive(
+                index: solution.outputIndex,
+                value: ref.read(widget.listenable)[widget.index].outputValue);
+          } // update resource
+          else {
+            ref.read(resourceProvider.notifier).updateValue(
+                index: solution.outputIndex,
+                value: ref.read(widget.listenable)[widget.index].outputValue);
+          }
 
           // increase solution duration & reset animation
           _animationController.duration =
@@ -77,7 +89,9 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
 
         if (widget.isActive) {
           _animationController.forward();
-          if (ref.watch(gameTimerProvider)[InheritedProviders.of(context).challengeIndex]) {
+          if (widget.isForSolution &&
+              ref.watch(gameTimerProvider)[
+                  InheritedProviders.of(context).challengeIndex]) {
             _animationController.stop();
           }
         } else {
@@ -85,8 +99,9 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
         }
 
         return ClipRRect(
-          borderRadius:
-              const BorderRadius.vertical(bottom: Radius.circular(10)),
+          borderRadius: widget.isForSolution
+              ? const BorderRadius.vertical(bottom: Radius.circular(10))
+              : const BorderRadius.all(Radius.circular(3)),
           child: Stack(
             children: [
               LinearProgressIndicator(

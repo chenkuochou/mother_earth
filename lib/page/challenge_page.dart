@@ -69,36 +69,34 @@ class ChallengePage extends ConsumerWidget {
       );
     }
 
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) => Container(
-        color: const Color(0xFFE6DBCA).withOpacity(0.5),
-        child: ListView(
-          children: [
-            section(
-              title: 'Climate Change',
-              listenable: climateChangeProvider,
-              notifier: climateChangeProvider.notifier,
-              groupList: {
-                ['Oh']: [
-                  [0, 1],
-                ]
-              },
-              challengeIndex: ListenableItem.challengeClimateChange.myIndex,
-            ),
-            section(
-              title: 'Pollution',
-              listenable: pollutionProvider,
-              notifier: pollutionProvider.notifier,
-              groupList: {
-                ['Air', 'Water']: [
-                  [0, 3],
-                  [3, 0],
-                ]
-              },
-              challengeIndex: ListenableItem.challengePollution.myIndex,
-            ),
-          ],
-        ),
+    return Container(
+      color: const Color(0xFFE6DBCA).withOpacity(0.5),
+      child: ListView(
+        children: [
+          section(
+            title: 'Climate Change',
+            listenable: climateChangeProvider,
+            notifier: climateChangeProvider.notifier,
+            groupList: {
+              ['Oh']: [
+                [0, 1],
+              ]
+            },
+            challengeIndex: ListenableItem.challengeClimateChange.myIndex,
+          ),
+          section(
+            title: 'Pollution',
+            listenable: pollutionProvider,
+            notifier: pollutionProvider.notifier,
+            groupList: {
+              ['Air', 'Water']: [
+                [0, 3],
+                [3, 0],
+              ]
+            },
+            challengeIndex: ListenableItem.challengePollution.myIndex,
+          ),
+        ],
       ),
     );
   }

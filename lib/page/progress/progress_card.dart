@@ -115,7 +115,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: AutoSizeText(
-                  maxFontSize: 14,
+                  maxFontSize: 12,
                   minFontSize: 10,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -169,6 +169,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
               ),
               const SizedBox(height: 5),
               ProgressBar(
+                isForSolution: true,
                 listenable: listenable,
                 notifier: notifier,
                 index: widget.index,

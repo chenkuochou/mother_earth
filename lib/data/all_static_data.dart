@@ -47,9 +47,22 @@ List<DevelopmentModel> developmentData = [
   DevelopmentModel(
     title: 'Education',
     duration: const Duration(seconds: 5),
-    assetUrl: 'assetUrl',
-    outputMap: {ListenableItem.resTech: 3},
-  )
+    assetUrl: 'file',
+    outputMap: {ListenableItem.resTech: 1},
+  ),
+  DevelopmentModel(
+    title: 'Research',
+    duration: const Duration(seconds: 10),
+    assetUrl: 'file',
+    requiredDevMap: {ListenableItem.devEducation: 1},
+    outputMap: {ListenableItem.resTech: 5},
+  ),
+  DevelopmentModel(
+    title: 'Agriculture',
+    duration: const Duration(seconds: 5),
+    assetUrl: 'file',
+    outputMap: {ListenableItem.resPeople: 1},
+  ),
 ];
 
 List<ResourceModel> resourceData = [
