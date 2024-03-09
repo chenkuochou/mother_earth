@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mother_earth/app/my_icon_value.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 
@@ -11,6 +11,7 @@ class AppBarFlexible extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final double health = ref.watch(healthProvider);
+    final double healthChanges = ref.watch(healthChangesProvider);
 
     Widget healthAndLevel() => Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -18,11 +19,14 @@ class AppBarFlexible extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+               
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText('Health', bold: true),
-                    Wrap(
+                 
+                 
+                           Wrap(
                       children: [
                         const Icon(
                           Icons.trending_up,
@@ -98,7 +102,6 @@ class AppBarFlexible extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 10),
               child: healthAndLevel(),
             )),
-            // const Flexible(flex: 1, child: Text('data')),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/app/my_icon_value.dart';
 import 'package:mother_earth/app/my_linear_progress.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/listenable_item.dart';
@@ -44,25 +45,16 @@ class ChallengePage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText(title, bold: true),
-                    Wrap(
-                      children: [
-                        Icon(
+                    myIconValue(
+                      icon:
                           changes > 0 ? Icons.trending_up : Icons.trending_down,
-                          color: changes > 0
-                              ? Colors.red.shade600
-                              : Colors.green.shade600,
-                          size: 17,
-                        ),
-                        const SizedBox(width: 2),
-                        myText(
-                          changes.toStringAsFixed(4),
-                          bold: true,
-                          color: changes > 0
-                              ? Colors.red.shade600
-                              : Colors.green.shade600,
-                          size: 12,
-                        ),
-                      ],
+                      iconColor: changes > 0
+                          ? Colors.red.shade600
+                          : Colors.green.shade600,
+                      value: changes.toStringAsFixed(4),
+                      valueColor: changes > 0
+                          ? Colors.red.shade600
+                          : Colors.green.shade600,
                     ),
                   ],
                 ),

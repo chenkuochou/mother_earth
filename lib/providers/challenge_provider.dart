@@ -21,6 +21,13 @@ final healthProvider = Provider<double>((ref) {
           .reduce((a, b) => a + b);
 });
 
+final healthChangesProvider = Provider<double>((ref) {
+  return ref
+      .watch(challengeProvider)
+      .map((item) => item.changes)
+      .reduce((a, b) => a + b);
+});
+
 final challengeProvider =
     NotifierProvider<ChallengeNotifier, List<ChallengeModel>>(
         ChallengeNotifier.new);
