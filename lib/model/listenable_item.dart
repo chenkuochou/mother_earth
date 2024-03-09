@@ -4,7 +4,7 @@ enum ListenableItem {
   polAirRegulation,
   polWaterReducing,
 
-  chaClimateChange,
+  challengeClimateChange,
   challengePollution,
 
   devEducation,
@@ -21,7 +21,7 @@ enum ListenableItem {
         ListenableItem.polAirEV => 1,
         ListenableItem.polAirRegulation => 2,
         ListenableItem.polWaterReducing => 3,
-        ListenableItem.chaClimateChange => 0,
+        ListenableItem.challengeClimateChange => 0,
         ListenableItem.challengePollution => 1,
         ListenableItem.devEducation => 0,
         ListenableItem.resMoney => 0,

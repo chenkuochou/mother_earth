@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mother_earth/app/my_icon_value.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/providers/challenge_provider.dart';
+import 'package:mother_earth/providers/game_provider.dart';
 
 class AppBarFlexible extends ConsumerWidget {
   const AppBarFlexible({super.key});
@@ -12,6 +12,7 @@ class AppBarFlexible extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double health = ref.watch(healthProvider);
     final double healthChanges = ref.watch(healthChangesProvider);
+    final int gameLevel = ref.watch(gameLevelProvider);
 
     Widget healthAndLevel() => Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -19,38 +20,22 @@ class AppBarFlexible extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText('Health', bold: true),
-                 
-                 
-                           Wrap(
-                      children: [
-                        const Icon(
-                          Icons.trending_up,
-                          color: Colors.green,
-                          size: 20,
-                        ),
-                        myText(
-                          ' +24',
-                          bold: true,
-                          color: Colors.green,
-                        ),
-                      ],
-                    ),
+                    myIconValueTrend(value: healthChanges),
                   ],
                 ),
                 LinearProgressIndicator(
                   value: health > 0 ? health : 0,
                   color: health > 0.75
-                      ? Colors.green
+                      ? Colors.green.shade600
                       : health > 0.5
                           ? Colors.yellow.shade600
                           : health > 0.25
-                              ? Colors.orange
-                              : Colors.red,
+                              ? Colors.orange.shade600
+                              : Colors.red.shade600,
                 )
               ],
             ),
@@ -58,8 +43,9 @@ class AppBarFlexible extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                myText('Level: 5', bold: true),
+                myText('Level: $gameLevel', bold: true),
                 const LinearProgressIndicator(
+// TODO: calculate value
                   value: 0.75,
                   color: Colors.blue,
                 ),

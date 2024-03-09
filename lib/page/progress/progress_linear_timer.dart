@@ -3,34 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_text.dart';
-import 'package:mother_earth/providers/challenge_provider.dart';
+import 'package:mother_earth/providers/game_provider.dart';
 
-class MyLinearProgress extends ConsumerWidget {
-  const MyLinearProgress({
-    required this.listenable,
-    required this.index,
-    this.minHeight,
-    super.key,
-  });
-
-  final ProviderListenable listenable;
-  final int index;
-  final double? minHeight;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return LinearProgressIndicator(
-      value: ref.watch(listenable)[index].value /
-          ref.read(listenable)[index].maxValue,
-      color: Colors.green,
-      minHeight: minHeight,
-      backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
-    );
-  }
-}
-
-class MyLinearProgressTimer extends ConsumerStatefulWidget {
-  const MyLinearProgressTimer({
+class ProgressLinearTimer extends ConsumerStatefulWidget {
+  const ProgressLinearTimer({
     required this.listenable,
     required this.notifier,
     required this.index,
@@ -45,7 +21,7 @@ class MyLinearProgressTimer extends ConsumerStatefulWidget {
       _MyLinearProgressTimerState();
 }
 
-class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
+class _MyLinearProgressTimerState extends ConsumerState<ProgressLinearTimer> {
   late Timer _timer = Timer.periodic(const Duration(seconds: 1), (_) {});
   late double progress = ref.read(widget.listenable)[widget.index].value;
   bool isTimerActive = true;
@@ -94,7 +70,13 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
       children: [
         LinearProgressIndicator(
           value: progress < 0 ? 0 : progress,
-          color: Colors.green,
+          color: progress < 0.25
+              ? Colors.green.shade600
+              : progress < 0.5
+                  ? Colors.yellow.shade600
+                  : progress < 0.75
+                      ? Colors.orange.shade600
+                      : Colors.red.shade600,
           minHeight: 25,
           backgroundColor: const Color(0xFFE6DBCA).withOpacity(0.5),
         ),
@@ -106,7 +88,7 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
               myText(
                   progress < 0
                       ? '0%'
-                      : '${(progress * 100).toStringAsFixed(2).toString()}%',
+                      : '${(progress * 100).toStringAsFixed(2)}%',
                   size: 13,
                   bold: true,
                   color: Colors.black54),
@@ -115,7 +97,9 @@ class _MyLinearProgressTimerState extends ConsumerState<MyLinearProgressTimer> {
                       onTap: () {
                         setState(() {
                           isTimerActive = !isTimerActive;
-                          ref.read(gameTimerProvider.notifier).toggle();
+                          ref
+                              .read(gameTimerProvider.notifier)
+                              .toggle(widget.index);
                         });
                         isTimerActive ? startTimer() : cancelTimer();
                       },

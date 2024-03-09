@@ -7,9 +7,9 @@ import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
+import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
-import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
@@ -35,7 +35,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ResourceModel resource =
         ref.read(resourceProvider)[solution.consumedResourcesIndex ?? 0];
 
-    final int solutionIndex = InheritedProviders.of(context).solutionIndex;
+    final int solutionIndex = InheritedProviders.of(context).challengeIndex;
     bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
 
     bool isClickable() {
@@ -124,9 +124,12 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 ),
               ),
               Expanded(
-                child: Image.asset(
-                  'assets/img/${solution.assetUrl}.png',
-                  color: isClickable() ? null : Colors.grey.shade900,
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Image.asset(
+                    'assets/img/${solution.assetUrl}.png',
+                    color: isClickable() ? null : Colors.grey.shade900,
+                  ),
                 ),
               ),
               Padding(
@@ -142,16 +145,18 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                             Colors.green.shade600,
                           )
                         : solution.requiredSolMap != null
-                            ? AutoSizeText(
-                                maxFontSize: 12,
-                                minFontSize: 9,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey.shade600,
+                            ? SizedBox(
+                                width: constraints.maxWidth - 15,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: Alignment.centerLeft,
+                                  child: myText(
+                                    '${ref.read(listenable)[solution.requiredSolutionIndex].title} ${ref.read(listenable)[solution.requiredSolutionIndex].level}/${solution.requiredSolutionLevel}',
+                                    color: Colors.grey.shade600,
+                                    bold: true,
+                                  ),
                                 ),
-                                '${ref.read(listenable)[solution.requiredSolutionIndex].title} ${ref.read(listenable)[solution.requiredSolutionIndex].level}/${solution.requiredSolutionLevel}')
+                              )
                             : iconValue(
                                 resource.icon,
                                 Colors.grey.shade600,

@@ -62,7 +62,7 @@ class AppBarBottom extends ConsumerWidget {
           icon,
           const SizedBox(width: 5),
           Text(
-            value.toString(),
+            value.toInt().toString(),
             style: const TextStyle(fontSize: 13, color: Colors.black),
           ),
         ],

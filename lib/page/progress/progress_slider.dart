@@ -6,8 +6,10 @@ class ProgressSlider extends ConsumerWidget {
   const ProgressSlider({
     super.key,
     required this.groupList,
+    required this.groupTitle,
   });
   final List<List<dynamic>> groupList;
+  final List<String> groupTitle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +41,7 @@ class ProgressSlider extends ConsumerWidget {
                     margin: const EdgeInsets.only(top: groupTitleTopPadding),
                     height: groupTitleHeight,
                     // width: 20,
-                    child: Text(['Air', 'Water'][index],
+                    child: Text(groupTitle[index],
                         style: const TextStyle(
                           color: Colors.grey,
                         )),

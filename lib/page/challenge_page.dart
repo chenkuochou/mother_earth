@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_icon_value.dart';
-import 'package:mother_earth/app/my_linear_progress.dart';
+import 'package:mother_earth/page/progress/progress_linear_timer.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 import 'package:mother_earth/page/progress/progress_slider.dart';
@@ -18,14 +18,15 @@ class ChallengePage extends ConsumerWidget {
       required String title,
       required ProviderListenable listenable,
       required ProviderListenable notifier,
-      required List<List<int>> groupListIndex,
-      required int solutionIndex,
-      required int listenableItemChallengeIndex,
+      required Map<List<String>, List<List<int>>> groupList,
+      required int challengeIndex,
     }) {
       final double changes =
-          ref.watch(challengeProvider)[listenableItemChallengeIndex].changes;
+          ref.watch(challengeProvider)[challengeIndex].changes;
+      final List<String> groupTitle = groupList.keys.first;
+      final List<List<int>> groupListIndex = groupList.values.first;
 
-      List<List> groupList(var list, List<List<int>> indexes) {
+      List<List> getGroupList(var list, List<List<int>> indexes) {
         List<List> result = [];
         for (int i = 0; i < indexes.length; i++) {
           result.add(list.sublist(
@@ -45,32 +46,23 @@ class ChallengePage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText(title, bold: true),
-                    myIconValue(
-                      icon:
-                          changes > 0 ? Icons.trending_up : Icons.trending_down,
-                      iconColor: changes > 0
-                          ? Colors.red.shade600
-                          : Colors.green.shade600,
-                      value: changes.toStringAsFixed(4),
-                      valueColor: changes > 0
-                          ? Colors.red.shade600
-                          : Colors.green.shade600,
-                    ),
+                    myIconValueTrend(value: changes, decimals: 3),
                   ],
                 ),
-                MyLinearProgressTimer(
+                ProgressLinearTimer(
                     listenable: challengeProvider,
                     notifier: challengeProvider.notifier,
-                    index: listenableItemChallengeIndex),
+                    index: challengeIndex),
               ],
             ),
           ),
           InheritedProviders(
             listenable: listenable,
             notifier: notifier,
-            solutionIndex: solutionIndex,
+            challengeIndex: challengeIndex,
             child: ProgressSlider(
-              groupList: groupList(ref.read(listenable), groupListIndex),
+              groupList: getGroupList(ref.read(listenable), groupListIndex),
+              groupTitle: groupTitle,
             ),
           ),
         ],
@@ -83,16 +75,28 @@ class ChallengePage extends ConsumerWidget {
         child: ListView(
           children: [
             section(
-                title: 'Pollution',
-                listenable: pollutionProvider,
-                notifier: pollutionProvider.notifier,
-                groupListIndex: [
+              title: 'Climate Change',
+              listenable: climateChangeProvider,
+              notifier: climateChangeProvider.notifier,
+              groupList: {
+                ['Oh']: [
+                  [0, 1],
+                ]
+              },
+              challengeIndex: ListenableItem.challengeClimateChange.myIndex,
+            ),
+            section(
+              title: 'Pollution',
+              listenable: pollutionProvider,
+              notifier: pollutionProvider.notifier,
+              groupList: {
+                ['Air', 'Water']: [
                   [0, 3],
                   [3, 0],
-                ],
-                solutionIndex: 1,
-                listenableItemChallengeIndex:
-                    ListenableItem.challengePollution.myIndex),
+                ]
+              },
+              challengeIndex: ListenableItem.challengePollution.myIndex,
+            ),
           ],
         ),
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
+import 'package:mother_earth/providers/game_provider.dart';
+import 'package:mother_earth/providers/inherited_providers.dart';
 
 class ProgressBar extends ConsumerStatefulWidget {
   const ProgressBar({
@@ -73,11 +75,9 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
       builder: (_, __) {
         double value = _animationController.value;
 
-        
-
         if (widget.isActive) {
           _animationController.forward();
-          if (ref.watch(gameTimerProvider)) {
+          if (ref.watch(gameTimerProvider)[InheritedProviders.of(context).challengeIndex]) {
             _animationController.stop();
           }
         } else {

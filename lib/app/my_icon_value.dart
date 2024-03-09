@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mother_earth/app/my_text.dart';
 
-Wrap myIconValue({
-  required IconData icon,
-  required Color iconColor,
+Wrap myIconValueTrend({
+  IconData? icon,
+  Color? iconColor,
   double? iconSize = 17,
-  required String value,
-  required Color valueColor,
+  required double value,
+  Color? valueColor,
   bool? isValueBold = true,
   double? valueSize = 12,
+  int? decimals = 2,
 }) =>
     Wrap(
       children: [
-        Icon(
-          icon,
-          color: iconColor,
-          size: iconSize,
-        ),
+        value != 0
+            ? Icon(
+                value > 0 ? Icons.trending_up : Icons.trending_down,
+                color: value > 0 ? Colors.red.shade600 : Colors.green.shade600,
+                size: iconSize,
+              )
+            : const SizedBox.shrink(),
         const SizedBox(width: 2),
         myText(
-          value,
+          '${(value * 100).toStringAsFixed(decimals!)}%',
           bold: isValueBold,
-          color: valueColor,
+          color: value > 0 ? Colors.red.shade600 : Colors.green.shade600,
           size: valueSize,
         ),
       ],

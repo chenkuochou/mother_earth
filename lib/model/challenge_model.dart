@@ -33,7 +33,7 @@ class ChallengeModel extends ConsumableModel {
   ChallengeModel({
     required super.title,
     super.value, // progress
-    this.level = 1,
+    this.level = 0,
     this.positive = 0,
     required this.negative,
     required this.maxValue,
