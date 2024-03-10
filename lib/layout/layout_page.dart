@@ -4,7 +4,7 @@ import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
 import 'package:mother_earth/page/challenge_page.dart';
 import 'package:mother_earth/layout/app_bar_bottom.dart';
-import 'package:mother_earth/page/develpment_page.dart';
+import 'package:mother_earth/page/development_page.dart';
 
 class LayoutPage extends StatefulWidget {
   const LayoutPage({super.key});
@@ -14,7 +14,7 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
-  int pageIndex = 1;
+  int pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {

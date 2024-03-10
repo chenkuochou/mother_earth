@@ -47,20 +47,20 @@ List<DevelopmentModel> developmentData = [
   DevelopmentModel(
     title: 'Education',
     duration: const Duration(seconds: 5),
-    assetUrl: 'file',
+    assetUrl: 'devForest.jpg',
     outputMap: {ListenableItem.resTech: 1},
   ),
   DevelopmentModel(
     title: 'Research',
     duration: const Duration(seconds: 10),
-    assetUrl: 'file',
+    assetUrl: 'file.png',
     requiredDevMap: {ListenableItem.devEducation: 1},
     outputMap: {ListenableItem.resTech: 5},
   ),
   DevelopmentModel(
     title: 'Agriculture',
     duration: const Duration(seconds: 5),
-    assetUrl: 'file',
+    assetUrl: 'file.png',
     outputMap: {ListenableItem.resPeople: 1},
   ),
 ];

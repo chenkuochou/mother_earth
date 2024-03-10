@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/page/progress/progress_card.dart';
 
-class ProgressGroup extends StatelessWidget {
+class ProgressGroup extends ConsumerWidget {
   const ProgressGroup({
     super.key,
     required this.list,
     required this.previousItems,
+    required this.toggleActive,
+    required this.activations,
   });
   final List list;
   final int previousItems;
+  final Function toggleActive;
+  final List<bool> activations;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.only(left: 5, right: 5, top: 8, bottom: 17),
@@ -20,9 +25,9 @@ class ProgressGroup extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ProgressCard(
-            index: previousItems + index,
-            // toggleActivation: toggleActivation,
-            // activation: activation,
+            longIndex: previousItems + index,
+            isActive: activations[index],
+            toggleActive: toggleActive,
           ),
         );
       },

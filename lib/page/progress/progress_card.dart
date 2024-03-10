@@ -7,16 +7,19 @@ import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
-import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
     super.key,
-    required this.index,
+    required this.longIndex,
+    required this.isActive,
+    required this.toggleActive,
   });
-  final int index;
+  final int longIndex;
+  final bool isActive;
+  final Function toggleActive;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ProgressCardState();
@@ -27,7 +30,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
   Widget build(BuildContext context) {
     final ProviderListenable listenable =
         InheritedProviders.of(context).listenable;
-    final SolutionModel solution = ref.read(listenable)[widget.index];
+    final SolutionModel solution = ref.read(listenable)[widget.longIndex];
 
     final ProviderListenable notifier = InheritedProviders.of(context).notifier;
     final ChallengeModel challenge =
@@ -35,8 +38,8 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ResourceModel resource =
         ref.read(resourceProvider)[solution.consumedResourcesIndex ?? 0];
 
-    final int solutionIndex = InheritedProviders.of(context).challengeIndex;
-    bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
+    // final int solutionIndex = InheritedProviders.of(context).challengeIndex;
+    // bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
 
     bool isClickable() {
       if (solution.requiredSolMap == null && solution.consumedResMap == null) {
@@ -81,16 +84,10 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
       onTap: () {
         isClickable()
             ? setState(() {
-                if (!isActive) {
-                  ref.read(activationProvider.notifier).toggleActive(
-                      solutionIndex: solutionIndex,
-                      index: widget.index,
-                      isActive: true);
+                if (!widget.isActive) {
+                  widget.toggleActive(widget.longIndex);
                 } else {
-                  ref.read(activationProvider.notifier).toggleActive(
-                      solutionIndex: solutionIndex,
-                      index: widget.index,
-                      isActive: false);
+                  widget.toggleActive(widget.longIndex);
                 }
                 HapticFeedback.selectionClick();
               })
@@ -100,7 +97,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
         decoration: BoxDecoration(
           color: Colors.grey[400],
           borderRadius: BorderRadius.circular(10),
-          border: isActive
+          border: widget.isActive
               ? Border.all(
                   color: Colors.greenAccent,
                   width: 3,
@@ -141,7 +138,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                         ? iconValue(
                             challenge.icon,
                             challenge.color,
-                            ref.watch(listenable)[widget.index].outputValue,
+                            ref.watch(listenable)[widget.longIndex].outputValue,
                             Colors.green.shade600,
                           )
                         : solution.requiredSolMap != null
@@ -161,7 +158,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                                 resource.icon,
                                 Colors.grey.shade600,
                                 ref
-                                    .watch(listenable)[widget.index]
+                                    .watch(listenable)[widget.longIndex]
                                     .consumedResourcesValue,
                                 Colors.grey.shade600),
                   ],
@@ -172,8 +169,8 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 isForSolution: true,
                 listenable: listenable,
                 notifier: notifier,
-                index: widget.index,
-                isActive: isActive,
+                index: widget.longIndex,
+                isActive: widget.isActive,
               ),
             ],
           );

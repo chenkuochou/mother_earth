@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/page/progress/progress_group.dart';
 
-class ProgressSlider extends ConsumerWidget {
+class ProgressSlider extends ConsumerStatefulWidget {
   const ProgressSlider({
     super.key,
     required this.groupList,
@@ -12,7 +12,45 @@ class ProgressSlider extends ConsumerWidget {
   final List<String> groupTitle;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProgressSliderState();
+}
+
+class _ProgressSliderState extends ConsumerState<ProgressSlider> {
+  late List<bool> activations;
+
+  List<bool> initActivations() {
+    activations = activations = List<bool>.filled(
+        widget.groupList.map((e) => e.length).reduce((e1, e2) => e1 + e2),
+        false,
+        growable: false);
+
+    return activations;
+  }
+
+  @override
+  void initState() {
+    activations = initActivations();
+    super.initState();
+  }
+
+  toggleActive(int index) {
+    setState(() {
+      if (!activations[index]) {
+        activations[index] = true;
+
+        for (int i = 0; i < activations.length; i++) {
+          if (i != index && activations[i] == true) {
+            activations[i] = false;
+          }
+        }
+      } else {
+        activations[index] = false;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     const double bgHeight = 175; //constraints.maxHeight * 0.25;
     const double groupPadding = 5;
     const double groupTitleHeight = 15;
@@ -25,7 +63,7 @@ class ProgressSlider extends ConsumerWidget {
       height: bgHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: groupList.length,
+        itemCount: widget.groupList.length,
         itemBuilder: (_, index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: groupPadding),
           child: Container(
@@ -41,7 +79,7 @@ class ProgressSlider extends ConsumerWidget {
                     margin: const EdgeInsets.only(top: groupTitleTopPadding),
                     height: groupTitleHeight,
                     // width: 20,
-                    child: Text(groupTitle[index],
+                    child: Text(widget.groupTitle[index],
                         style: const TextStyle(
                           color: Colors.grey,
                         )),
@@ -49,10 +87,10 @@ class ProgressSlider extends ConsumerWidget {
                   SizedBox(
                       height: progressGroupHeight,
                       child: ProgressGroup(
-                        list: groupList[index],
+                        list: widget.groupList[index],
                         previousItems: countPreviousItems(index),
-                        // toggleActivation: toggleActivation,
-                        // activation: activations,
+                        toggleActive: toggleActive,
+                        activations: activations,
                       )),
                 ],
               )),
@@ -64,7 +102,7 @@ class ProgressSlider extends ConsumerWidget {
   int countPreviousItems(int index) {
     int count = 0;
     for (int i = 0; i < index; i++) {
-      count += groupList[i].length;
+      count += widget.groupList[i].length;
     }
     return count;
   }
