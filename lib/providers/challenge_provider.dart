@@ -66,6 +66,5 @@ class ResourceNotifier extends Notifier<List<ResourceModel>> {
     newState[index] = resource.copyWith(value: resource.value! + value);
 
     state = await newState;
-    print(state[index].value);
   }
 }

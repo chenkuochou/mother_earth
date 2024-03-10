@@ -52,7 +52,7 @@ class DevelopmentNotifier extends Notifier<List<DevelopmentModel>> {
   build() => developmentData;
 
   Future<void> levelUp(int index) async {
-    List<DevelopmentModel> newState = state;
+    List<DevelopmentModel> newState = [...state];
 
     DevelopmentModel development = newState[index];
     newState[index] = development.copyWith(level: development.level! + 1);

@@ -95,7 +95,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[400],
+          color: Colors.grey.shade400,
           borderRadius: BorderRadius.circular(10),
           border: widget.isActive
               ? Border.all(

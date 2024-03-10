@@ -9,8 +9,8 @@ import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
 
-class ChallengePage extends ConsumerWidget {
-  const ChallengePage({super.key});
+class SolutionPage extends ConsumerWidget {
+  const SolutionPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,7 +46,7 @@ class ChallengePage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText(title, bold: true),
-                    myIconValueTrend(value: changes, decimals: 3),
+                    myIconValueTrend(value: changes, decimals: 3,isForHealth: false),
                   ],
                 ),
                 ProgressLinearTimer(

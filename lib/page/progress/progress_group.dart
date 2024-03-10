@@ -22,11 +22,13 @@ class ProgressGroup extends ConsumerWidget {
       padding: const EdgeInsets.only(left: 5, right: 5, top: 8, bottom: 17),
       itemCount: list.length,
       itemBuilder: (context, index) {
+        final int longIndex = previousItems + index;
+
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ProgressCard(
-            longIndex: previousItems + index,
-            isActive: activations[index],
+            longIndex: longIndex,
+            isActive: activations[longIndex],
             toggleActive: toggleActive,
           ),
         );

@@ -23,7 +23,6 @@ class _ProgressSliderState extends ConsumerState<ProgressSlider> {
         widget.groupList.map((e) => e.length).reduce((e1, e2) => e1 + e2),
         false,
         growable: false);
-
     return activations;
   }
 

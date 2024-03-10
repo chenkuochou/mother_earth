@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mother_earth/app/my_text.dart';
 
 Wrap myIconValueTrend({
+  required bool isForHealth,
   IconData? icon,
   Color? iconColor,
   double? iconSize = 17,
@@ -15,7 +16,13 @@ Wrap myIconValueTrend({
       children: [
         value != 0
             ? Icon(
-                value > 0 ? Icons.trending_up : Icons.trending_down,
+                isForHealth
+                    ? value > 0
+                        ? Icons.trending_down
+                        : Icons.trending_up
+                    : value > 0
+                        ? Icons.trending_up
+                        : Icons.trending_down,
                 color: value > 0 ? Colors.red.shade600 : Colors.green.shade600,
                 size: iconSize,
               )

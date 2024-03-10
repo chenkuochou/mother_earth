@@ -16,11 +16,12 @@ class GameTimerNotifier extends Notifier<List<bool>> {
   }
 }
 
-final gameLevelProvider = Provider<int>((ref) {
-  return ref
-      .watch(challengeProvider)
-      .map((item) => item.level!)
-      .reduce((a, b) => a + b);
+final gameLevelProvider = Provider<double>((ref) {
+  return (ref
+          .watch(challengeProvider)
+          .map((item) => item.level!)
+          .reduce((a, b) => a + b)) /
+      10;
 });
 
 final healthProvider = Provider<double>((ref) {
@@ -36,4 +37,15 @@ final healthChangesProvider = Provider<double>((ref) {
       .watch(challengeProvider)
       .map((item) => item.changes)
       .reduce((a, b) => a + b);
+});
+
+final achievementsProvider = Provider<List<bool>>((ref) {
+  return [
+    ref.watch(gameLevelProvider) >= 1,
+    ref.watch(gameLevelProvider) >= 10,
+    ref.watch(gameLevelProvider) >= 20,
+    ref.watch(gameLevelProvider) >= 30,
+    ref.watch(gameLevelProvider) >= 40,
+    ref.watch(gameLevelProvider) >= 50,
+  ];
 });

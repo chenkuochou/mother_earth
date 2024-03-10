@@ -12,7 +12,7 @@ class AppBarFlexible extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double health = ref.watch(healthProvider);
     final double healthChanges = ref.watch(healthChangesProvider);
-    final int gameLevel = ref.watch(gameLevelProvider);
+    final double gameLevel = ref.watch(gameLevelProvider);
 
     Widget healthAndLevel() => Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +24,7 @@ class AppBarFlexible extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText('Health', bold: true),
-                    myIconValueTrend(value: healthChanges),
+                    myIconValueTrend(value: healthChanges, isForHealth: true),
                   ],
                 ),
                 LinearProgressIndicator(
@@ -43,10 +43,9 @@ class AppBarFlexible extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                myText('Level: $gameLevel', bold: true),
-                const LinearProgressIndicator(
-// TODO: calculate value
-                  value: 0.75,
+                myText('Level: ${gameLevel.floor()}', bold: true),
+                LinearProgressIndicator(
+                  value: gameLevel - gameLevel.floor(),
                   color: Colors.blue,
                 ),
                 const SizedBox(height: 5),
@@ -78,10 +77,8 @@ class AppBarFlexible extends ConsumerWidget {
                   tileMode: TileMode.mirror,
                 ).createShader(bounds);
               },
-              child: Lottie.network(
-                  'https://lottie.host/1de15c7c-278e-4751-bd68-54ebedb5d3a3/crNVTBdG5b.json',
-                  fit: BoxFit.contain,
-                  alignment: Alignment.center),
+              child: Lottie.asset('assets/bg/earth.json',
+                  fit: BoxFit.contain, alignment: Alignment.center),
             ),
             Expanded(
                 child: Padding(

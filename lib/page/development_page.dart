@@ -44,12 +44,12 @@ class _DevelopmentPageState extends ConsumerState<DevelopmentPage> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(10),
-            child: GestureDetector(
-                onTap: () => toggleActive(index),
-                child: DevelopmentCard(
-                    index: index, isActive: activations[index])),
+            child: DevelopmentCard(
+              index: index,
+              isActive: activations[index],
+              toggleActive: toggleActive,
+            ),
           );
         });
   }
 }
-

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
@@ -101,7 +100,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
         return ClipRRect(
           borderRadius: widget.isForSolution
               ? const BorderRadius.vertical(bottom: Radius.circular(10))
-              : const BorderRadius.all(Radius.circular(3)),
+              : const BorderRadius.all(Radius.zero),
           child: Stack(
             children: [
               LinearProgressIndicator(

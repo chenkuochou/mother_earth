@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
-import 'package:mother_earth/page/challenge_page.dart';
+import 'package:mother_earth/page/solution_page.dart';
 import 'package:mother_earth/layout/app_bar_bottom.dart';
+import 'package:mother_earth/page/achievement_page.dart';
 import 'package:mother_earth/page/development_page.dart';
 
 class LayoutPage extends StatefulWidget {
@@ -15,6 +16,25 @@ class LayoutPage extends StatefulWidget {
 
 class _LayoutPageState extends State<LayoutPage> {
   int pageIndex = 0;
+
+  void showStart() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      const snackBar = SnackBar(
+        content: Center(child: Text('Welcome to the game!')),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        elevation: 8,
+        behavior: SnackBarBehavior.floating,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  }
+
+  @override
+  void initState() {
+    showStart();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +58,9 @@ class _LayoutPageState extends State<LayoutPage> {
       body: IndexedStack(
         index: pageIndex,
         children: const [
-          ChallengePage(),
+          SolutionPage(),
           DevelopmentPage(),
-          Center(
-            child: Text('Achievements'),
-          ),
+          AchievementPage(),
         ],
       ),
       bottomNavigationBar: AppBarNavigation(

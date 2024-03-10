@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mother_earth/model/achievement_model.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 import 'package:mother_earth/model/solution_model.dart';
@@ -30,7 +31,6 @@ List<SolutionModel> pollutionData = [
     title: 'Air Regulation',
     duration: const Duration(seconds: 10),
     assetUrl: 'airRegulation',
-    // requiredSolMap: {ListenableItem.polAirEV: 5},
     consumedResMap: {ListenableItem.resPeople: 10},
     outputMap: {ListenableItem.challengePollution: 0.25},
   ),
@@ -53,14 +53,14 @@ List<DevelopmentModel> developmentData = [
   DevelopmentModel(
     title: 'Research',
     duration: const Duration(seconds: 10),
-    assetUrl: 'file.png',
+    assetUrl: 'devForest.jpg',
     requiredDevMap: {ListenableItem.devEducation: 1},
     outputMap: {ListenableItem.resTech: 5},
   ),
   DevelopmentModel(
     title: 'Agriculture',
     duration: const Duration(seconds: 5),
-    assetUrl: 'file.png',
+    assetUrl: 'devForest.jpg',
     outputMap: {ListenableItem.resPeople: 1},
   ),
 ];
@@ -108,4 +108,37 @@ List<ChallengeModel> challengeData = [
     icon: Icons.factory,
     color: Colors.brown.shade600,
   )
+];
+
+List<AchievementModel> achievements = [
+  AchievementModel(
+    title: 'Stat a Game',
+    description: 'Just started, nice work.',
+    imageUrl: 'file',
+  ),
+  AchievementModel(
+    title: 'Level 10 Reached',
+    description: "You've passed your first test.",
+    imageUrl: 'solar',
+  ),
+  AchievementModel(
+    title: 'Level 20 Reached',
+    description: "Stronger enemies await.",
+    imageUrl: 'solar',
+  ),
+  AchievementModel(
+    title: 'Level 30 Reached',
+    description: "Now face even greater challenges.",
+    imageUrl: 'solar',
+  ),
+  AchievementModel(
+    title: 'Level 40 Reached',
+    description: "Master powerful skills and conquer the unknown.",
+    imageUrl: 'solar',
+  ),
+  AchievementModel(
+    title: 'Level 50 Reached',
+    description: "The fate of the world may rest on you.",
+    imageUrl: 'solar',
+  ),
 ];
