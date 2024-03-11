@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';

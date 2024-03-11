@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/app/my_icon_value.dart';
+import 'package:mother_earth/common/my_icon_value.dart';
 import 'package:mother_earth/page/progress/progress_linear_timer.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 import 'package:mother_earth/page/progress/progress_slider.dart';
 import 'package:mother_earth/providers/game_provider.dart';

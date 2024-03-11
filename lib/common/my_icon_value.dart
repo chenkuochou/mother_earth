@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_text.dart';
 
 Wrap myIconValueTrend({
   required bool isForHealth,

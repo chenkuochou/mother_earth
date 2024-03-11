@@ -15,7 +15,14 @@ class GameTimerNotifier extends Notifier<List<bool>> {
     newState[index] = !newState[index];
 
     state = newState;
+
   }
+
+  void stop(){
+    List<bool> newState = List<bool>.filled(ref.read(challengeProvider).length, false,
+        growable: false);
+     state = newState;
+ }
 }
 
 final gameLevelProvider = Provider<double>((ref) {

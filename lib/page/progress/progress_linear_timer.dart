@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_text.dart';
+import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/game_provider.dart';
+import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressLinearTimer extends ConsumerStatefulWidget {
   const ProgressLinearTimer({
@@ -38,33 +40,33 @@ class _MyLinearProgressTimerState extends ConsumerState<ProgressLinearTimer> {
           // debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
 
-          // End Game
-          Future(() {
-            if (progress > 1) {
-              showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: const Center(child: Text('Mother Earth Is Dead')),
-                  content: const Text('Sadly you have reached the end..'),
-                  backgroundColor: const Color(0xFFE6DBCA),
-                  actionsAlignment: MainAxisAlignment.center,
-                  actions: [
-                    FilledButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.grey.shade800)),
-                      child: myText('PLAY AGAIN'),
-                    ),
-                  ],
-                ),
-              );
-              // stop all & resetStates
-              _timer.cancel();
-            }
-          });
+          // // End Game
+          // Future(() {
+          //   if (progress > 1) {
+          //     ref.read(gameTimerProvider.notifier).stop();
+
+          //     showDialog<String>(
+          //       context: context,
+          //       builder: (BuildContext context) => const AlertDialog(
+          //         title: Center(child: Text('Mother Earth Is Dead')),
+          //         content: Text('Sadly you have reached the end..'),
+          //         backgroundColor: Color(0xFFE6DBCA),
+          //         actionsAlignment: MainAxisAlignment.center,
+          //         // actions: [
+          //         //   FilledButton(
+          //         //     onPressed: () {
+          //         //       Navigator.pop(context);
+          //         //     },
+          //         //     style: ButtonStyle(
+          //         //         backgroundColor:
+          //         //             MaterialStateProperty.all(Colors.grey.shade800)),
+          //         //     child: myText('PLAY AGAIN'),
+          //         //   ),
+          //         // ],
+          //       ),
+          //     );
+          //   }
+          // });
         },
       ),
     );

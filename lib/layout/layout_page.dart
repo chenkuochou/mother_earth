@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mother_earth/app/my_icon_value.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_icon_value.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
 import 'package:mother_earth/page/solution_page.dart';

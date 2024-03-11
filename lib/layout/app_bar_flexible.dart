@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mother_earth/app/my_icon_value.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_icon_value.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/providers/game_provider.dart';
 
 class AppBarFlexible extends ConsumerWidget {

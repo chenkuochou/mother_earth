@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/model/achievement_model.dart';
 
 Future<void> showMyDialog(
@@ -38,16 +38,16 @@ Future<void> showMyDialog(
               ],
             ),
             content: Image.asset('assets/img/${achievement.imageUrl}.png'),
-            actions: [
-              Center(
-                child: FilledButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.grey.shade800)),
-                  child: const Text('Save to Google Wallet'),
-                ),
-              ),
+            actions: const [
+              // Center(
+              //   child: FilledButton(
+              //     onPressed: () {},
+              //     style: ButtonStyle(
+              //         backgroundColor:
+              //             MaterialStateProperty.all(Colors.grey.shade800)),
+              //     child: const Text('Save to Google Wallet'),
+              //   ),
+              // ),
             ],
           ),
           Align(

@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/app/my_formatted_number.dart';
-import 'package:mother_earth/app/my_text.dart';
+import 'package:mother_earth/common/my_formatted_number.dart';
+import 'package:mother_earth/common/my_text.dart';
 import 'package:mother_earth/model/challenge_model.dart';
 import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
