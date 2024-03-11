@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mother_earth/app/my_icon_value.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
@@ -18,23 +19,69 @@ class LayoutPage extends StatefulWidget {
 class _LayoutPageState extends State<LayoutPage> {
   int pageIndex = 0;
 
-  void showStart() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final snackBar = SnackBar(
-        content: Center(child: myText('Welcome to the game!',size: 17, bold: true)),
-        backgroundColor: Colors.green.shade600,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        elevation: 8,
-        behavior: SnackBarBehavior.floating,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    });
-  }
-
   @override
   void initState() {
-    showStart();
+    Future(() {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Center(child: Text('Welcome to the Game')),
+          content: Wrap(
+            children: [
+              const Text(
+                  "Tap to rescue the Mother Earth (eg. lower pollution by renewable energy)."),
+              myText(
+                  'Increase strategy levels will also increase negative aspects to the earth',
+                  bold: true),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: myIconValueTrend(
+                      isForHealth: true, value: 0.0024, decimals: 2),
+                ),
+              ),
+              const Text(
+                  "Be aware of earth's health and use your resources (money, happiness.. etc.) smartly."),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.paid,
+                    color: Colors.amber.shade600,
+                    size: 15,
+                  ),
+                  const SizedBox(width: 5),
+                  Icon(
+                    Icons.favorite_sharp,
+                    color: Colors.green.shade600,
+                    size: 15,
+                  ),
+                  const SizedBox(width: 5),
+                  Icon(
+                    Icons.apartment,
+                    color: Colors.blue.shade600,
+                    size: 15,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFFE6DBCA),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.grey.shade800)),
+              child: myText('PLAY'),
+            ),
+          ],
+        ),
+      );
+    });
     super.initState();
   }
 

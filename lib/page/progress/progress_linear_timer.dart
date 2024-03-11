@@ -35,18 +35,17 @@ class _MyLinearProgressTimerState extends ConsumerState<ProgressLinearTimer> {
           ref
               .read(widget.notifier)
               .updateValue(index: widget.index, value: progress);
-          debugPrint(progress.toString());
+          // debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
 
           // End Game
           Future(() {
-            if (progress > 0.0001) {
+            if (progress > 1) {
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                   title: const Center(child: Text('Mother Earth Is Dead')),
                   content: const Text('Sadly you have reached the end..'),
-                  // elevation: 8,
                   backgroundColor: const Color(0xFFE6DBCA),
                   actionsAlignment: MainAxisAlignment.center,
                   actions: [

@@ -1,10 +1,10 @@
 name: mother_earth
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   auto_size_text: ^3.0.0
@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.4.10
   google_fonts: ^6.1.0
+  # google_wallet: ^0.1.1
   lottie: ^3.1.0
 
 dev_dependencies:
