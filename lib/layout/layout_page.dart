@@ -29,10 +29,7 @@ class _LayoutPageState extends State<LayoutPage> {
           content: Wrap(
             children: [
               const Text(
-                  "Tap to rescue the Mother Earth (eg. lower pollution by renewable energy)."),
-              myText(
-                  'Increase strategy levels will also increase negative aspects to the earth',
-                  bold: true),
+                  "Tap to rescue the Mother Earth (eg. lower pollution by developing renewable energy)."),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Center(
@@ -41,29 +38,35 @@ class _LayoutPageState extends State<LayoutPage> {
                 ),
               ),
               const Text(
-                  "Be aware of earth's health and use your resources (money, happiness.. etc.) smartly."),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.paid,
-                    color: Colors.amber.shade600,
-                    size: 15,
-                  ),
-                  const SizedBox(width: 5),
-                  Icon(
-                    Icons.favorite_sharp,
-                    color: Colors.green.shade600,
-                    size: 15,
-                  ),
-                  const SizedBox(width: 5),
-                  Icon(
-                    Icons.apartment,
-                    color: Colors.blue.shade600,
-                    size: 15,
-                  ),
-                ],
+                  "Take care of earth's health and use your resources (money, happiness.. etc.) smartly."),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.paid,
+                      color: Colors.amber.shade600,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.favorite_sharp,
+                      color: Colors.green.shade600,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.apartment,
+                      color: Colors.blue.shade600,
+                      size: 15,
+                    ),
+                  ],
+                ),
               ),
+              myText(
+                  'Be aware: \nNegative aspects to the earth will be also increased by levels.',
+                  bold: true),
             ],
           ),
           backgroundColor: const Color(0xFFE6DBCA),

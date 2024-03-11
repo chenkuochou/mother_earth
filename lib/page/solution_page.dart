@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_icon_value.dart';
@@ -5,6 +6,7 @@ import 'package:mother_earth/page/progress/progress_linear_timer.dart';
 import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/model/listenable_item.dart';
 import 'package:mother_earth/page/progress/progress_slider.dart';
+import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/solution_provider.dart';
@@ -14,6 +16,24 @@ class SolutionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<List<bool>>(achievementUnlockedProvider,
+        (List<bool>? previousState, List<bool> newState) {
+      if (!listEquals(previousState, newState)) {
+        final snackBar = SnackBar(
+          content: Center(
+              child: myText('New achievement unlocked!',
+                  color: Colors.black54, size: 17, bold: true)),
+          backgroundColor: const Color(0xFFE6DBCA),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          elevation: 8,
+          behavior: SnackBarBehavior.floating,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    });
+
     Widget section({
       required String title,
       required ProviderListenable listenable,
@@ -46,7 +66,8 @@ class SolutionPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     myText(title, bold: true),
-                    myIconValueTrend(value: changes, decimals: 3,isForHealth: false),
+                    myIconValueTrend(
+                        value: changes, decimals: 3, isForHealth: false),
                   ],
                 ),
                 ProgressLinearTimer(

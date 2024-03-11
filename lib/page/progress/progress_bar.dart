@@ -1,10 +1,5 @@
-import 'dart:math';
-
-import 'package:confetti/confetti.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
@@ -40,7 +35,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      // TODO: duration add gift variation
+      // duration update by gift variation
       duration: solution.currentDuration,
       lowerBound: 0,
     );
@@ -70,28 +65,6 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
                 value: ref.read(widget.listenable)[widget.index].outputValue);
           }
 
-          // Notify achievement
-          if (!listEquals(
-              achievements, ref.read(achievementUnlockedProvider))) {
-            setState(() {
-              achievements = ref.read(achievementUnlockedProvider);
-            });
-
-            final snackBar = SnackBar(
-              content: Center(
-                  child: myText('New achievement unlocked!',
-                      size: 17, bold: true)),
-              backgroundColor: Colors.green.shade600,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              elevation: 8,
-              behavior: SnackBarBehavior.floating,
-            );
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
-          }
-
           // increase solution duration & reset animation
           _animationController.duration =
               await ref.read(widget.listenable)[widget.index].currentDuration;
@@ -99,8 +72,6 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
         }
       });
     });
-
-    achievements = ref.read(achievementUnlockedProvider);
   }
 
   @override
@@ -128,7 +99,6 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
         } else {
           _animationController.stop();
         }
-
 
         return ClipRRect(
           borderRadius: widget.isForSolution
