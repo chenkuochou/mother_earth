@@ -21,7 +21,8 @@ class AchievementPage extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return AchievementCard(
               achievement: achievements[index],
-              isVisible: ref.watch(achievementsProvider)[index],
+              isVisible: ref.watch(achievementUnlockedProvider)[index],
+              index: index,
             );
           }),
     );

@@ -35,12 +35,37 @@ class _MyLinearProgressTimerState extends ConsumerState<ProgressLinearTimer> {
           ref
               .read(widget.notifier)
               .updateValue(index: widget.index, value: progress);
-          // debugPrint(progress.toString());
+          debugPrint(progress.toString());
           // debugPrint(ref.read(widget.listenable)[widget.index].toString());
-          if (progress > 1) {
-            /// TODO: game end msg
-            _timer.cancel();
-          }
+
+          // End Game
+          Future(() {
+            if (progress > 0.0001) {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Center(child: Text('Mother Earth Is Dead')),
+                  content: const Text('Sadly you have reached the end..'),
+                  // elevation: 8,
+                  backgroundColor: const Color(0xFFE6DBCA),
+                  actionsAlignment: MainAxisAlignment.center,
+                  actions: [
+                    FilledButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.grey.shade800)),
+                      child: myText('PLAY AGAIN'),
+                    ),
+                  ],
+                ),
+              );
+              // stop all & resetStates
+              _timer.cancel();
+            }
+          });
         },
       ),
     );

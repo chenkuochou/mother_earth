@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/layout/app_bar_flexible.dart';
 import 'package:mother_earth/layout/app_bar_navigation.dart';
 import 'package:mother_earth/page/solution_page.dart';
@@ -19,9 +20,10 @@ class _LayoutPageState extends State<LayoutPage> {
 
   void showStart() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      const snackBar = SnackBar(
-        content: Center(child: Text('Welcome to the game!')),
-        shape: RoundedRectangleBorder(
+      final snackBar = SnackBar(
+        content: Center(child: myText('Welcome to the game!',size: 17, bold: true)),
+        backgroundColor: Colors.green.shade600,
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 8,
         behavior: SnackBarBehavior.floating,

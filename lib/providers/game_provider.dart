@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/data/all_static_data.dart';
+import 'package:mother_earth/model/achievement_model.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 
 final gameTimerProvider =
@@ -39,7 +41,7 @@ final healthChangesProvider = Provider<double>((ref) {
       .reduce((a, b) => a + b);
 });
 
-final achievementsProvider = Provider<List<bool>>((ref) {
+final achievementUnlockedProvider = Provider<List<bool>>((ref) {
   return [
     ref.watch(gameLevelProvider) >= 1,
     ref.watch(gameLevelProvider) >= 10,
@@ -49,3 +51,19 @@ final achievementsProvider = Provider<List<bool>>((ref) {
     ref.watch(gameLevelProvider) >= 50,
   ];
 });
+
+final achievementProvider =
+    NotifierProvider<AchievementNotifier, List<AchievementModel>>(
+        AchievementNotifier.new);
+
+class AchievementNotifier extends Notifier<List<AchievementModel>> {
+  @override
+  build() => achievements;
+
+  void clicked(int index) {
+    List<AchievementModel> newState = state;
+    newState[index] = newState[index].copyWith(isFirstClicked: true);
+
+    state = newState;
+  }
+}

@@ -4,20 +4,40 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/app/my_dialog.dart';
 import 'package:mother_earth/model/achievement_model.dart';
+import 'package:mother_earth/providers/game_provider.dart';
 
-class AchievementCard extends ConsumerWidget {
-  const AchievementCard(
-      {super.key, required this.achievement, required this.isVisible});
+class AchievementCard extends ConsumerStatefulWidget {
+  const AchievementCard({
+    super.key,
+    required this.achievement,
+    required this.isVisible,
+    required this.index,
+  });
   final AchievementModel achievement;
   final bool isVisible;
+  final int index;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AchievementCardState();
+}
+
+class _AchievementCardState extends ConsumerState<AchievementCard> {
+  bool isFirstClicked = true;
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: isVisible
+      onTap: widget.isVisible
           ? () {
-              showMyDialog(context, achievement);
-                HapticFeedback.selectionClick();
+              showMyDialog(context, widget.achievement, isFirstClicked);
+              if (isFirstClicked) {
+                ref.read(achievementProvider.notifier).clicked(widget.index);
+                setState(() {
+                  isFirstClicked = !isFirstClicked;
+                });
+              }
+              HapticFeedback.selectionClick();
             }
           : null,
       child: Card(
@@ -30,12 +50,12 @@ class AchievementCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CircleAvatar(
-                backgroundColor: isVisible ? null : Colors.grey.shade600,
+                backgroundColor: widget.isVisible ? null : Colors.grey.shade600,
                 radius: 25,
-                child: isVisible
+                child: widget.isVisible
                     ? CircleAvatar(
                         backgroundImage: AssetImage(
-                            'assets/img/${achievement.imageUrl}.png'),
+                            'assets/img/${widget.achievement.imageUrl}.png'),
                         radius: 20)
                     : null,
               ),
@@ -47,7 +67,7 @@ class AchievementCard extends ConsumerWidget {
                 minFontSize: 10,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                isVisible ? achievement.title : '???',
+                widget.isVisible ? widget.achievement.title : '???',
                 style: const TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
@@ -56,7 +76,7 @@ class AchievementCard extends ConsumerWidget {
                 minFontSize: 10,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                isVisible ? achievement.description : '...',
+                widget.isVisible ? widget.achievement.description : '...',
                 textAlign: TextAlign.left,
                 style: TextStyle(color: Colors.grey.shade600),
               ), //SizedBox

@@ -1,5 +1,10 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mother_earth/app/my_text.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
 import 'package:mother_earth/providers/game_provider.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
@@ -28,49 +33,74 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late var solution = ref.read(widget.listenable)[widget.index];
+  late List<bool> achievements;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      // duration * gift updates
+      // TODO: duration add gift variation
       duration: solution.currentDuration,
       lowerBound: 0,
     );
 
     Future(() {
-      _animationController.addStatusListener((status) {
+      _animationController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           // update solution level
-          ref.read(widget.notifier).levelUp(widget.index);
+          await ref.read(widget.notifier).levelUp(widget.index);
 
           // update challenge level
           if (widget.isForSolution) {
-            ref
+            await ref
                 .read(challengeProvider.notifier)
                 .updateLevel(solution.outputIndex);
           }
 
           // update challenge positive
           if (widget.isForSolution) {
-            ref.read(challengeProvider.notifier).updatePositive(
+            await ref.read(challengeProvider.notifier).updatePositive(
                 index: solution.outputIndex,
                 value: ref.read(widget.listenable)[widget.index].outputValue);
           } // update resource
           else {
-            ref.read(resourceProvider.notifier).updateValue(
+            await ref.read(resourceProvider.notifier).updateValue(
                 index: solution.outputIndex,
                 value: ref.read(widget.listenable)[widget.index].outputValue);
           }
 
+          // Notify achievement
+          if (!listEquals(
+              achievements, ref.read(achievementUnlockedProvider))) {
+            setState(() {
+              achievements = ref.read(achievementUnlockedProvider);
+            });
+
+            final snackBar = SnackBar(
+              content: Center(
+                  child: myText('New achievement unlocked!',
+                      size: 17, bold: true)),
+              backgroundColor: Colors.green.shade600,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              elevation: 8,
+              behavior: SnackBarBehavior.floating,
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          }
+
           // increase solution duration & reset animation
           _animationController.duration =
-              ref.read(widget.listenable)[widget.index].currentDuration;
+              await ref.read(widget.listenable)[widget.index].currentDuration;
           _animationController.repeat();
         }
       });
     });
+
+    achievements = ref.read(achievementUnlockedProvider);
   }
 
   @override
@@ -78,6 +108,8 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
     _animationController.dispose();
     super.dispose();
   }
+
+  Future<void> whenAnimationComplete() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +128,7 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
         } else {
           _animationController.stop();
         }
+
 
         return ClipRRect(
           borderRadius: widget.isForSolution
