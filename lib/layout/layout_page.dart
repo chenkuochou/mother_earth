@@ -21,70 +21,70 @@ class _LayoutPageState extends State<LayoutPage> {
 
   @override
   void initState() {
-    // Future(() {
-    //   showDialog<String>(
-    //     context: context,
-    //     builder: (BuildContext context) => AlertDialog(
-    //       title: const Center(child: Text('Welcome to the Game')),
-    //       content: Wrap(
-    //         children: [
-    //           const Text(
-    //               "Tap to rescue the Mother Earth (eg. lower pollution by developing renewable energy)."),
-    //           Padding(
-    //             padding: const EdgeInsets.only(top: 10, bottom: 10),
-    //             child: Center(
-    //               child: myIconValueTrend(
-    //                   isForHealth: true, value: 0.0024, decimals: 2),
-    //             ),
-    //           ),
-    //           const Text(
-    //               "Take care of earth's health and use your resources (money, happiness.. etc.) smartly."),
-    //           Padding(
-    //             padding: const EdgeInsets.only(top: 10, bottom: 10),
-    //             child: Row(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: [
-    //                 Icon(
-    //                   Icons.paid,
-    //                   color: Colors.amber.shade600,
-    //                   size: 15,
-    //                 ),
-    //                 const SizedBox(width: 5),
-    //                 Icon(
-    //                   Icons.pets,
-    //                   color: Colors.green.shade600,
-    //                   size: 15,
-    //                 ),
-    //                 const SizedBox(width: 5),
-    //                 Icon(
-    //                   Icons.account_balance,
-    //                   color: Colors.blue.shade600,
-    //                   size: 15,
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           myText(
-    //               'Be aware: \nNegative aspects to the earth will be also increased by levels.',
-    //               bold: true),
-    //         ],
-    //       ),
-    //       backgroundColor: const Color(0xFFE6DBCA),
-    //       actionsAlignment: MainAxisAlignment.center,
-    //       actions: [
-    //         FilledButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           style: ButtonStyle(
-    //               backgroundColor:
-    //                   MaterialStateProperty.all(Colors.grey.shade800)),
-    //           child: myText('PLAY'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // });
+    Future(() {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Center(child: Text('Welcome to the Game')),
+          content: Wrap(
+            children: [
+              const Text(
+                  "Tap to rescue the Mother Earth (eg. lower pollution by developing renewable energy)."),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: myIconValueTrend(
+                      isForHealth: true, value: 0.0024, decimals: 2),
+                ),
+              ),
+              const Text(
+                  "Take care of earth's health and use your resources (money, happiness.. etc.) smartly."),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.paid,
+                      color: Colors.amber.shade600,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.pets,
+                      color: Colors.green.shade600,
+                      size: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.account_balance,
+                      color: Colors.blue.shade600,
+                      size: 15,
+                    ),
+                  ],
+                ),
+              ),
+              myText(
+                  'Be aware: \nNegative aspects to the earth will be also increased by levels.',
+                  bold: true),
+            ],
+          ),
+          backgroundColor: const Color(0xFFE6DBCA),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.grey.shade800)),
+              child: myText('PLAY'),
+            ),
+          ],
+        ),
+      );
+    });
     super.initState();
   }
 

@@ -186,30 +186,48 @@ List<SolutionModel> biodiversityData = [
 
 List<DevelopmentModel> developmentData = [
   DevelopmentModel(
-    title: 'Education',
+    title: 'Go Decentralised',
     duration: const Duration(seconds: 5),
-    assetUrl: 'devForest.jpg',
-    outputMap: {ListenableItem.resWildlife: 1},
+    assetUrl: 'devDecentralised.jpg',
+    outputMap: {ListenableItem.resMoney: 0.2},
   ),
   DevelopmentModel(
-    title: 'Research',
+    title: 'Frictionless Finance',
     duration: const Duration(seconds: 10),
-    assetUrl: 'devForest.jpg',
-    requiredDevMap: {ListenableItem.devFairness: 1}, //10
-    outputMap: {ListenableItem.resWildlife: 5},
+    assetUrl: 'devFrictionless.jpg',
+    requiredDevMap: {ListenableItem.devDecentralised: 20},
+    outputMap: {ListenableItem.resMoney: 0.5},
   ),
   DevelopmentModel(
-    title: 'Agriculture',
+    title: 'Building Tomorrow',
     duration: const Duration(seconds: 5),
-    assetUrl: 'devForest.jpg',
-    outputMap: {ListenableItem.non: 1},
+    assetUrl: 'devTomorrow.jpg',
+    outputMap: {ListenableItem.resTech: 0.3},
   ),
   DevelopmentModel(
-    title: 'Finding Peaceful',
+    title: 'Thriving Together',
+    duration: const Duration(seconds: 5),
+    assetUrl: 'devThriving.jpg',
+    outputMap: {ListenableItem.resWildlife: 0.3},
+  ),
+  DevelopmentModel(
+    title: 'Civility Revolution',
+    duration: const Duration(seconds: 5),
+    assetUrl: 'devCivility.jpg',
+    outputMap: {ListenableItem.resPolitics: 0.2},
+  ),
+  DevelopmentModel(
+    title: 'Bridge the Divide',
     duration: const Duration(seconds: 10),
-    assetUrl: 'devForest.jpg',
-    requiredDevMap: {ListenableItem.devFairness: 1}, //10
-    outputMap: {ListenableItem.non: 5},
+    assetUrl: 'devBridge.jpg',
+    requiredDevMap: {ListenableItem.devTomorrow: 20},
+    outputMap: {ListenableItem.resPolitics: 0.5},
+  ),
+  DevelopmentModel(
+    title: 'The Happiness Project',
+    duration: const Duration(seconds: 5),
+    assetUrl: 'devProject.jpg',
+    outputMap: {ListenableItem.resHappiness: 0.3},
   ),
 ];
 
@@ -298,7 +316,37 @@ List<AchievementModel> achievements = [
   ),
   AchievementModel(
     title: 'Level 50 Reached',
-    description: "The fate of the world may rest on you.",
+    description: "Oh, you're still here! (This is the last level..)",
     imageUrl: 'achLevel50',
+  ),
+  AchievementModel(
+    title: 'Health < 75%',
+    description: "Battered, but not broken. You're okey still..",
+    imageUrl: 'achHealth75',
+  ),
+  AchievementModel(
+    title: 'Health < 50%',
+    description: "Feeling spry! Hanging by a thread.",
+    imageUrl: 'achHealth50',
+  ),
+  AchievementModel(
+    title: 'Health < 25%',
+    description: "One hit away from needing a nap... permanently.",
+    imageUrl: 'achHealth25',
+  ),
+  AchievementModel(
+    title: 'Health < 5%',
+    description: "We need a miracle.. Don't you think?",
+    imageUrl: 'achHealth5',
+  ),
+  AchievementModel(
+    title: "You're the Boss",
+    description: "Money over 100. A decent chunk of change!",
+    imageUrl: 'achMoney',
+  ),
+  AchievementModel(
+    title: 'Global Leadership',
+    description: "You have strategies for world domination.",
+    imageUrl: 'achGlobal',
   ),
 ];

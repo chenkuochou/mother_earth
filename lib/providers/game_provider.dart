@@ -15,14 +15,14 @@ class GameTimerNotifier extends Notifier<List<bool>> {
     newState[index] = !newState[index];
 
     state = newState;
-
   }
 
-  void stop(){
-    List<bool> newState = List<bool>.filled(ref.read(challengeProvider).length, false,
+  void stop() {
+    List<bool> newState = List<bool>.filled(
+        ref.read(challengeProvider).length, false,
         growable: false);
-     state = newState;
- }
+    state = newState;
+  }
 }
 
 final gameLevelProvider = Provider<double>((ref) {
@@ -50,12 +50,18 @@ final healthChangesProvider = Provider<double>((ref) {
 
 final achievementUnlockedProvider = Provider<List<bool>>((ref) {
   return [
-    ref.watch(gameLevelProvider) >= 1,
-    ref.watch(gameLevelProvider) >= 10,
-    ref.watch(gameLevelProvider) >= 20,
-    ref.watch(gameLevelProvider) >= 30,
-    ref.watch(gameLevelProvider) >= 40,
-    ref.watch(gameLevelProvider) >= 50,
+    ref.watch(gameLevelProvider) > 1,
+    ref.watch(gameLevelProvider) > 10,
+    ref.watch(gameLevelProvider) > 20,
+    ref.watch(gameLevelProvider) > 30,
+    ref.watch(gameLevelProvider) > 40,
+    ref.watch(gameLevelProvider) > 50,
+    ref.watch(healthProvider) < 0.75,
+    ref.watch(healthProvider) < 0.5,
+    ref.watch(healthProvider) < 0.25,
+    ref.watch(healthProvider) < 0.05,
+    ref.watch(resourceProvider)[0].value! > 100,
+    ref.watch(resourceProvider)[3].value! > 100,
   ];
 });
 
