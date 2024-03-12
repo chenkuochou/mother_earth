@@ -43,6 +43,24 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   }
 }
 
+final biodiversityProvider =
+    NotifierProvider<BiodiversityNotifier, List<SolutionModel>>(
+        BiodiversityNotifier.new);
+
+class BiodiversityNotifier extends Notifier<List<SolutionModel>> {
+  @override
+  build() => biodiversityData;
+
+  Future<void> levelUp(int index) async {
+    List<SolutionModel> newState = [...state];
+
+    SolutionModel solution = newState[index];
+    newState[index] = solution.copyWith(level: solution.level! + 1);
+
+    state = await newState;
+  }
+}
+
 final developmentProvider =
     NotifierProvider<DevelopmentNotifier, List<DevelopmentModel>>(
         DevelopmentNotifier.new);

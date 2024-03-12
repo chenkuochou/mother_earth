@@ -19,6 +19,7 @@ Future<void> showMyDialog(
       return Stack(
         children: [
           AlertDialog(
+            backgroundColor: const Color(0xFFE6DBCA),
             elevation: 20,
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,

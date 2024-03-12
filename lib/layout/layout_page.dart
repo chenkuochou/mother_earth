@@ -51,13 +51,13 @@ class _LayoutPageState extends State<LayoutPage> {
     //                 ),
     //                 const SizedBox(width: 5),
     //                 Icon(
-    //                   Icons.favorite_sharp,
+    //                   Icons.pets,
     //                   color: Colors.green.shade600,
     //                   size: 15,
     //                 ),
     //                 const SizedBox(width: 5),
     //                 Icon(
-    //                   Icons.apartment,
+    //                   Icons.account_balance,
     //                   color: Colors.blue.shade600,
     //                   size: 15,
     //                 ),

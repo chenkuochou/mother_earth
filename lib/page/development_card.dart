@@ -54,6 +54,7 @@ class _DevelopmentCardState extends ConsumerState<DevelopmentCard> {
   }
 
   Row iconValue({
+    required String title,
     required IconData icon,
     required Color iconColor,
     required double value,
@@ -68,7 +69,7 @@ class _DevelopmentCardState extends ConsumerState<DevelopmentCard> {
           ),
           const SizedBox(width: 2),
           myText(
-            '+${myFormattedNumber(value)}',
+            '$title +${myFormattedNumber(value)}',
             color: valueColor,
             size: 12,
             bold: true,
@@ -79,9 +80,15 @@ class _DevelopmentCardState extends ConsumerState<DevelopmentCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => isClickable()
-          ? {widget.toggleActive(widget.index), HapticFeedback.selectionClick()}
-          : null,
+      onTap: () {
+        isClickable()
+            ? {
+                widget.toggleActive(widget.index),
+                HapticFeedback.selectionClick()
+              }
+            : null;
+        HapticFeedback.selectionClick();
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 100,
@@ -138,6 +145,7 @@ class _DevelopmentCardState extends ConsumerState<DevelopmentCard> {
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: iconValue(
+                    title: resource.title,
                     icon: resource.icon,
                     iconColor:
                         widget.isActive ? resource.color : Colors.black54,

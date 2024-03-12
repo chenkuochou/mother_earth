@@ -9,7 +9,6 @@ import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
-import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
@@ -37,11 +36,11 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ChallengeModel challenge =
         ref.read(challengeProvider)[solution.outputIndex];
     final ResourceModel resource =
-        ref.read(resourceProvider)[solution.consumedResourcesIndex ?? 0];
+        ref.read(resourceProvider)[solution.consumedResourcesIndex];
 
     bool isClickable() {
-      print(ref.watch(pollutionProvider)[2].consumedResMap);
-      if (solution.requiredSolMap == null && solution.consumedResourcesValue == 0) {
+      if (solution.requiredSolMap == null &&
+          solution.consumedResourcesValue == 0) {
         return true;
       }
 
@@ -54,28 +53,35 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
       // if (solution.consumedResMap != null) {
       if (solution.consumedResourcesValue != 0 &&
-          ref
-                  .watch(resourceProvider)[solution.consumedResourcesIndex!]
-                  .value! >=
-              solution.consumedResourcesValue!) {
+          ref.watch(resourceProvider)[solution.consumedResourcesIndex].value! >=
+              solution.consumedResourcesValue) {
         return true;
       }
       // }
       return false;
     }
 
-    Row iconValue(
-            IconData icon, Color iconColor, double value, Color valueColor) =>
+    Row iconValue(bool isForChallenge, IconData icon, Color iconColor,
+            double value, Color valueColor,
+            [double? resourceRequiredValue]) =>
         Row(
           children: [
-            Icon(
-              icon,
-              color: iconColor,
-              size: 15,
-            ),
+            isForChallenge
+                ? const SizedBox.shrink()
+                : Icon(
+                    icon,
+                    color: iconColor,
+                    size: 15,
+                  ),
             const SizedBox(width: 2),
-            myText('-${myFormattedNumber(value)}',
-                color: valueColor, size: 12, bold: true),
+            isForChallenge
+                ? myText('-${myFormattedNumber(value)}',
+                    color: valueColor, size: 12, bold: true)
+                : myText(
+                    '${myFormattedNumber(value)}/${myFormattedNumber(resourceRequiredValue!)}',
+                    color: valueColor,
+                    size: 12,
+                    bold: true),
           ],
         );
 
@@ -85,11 +91,11 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
           isClickable()
               ? {
                   widget.toggleActive(widget.longIndex),
-                  if (solution.consumedResMap != null)
+                  if (solution.consumedResourcesValue != 0)
                     {
                       ref.read(resourceProvider.notifier).updateValue(
-                          index: solution.consumedResourcesIndex!,
-                          value: -solution.consumedResourcesValue!),
+                          index: solution.consumedResourcesIndex,
+                          value: -solution.consumedResourcesValue),
                     },
                 }
               : null;
@@ -141,6 +147,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                   children: [
                     isClickable()
                         ? iconValue(
+                            true,
                             challenge.icon,
                             challenge.color,
                             ref.watch(listenable)[widget.longIndex].outputValue,
@@ -160,12 +167,18 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                                 ),
                               )
                             : iconValue(
+                                false,
                                 resource.icon,
                                 Colors.grey.shade600,
                                 ref
                                     .watch(listenable)[widget.longIndex]
                                     .consumedResourcesValue,
-                                Colors.grey.shade600),
+                                Colors.grey.shade600,
+                                ref
+                                    .watch(resourceProvider)[
+                                        solution.consumedResourcesIndex]
+                                    .value,
+                              ),
                   ],
                 ),
               ),
@@ -176,7 +189,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 notifier: notifier,
                 index: widget.longIndex,
                 isActive: widget.isActive,
-                isForResourceConsuming: solution.consumedResMap != null,
+                isForResourceConsuming: solution.consumedResourcesValue != 0,
                 clickableCallback: () => {
                   widget.toggleActive(widget.longIndex),
                 },

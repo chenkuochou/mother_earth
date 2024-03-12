@@ -43,20 +43,23 @@ class _AchievementCardState extends ConsumerState<AchievementCard> {
       child: Card(
         // elevation: 50,
         // shadowColor: Colors.black,
-        color: const Color(0xFFE6DBCA).withOpacity(0.5),
+        color: const Color(0xFFE6DBCA),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CircleAvatar(
-                backgroundColor: widget.isVisible ? null : Colors.grey.shade600,
+                backgroundColor:
+                    widget.isVisible ? Colors.white : Colors.grey.shade600,
                 radius: 25,
                 child: widget.isVisible
                     ? CircleAvatar(
                         backgroundImage: AssetImage(
                             'assets/img/${widget.achievement.imageUrl}.png'),
-                        radius: 20)
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                      )
                     : null,
               ),
               const SizedBox(

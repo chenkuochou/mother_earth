@@ -99,8 +99,9 @@ class SolutionPage extends ConsumerWidget {
             listenable: climateChangeProvider,
             notifier: climateChangeProvider.notifier,
             groupList: {
-              ['Oh']: [
-                [0, 1],
+              ['Mitigation', 'Action']: [
+                [0, 3],
+                [3, 0]
               ]
             },
             challengeIndex: ListenableItem.challengeClimateChange.myIndex,
@@ -110,12 +111,25 @@ class SolutionPage extends ConsumerWidget {
             listenable: pollutionProvider,
             notifier: pollutionProvider.notifier,
             groupList: {
-              ['Air', 'Water']: [
+              ['Air', 'Water', 'Soil']: [
                 [0, 3],
-                [3, 0],
+                [3, 6],
+                [6, 0]
               ]
             },
             challengeIndex: ListenableItem.challengePollution.myIndex,
+          ),
+          section(
+            title: 'Biodiversity',
+            listenable: biodiversityProvider,
+            notifier: biodiversityProvider.notifier,
+            groupList: {
+              ['Protection & Restoration', 'Education']: [
+                [0, 3],
+                [3, 0]
+              ]
+            },
+            challengeIndex: ListenableItem.challengeBiodiversity.myIndex,
           ),
         ],
       ),
