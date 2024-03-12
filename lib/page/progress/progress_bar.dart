@@ -12,6 +12,8 @@ class ProgressBar extends ConsumerStatefulWidget {
     required this.notifier,
     required this.index,
     required this.isActive,
+    this.isForResourceConsuming,
+    this.clickableCallback,
   });
 
   final bool isForSolution;
@@ -19,6 +21,8 @@ class ProgressBar extends ConsumerStatefulWidget {
   final ProviderListenable notifier;
   final int index;
   final bool isActive;
+  final bool? isForResourceConsuming;
+  final Function? clickableCallback;
 
   @override
   ConsumerState createState() => _ProgressBarState();
@@ -58,11 +62,21 @@ class _ProgressBarState extends ConsumerState<ProgressBar>
             await ref.read(challengeProvider.notifier).updatePositive(
                 index: solution.outputIndex,
                 value: ref.read(widget.listenable)[widget.index].outputValue);
-          } // update resource
+          } // update resource from development
           else {
             await ref.read(resourceProvider.notifier).updateValue(
                 index: solution.outputIndex,
                 value: ref.read(widget.listenable)[widget.index].outputValue);
+          }
+
+          if (widget.isForResourceConsuming == true) {
+            if (ref
+                    .watch(resourceProvider)[solution.consumedResourcesIndex!]
+                    .value! <
+                solution.consumedResourcesValue!) {
+
+              widget.clickableCallback!();
+            }
           }
 
           // increase solution duration & reset animation

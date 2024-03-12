@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mother_earth/common/my_formatted_number.dart';
 import 'package:mother_earth/common/my_text.dart';
@@ -78,7 +79,9 @@ class _DevelopmentCardState extends ConsumerState<DevelopmentCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => isClickable() ? widget.toggleActive(widget.index) : null,
+      onTap: () => isClickable()
+          ? {widget.toggleActive(widget.index), HapticFeedback.selectionClick()}
+          : null,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 100,

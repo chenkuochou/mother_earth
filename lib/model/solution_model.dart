@@ -42,7 +42,7 @@ class ProgressModel {
 class SolutionModel extends ProgressModel {
   final Map<ListenableItem, int>? requiredSolMap;
   // final Map<ListenableItem, int>? requiredDevMap;
-  final Map<ListenableItem, double>? consumedResMap;
+  final Map<ListenableItem, double> consumedResMap;
 
   SolutionModel({
     required super.title,
@@ -54,14 +54,14 @@ class SolutionModel extends ProgressModel {
     super.isActive,
     this.requiredSolMap,
     // this.requiredDevMap,
-    this.consumedResMap,
+   required this.consumedResMap,
   });
 
   int? get requiredSolutionIndex => requiredSolMap?.keys.first.myIndex;
   int? get requiredSolutionLevel => requiredSolMap?.values.first;
 
-  int? get consumedResourcesIndex => consumedResMap?.keys.first.myIndex;
-  double? get consumedResourcesValue => consumedResMap?.values.first;
+  int get consumedResourcesIndex => consumedResMap.keys.first.myIndex;
+  double get consumedResourcesValue => consumedResMap.values.first;
 
   int get outputIndex => outputMap.keys.first.myIndex;
   double get outputValue => outputMap.values.first * (1 + level!);
@@ -90,7 +90,7 @@ class SolutionModel extends ProgressModel {
       isActive: isActive ?? this.isActive,
       requiredSolMap: requiredSolMap ?? requiredSolMap,
       // requiredDevMap: requiredDevMap ?? requiredDevMap,
-      consumedResMap: consumedResMap ?? consumedResMap,
+      consumedResMap: consumedResMap ?? this.consumedResMap,
       outputMap: outputs ?? outputMap,
     );
   }

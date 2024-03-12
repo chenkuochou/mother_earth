@@ -13,7 +13,7 @@ class ClimateChangeNotifier extends Notifier<List<SolutionModel>> {
   build() => climateChangeData;
 
   Future<void> levelUp(int index) async {
-    List<SolutionModel> newState = state;
+    List<SolutionModel> newState = [...state];
 
     SolutionModel solution = newState[index];
     newState[index] = solution.copyWith(level: solution.level! + 1);
@@ -31,7 +31,7 @@ class PollutionNotifier extends Notifier<List<SolutionModel>> {
   build() => pollutionData;
 
   Future<void> levelUp(int index) async {
-    List<SolutionModel> newState = state;
+    List<SolutionModel> newState = [...state];
 
     SolutionModel solution = newState[index];
     newState[index] = solution.copyWith(level: solution.level! + 1);

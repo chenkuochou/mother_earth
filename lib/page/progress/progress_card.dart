@@ -9,6 +9,7 @@ import 'package:mother_earth/model/solution_model.dart';
 import 'package:mother_earth/page/progress/progress_bar.dart';
 import 'package:mother_earth/providers/inherited_providers.dart';
 import 'package:mother_earth/providers/challenge_provider.dart';
+import 'package:mother_earth/providers/solution_provider.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
   const ProgressCard({
@@ -38,11 +39,9 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
     final ResourceModel resource =
         ref.read(resourceProvider)[solution.consumedResourcesIndex ?? 0];
 
-    // final int solutionIndex = InheritedProviders.of(context).challengeIndex;
-    // bool isActive = ref.watch(activationProvider)[solutionIndex][widget.index];
-
     bool isClickable() {
-      if (solution.requiredSolMap == null && solution.consumedResMap == null) {
+      print(ref.watch(pollutionProvider)[2].consumedResMap);
+      if (solution.requiredSolMap == null && solution.consumedResourcesValue == 0) {
         return true;
       }
 
@@ -53,15 +52,15 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
         }
       }
 
-      if (solution.consumedResMap != null) {
-        if (ref
-                .watch(resourceProvider)[solution.consumedResourcesIndex!]
-                .value! >=
-            solution.consumedResourcesValue!) {
-          return true;
-        }
+      // if (solution.consumedResMap != null) {
+      if (solution.consumedResourcesValue != 0 &&
+          ref
+                  .watch(resourceProvider)[solution.consumedResourcesIndex!]
+                  .value! >=
+              solution.consumedResourcesValue!) {
+        return true;
       }
-
+      // }
       return false;
     }
 
@@ -82,16 +81,22 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
 
     return GestureDetector(
       onTap: () {
-        isClickable()
-            ? setState(() {
-                if (!widget.isActive) {
-                  widget.toggleActive(widget.longIndex);
-                } else {
-                  widget.toggleActive(widget.longIndex);
+        if (widget.isActive == false) {
+          isClickable()
+              ? {
+                  widget.toggleActive(widget.longIndex),
+                  if (solution.consumedResMap != null)
+                    {
+                      ref.read(resourceProvider.notifier).updateValue(
+                          index: solution.consumedResourcesIndex!,
+                          value: -solution.consumedResourcesValue!),
+                    },
                 }
-                HapticFeedback.selectionClick();
-              })
-            : null;
+              : null;
+        } else {
+          widget.toggleActive(widget.longIndex);
+        }
+        HapticFeedback.selectionClick();
       },
       child: Container(
         decoration: BoxDecoration(
@@ -171,6 +176,10 @@ class _ProgressCardState extends ConsumerState<ProgressCard> {
                 notifier: notifier,
                 index: widget.longIndex,
                 isActive: widget.isActive,
+                isForResourceConsuming: solution.consumedResMap != null,
+                clickableCallback: () => {
+                  widget.toggleActive(widget.longIndex),
+                },
               ),
             ],
           );

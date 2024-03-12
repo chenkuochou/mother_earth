@@ -10,6 +10,7 @@ List<SolutionModel> climateChangeData = [
     duration: const Duration(seconds: 1),
     assetUrl: 'solar',
     outputMap: {ListenableItem.challengeClimateChange: 0.1},
+    consumedResMap: {ListenableItem.resPeople: 0},
   )
 ];
 
@@ -19,6 +20,7 @@ List<SolutionModel> pollutionData = [
     duration: const Duration(seconds: 1),
     assetUrl: 'airRenewable',
     outputMap: {ListenableItem.challengePollution: 0.1},
+    consumedResMap: {ListenableItem.resPeople: 0},
   ),
   SolutionModel(
     title: 'Electric Cars',
@@ -26,10 +28,11 @@ List<SolutionModel> pollutionData = [
     assetUrl: 'airEV',
     requiredSolMap: {ListenableItem.polAirRenewable: 3},
     outputMap: {ListenableItem.challengePollution: 0.15},
+    consumedResMap: {ListenableItem.resPeople: 0},
   ),
   SolutionModel(
     title: 'Air Regulation',
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 1),
     assetUrl: 'airRegulation',
     consumedResMap: {ListenableItem.resPeople: 10},
     outputMap: {ListenableItem.challengePollution: 0.25},
@@ -40,6 +43,7 @@ List<SolutionModel> pollutionData = [
     assetUrl: 'waterReduce',
     requiredSolMap: {ListenableItem.polAirRegulation: 1},
     outputMap: {ListenableItem.challengePollution: 0.13},
+    consumedResMap: {ListenableItem.resPeople: 0},
   )
 ];
 
@@ -79,7 +83,7 @@ List<ResourceModel> resourceData = [
   ResourceModel(
     title: 'People',
     icon: Icons.favorite_sharp,
-    color: Colors.green.shade600,
+    color: Colors.green.shade600,value: 11,
   ),
   ResourceModel(
     title: 'Industry',
